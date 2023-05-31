@@ -1,4 +1,4 @@
-export class Basket {
+class Basket {
   constructor(id, vehicles, user, price) {
     this.id = id;
     this.vehicles = vehicles;
@@ -6,3 +6,5 @@ export class Basket {
     this.price = price;
   }
 }
+
+module.exports = Basket;

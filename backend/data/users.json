@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "username": "nikola",
+    "password": "123",
+    "name": "Nikola",
+    "surname": "Kolarov",
+    "gender": "F",
+    "birthday": "2001-11-17T23:00:00.000Z",
+    "role": "buyer",
+    "pastRentals": null,
+    "basket": null,
+    "rentalObject": null,
+    "points": 100,
+    "buyerType": {
+      "id": 1,
+      "name": "Zlatni",
+      "discount": 0.2,
+      "points": 15
+    }
+  }
+]

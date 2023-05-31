@@ -1,4 +1,4 @@
-export class Location {
+class Location {
   constructor(id, longtitude, latitude, address) {
     this.id = id;
     this.longtitude = longtitude;
@@ -6,3 +6,5 @@ export class Location {
     this.address = address;
   }
 }
+
+module.exports = Location;

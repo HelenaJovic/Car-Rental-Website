@@ -1,4 +1,4 @@
-export class RentalObject {
+class RentalObject {
   constructor(id, name, vehicles, workHours, status, location, logo, grade) {
     this.id = id;
     this.name = name;
@@ -10,3 +10,5 @@ export class RentalObject {
     this.grade = grade;
   }
 }
+
+module.exports = RentalObject;
