@@ -1,4 +1,4 @@
-export class Vehicle {
+class Vehicle {
   constructor(
     id,
     brand,
@@ -31,3 +31,5 @@ export class Vehicle {
     this.status = status;
   }
 }
+
+module.exports = Vehicle;
