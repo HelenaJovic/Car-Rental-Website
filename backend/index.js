@@ -1,8 +1,15 @@
 const express = require("express");
+const cors = require("cors");
 const userController = require("./controller/user_controller");
 
 const app = express();
 
-app.use("/users", userController);
+const corsOptions = {
+  origin: "http://localhost:8080",
+};
 
-app.listen(8080, () => console.log("Server running!"));
+app.use(cors(corsOptions));
+
+app.use("/users", userController);
+//console.log(userService.getById(1)); samo provera da li radi getById
+app.listen(8081, () => console.log("Server running!"));

@@ -19,4 +19,14 @@ router.post("/", (req, res) => {
   }
 });
 
+router.get("/:id", (req, res) => {
+  const id = parseInt(req.params.id, 10);
+
+  try {
+    var user = userService.getById(id);
+    res.status(200).json(userService.getById(id));
+  } catch (error) {
+    res.status(404).json({ error: "User not found" });
+  }
+});
 module.exports = router;

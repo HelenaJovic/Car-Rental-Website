@@ -30,8 +30,8 @@ function getAll() {
 
 function getById(id) {
   var users = json_utils.jsonReader(path);
-
   index = users.findIndex((user) => user.id === id);
+
   return users[index];
 }
 
