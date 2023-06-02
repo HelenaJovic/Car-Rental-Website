@@ -49,8 +49,30 @@
         }
     },
     {
-        "name": "Aleksa",
-        "lastName": "Kralj",
+        "username": "Aca",
+        "password": "Aca",
+        "name": "ACA",
+        "surname": "ACA",
+        "gender": "male",
+        "birthday": "2023-01-01",
         "id": 4
+    },
+    {
+        "username": "Ogy",
+        "password": "123",
+        "name": "Ogi",
+        "surname": "Srda",
+        "gender": "male",
+        "birthday": "2023-01-01",
+        "id": 5
+    },
+    {
+        "username": "helenajovic_",
+        "password": "helena123",
+        "name": "Helena",
+        "surname": "Jovic",
+        "gender": "female",
+        "birthday": "2000-11-02",
+        "id": 6
     }
 ]

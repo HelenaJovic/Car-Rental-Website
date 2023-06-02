@@ -1,0 +1,47 @@
+[
+    {
+        "name": "AcinaKola",
+        "vehicles": [
+            "BMW",
+            "Porsche",
+            "RR"
+        ],
+        "workHours": "8",
+        "status": true,
+        "location": "Novi Sad",
+        "grade": "4.5",
+        "path": "../assets/images/aaaa.png",
+        "id": 1
+    },
+    
+    {
+        "name": "SrdinaKola",
+        "vehicles": [
+            "BMW",
+            "Porsche",
+            "RR"
+        ],
+        "workHours": "8",
+        "status": false,
+        "location": "Novi Sad",
+        "grade": "4.5",
+        "path": "../assets/images/aaaa.png",
+        "id": 2
+    },
+    
+    {
+        "name": "LeninaKola",
+        "vehicles": [
+            "BMW",
+            "Porsche",
+            "RR"
+        ],
+        "workHours": "8",
+        "status": true,
+        "location": "Novi Sad",
+        "grade": "4.5",
+        "path": "../assets/images/aaaa.png",
+        "id": 3
+    }
+
+]

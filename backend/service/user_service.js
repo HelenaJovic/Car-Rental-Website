@@ -5,7 +5,7 @@ function create(user) {
 }
 
 function remove(id) {
-  userRepo.remove(id);
+  return userRepo.remove(id);
 }
 
 function getAll() {

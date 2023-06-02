@@ -26,13 +26,19 @@ function update(id, updatedUser) {
 
   return users[index];
 }
-
 function remove(id) {
   const users = json_utils.jsonReader(path);
-  index = users.findIndex((user) => user.id === id);
-  users.pop(index);
-  json_utils.saveDataToFile(users, path);
+  const index = findIndex(users, id);
+
+  if (index !== -1) {
+    const removedUser = users.splice(index, 1)[0]; // Remove the user at the specified index
+    json_utils.saveDataToFile(users, path);
+    return removedUser;
+  } else {
+    throw new Error("User not found");
+  }
 }
+
 
 function getAll() {
   return json_utils.jsonReader(path);
