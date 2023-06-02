@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "username": "nikola",
+        "username": "Aca",
         "password": "123",
         "name": "Nikola",
         "surname": "Kolarov",
@@ -47,5 +47,10 @@
             "discount": 0.2,
             "points": 15
         }
+    },
+    {
+        "name": "Aleksa",
+        "lastName": "Kralj",
+        "id": 4
     }
 ]

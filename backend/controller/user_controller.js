@@ -6,6 +6,7 @@ router.use(express.json());
 
 router.get("/", (req, res) => {
   res.json(userService.getAll());
+
 });
 
 router.post("/", (req, res) => {
@@ -19,12 +20,31 @@ router.post("/", (req, res) => {
   }
 });
 
+router.put("/:id", (req, res) => {
+
+
+
+  const userId = req.params.id;
+  const updatedData = req.body; 
+  const updatedUser = userService.update(userId, updatedData);
+
+  if (!updatedUser) {
+    return res.status(404).json({ error: "User not found" });
+  }
+
+  
+  res.json(updatedUser);
+});
+
+
+
 router.get("/:id", (req, res) => {
   const id = parseInt(req.params.id, 10);
 
   try {
     var user = userService.getById(id);
-    res.status(200).json(userService.getById(id));
+    console.log(user);
+    res.status(200).json(user);
   } catch (error) {
     res.status(404).json({ error: "User not found" });
   }

@@ -17,7 +17,7 @@ function getById(id) {
 }
 
 function update(id, updatedUser) {
-  userRepo.update(id, updatedUser);
+  return userRepo.update(id, updatedUser);
 }
 
 module.exports = { create, remove, getAll, getById, update };

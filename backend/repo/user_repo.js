@@ -9,12 +9,22 @@ function create(user) {
   json_utils.saveDataToFile(users, path);
 }
 
+function findIndex(users, id) {
+  return users.findIndex(user => user.id === parseInt(id));
+}
+
+
 function update(id, updatedUser) {
   const users = json_utils.jsonReader(path);
-  index = users.findIndex((user) => user.id === id);
+  console.log(users)
+  index = findIndex(users, id);
+  console.log(index);
   users[index] = updatedUser;
-  users[index].id = id;
+  users[index].id = parseInt(id, 10);
+
   json_utils.saveDataToFile(users, path);
+
+  return users[index];
 }
 
 function remove(id) {
@@ -29,8 +39,8 @@ function getAll() {
 }
 
 function getById(id) {
-  var users = json_utils.jsonReader(path);
-  index = users.findIndex((user) => user.id === id);
+  const users = json_utils.jsonReader(path);
+  index = findIndex(users, id);
 
   return users[index];
 }
