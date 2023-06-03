@@ -5,7 +5,10 @@ import Routes from "./router/routes";
 
 Vue.use(VueRouter);
 
+export const eventBus = new Vue();
+
 const router = new VueRouter({
+  mode: "history",
   routes: Routes
 });
 
