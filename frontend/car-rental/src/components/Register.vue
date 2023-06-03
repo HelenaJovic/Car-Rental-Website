@@ -50,7 +50,8 @@ export default {
         name: "",
         surname: "",
         gender: "",
-        birthday: ""
+        birthday: "",
+        basket: null
       }
     };
   },
