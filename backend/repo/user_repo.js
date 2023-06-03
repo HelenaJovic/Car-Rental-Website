@@ -9,28 +9,44 @@ function create(user) {
   json_utils.saveDataToFile(users, path);
 }
 
-function update(id, updatedUser) {
-  const users = json_utils.jsonReader(path);
-  index = users.findIndex((user) => user.id === id);
-  users[index] = updatedUser;
-  users[index].id = id;
-  json_utils.saveDataToFile(users, path);
+function findIndex(users, id) {
+  return users.findIndex(user => user.id === parseInt(id));
 }
 
+
+function update(id, updatedUser) {
+  const users = json_utils.jsonReader(path);
+  console.log(users)
+  index = findIndex(users, id);
+  console.log(index);
+  users[index] = updatedUser;
+  users[index].id = parseInt(id, 10);
+
+  json_utils.saveDataToFile(users, path);
+
+  return users[index];
+}
 function remove(id) {
   const users = json_utils.jsonReader(path);
-  index = users.findIndex((user) => user.id === id);
-  users.pop(index);
-  json_utils.saveDataToFile(users, path);
+  const index = findIndex(users, id);
+
+  if (index !== -1) {
+    const removedUser = users.splice(index, 1)[0]; // Remove the user at the specified index
+    json_utils.saveDataToFile(users, path);
+    return removedUser;
+  } else {
+    throw new Error("User not found");
+  }
 }
+
 
 function getAll() {
   return json_utils.jsonReader(path);
 }
 
 function getById(id) {
-  var users = json_utils.jsonReader(path);
-  index = users.findIndex((user) => user.id === id);
+  const users = json_utils.jsonReader(path);
+  index = findIndex(users, id);
 
   return users[index];
 }
