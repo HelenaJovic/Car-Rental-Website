@@ -12,6 +12,7 @@
 
 <script>
 import axios from "axios";
+import { eventBus } from "../main.js";
 
 export default {
   data() {
@@ -33,14 +34,14 @@ export default {
           const token = data.token;
 
           localStorage.setItem("token", token);
-          this.$router.push("/");
+          eventBus.$emit("rerenderNavbar");
         });
     }
   }
 };
 </script>
 
-<style>
+<style scoped>
 .login-form {
   display: flex;
   flex-direction: column;
