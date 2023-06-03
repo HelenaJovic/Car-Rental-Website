@@ -35,4 +35,11 @@ function getById(id) {
   return users[index];
 }
 
-module.exports = { create, update, remove, getAll, getById };
+function getByUsername(username) {
+  var users = json_utils.jsonReader(path);
+  const user = users.find((user) => user.username === username);
+
+  return user;
+}
+
+module.exports = { create, update, remove, getAll, getById, getByUsername };

@@ -47,5 +47,15 @@
             "discount": 0.2,
             "points": 15
         }
+    },
+    {
+        "username": "ancica",
+        "password": "aaaa",
+        "name": "ana",
+        "surname": "bos",
+        "gender": "female",
+        "birthday": "2023-06-08",
+        "basket": null,
+        "id": 4
     }
 ]

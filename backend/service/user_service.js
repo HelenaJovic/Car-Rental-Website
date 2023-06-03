@@ -20,4 +20,8 @@ function update(id, updatedUser) {
   userRepo.update(id, updatedUser);
 }
 
-module.exports = { create, remove, getAll, getById, update };
+function getByUsername(username) {
+  return userRepo.getByUsername(username);
+}
+
+module.exports = { create, remove, getAll, getById, update, getByUsername };
