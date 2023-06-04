@@ -1,84 +1,50 @@
 [
     {
-        "id": 1,
-        "username": "Aca",
+        "username": "ancica1",
         "password": "123",
-        "name": "Aleksandar",
-        "surname": "Nikic",
-        "gender": "male",
-        "birthday": "2001-11-17T23:00:00.000Z",
-        "role": "buyer",
-        "pastRentals": null,
-        "basket": null,
-        "rentalObject": null,
-        "points": 100,
-        "buyerType": {
-            "id": 1,
-            "name": "Zlatni",
-            "discount": 0.2,
-            "points": 15
-        }
-    },
-    {
-        "username": "ana",
-        "password": "123",
+        "new_password": "123",
         "name": "Ana",
         "surname": "Boskovic",
         "gender": "female",
-        "birthday": "2023-06-30",
-        "id": 2
+        "birthday": "2023-03-23",
+        "basket": null,
+        "role": "buyer",
+        "pastRentals": null,
+        "rentalObject": null,
+        "points": null,
+        "buyerType": null,
+        "id": 1
     },
     {
-        "id": 3
-    },
-    {
-        "username": "ancica",
-        "password": "aaaa",
-        "name": "ana",
-        "surname": "bos",
+        "username": "helenica",
+        "password": "122",
+        "new_password": "122",
+        "name": "Helena",
+        "surname": "Jovic",
         "gender": "female",
         "birthday": "2023-06-08",
         "basket": null,
-        "id": 4
+        "role": "buyer",
+        "pastRentals": null,
+        "rentalObject": null,
+        "points": null,
+        "buyerType": null,
+        "id": 2
     },
     {
-        "username": "pera",
-        "password": "123",
+        "username": "dzoni",
+        "password": "333",
+        "new_password": "333",
         "name": "Nikola",
         "surname": "Kolarov",
-        "gender": "other",
-        "birthday": "2023-06-30",
-        "basket": null,
-        "id": 5
-    },
-    {
-        "username": "pp",
-        "password": "123",
-        "name": "nweq",
-        "surname": "qwlkje",
         "gender": "male",
-        "birthday": "2023-06-30",
+        "birthday": "2023-06-06",
         "basket": null,
-        "id": 6
-    },
-    {
-        "username": "asd",
-        "password": "qwe",
-        "name": "qweq",
-        "surname": "ewqf",
-        "gender": "male",
-        "birthday": "2023-06-30",
-        "basket": null,
-        "id": 7
-    },
-    {
-        "username": "ancica",
-        "password": "1234",
-        "name": "Anoka",
-        "surname": "Boskovic",
-        "gender": "female",
-        "birthday": "2023-05-31",
-        "basket": null,
-        "id": 8
+        "role": "buyer",
+        "pastRentals": null,
+        "rentalObject": null,
+        "points": null,
+        "buyerType": null,
+        "id": 3
     }
 ]

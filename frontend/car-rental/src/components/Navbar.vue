@@ -1,7 +1,8 @@
 <template>
   <nav class="navbar">
     <ul class="navbar-nav">
-      <li class="nav-item">
+      <router-link to="/" class="nav-link">Car Rental</router-link>
+      <li class="nav-item nav-item-left">
         <router-link to="/login" v-if="!isLoggedIn" class="nav-link"
           >Login</router-link
         >
@@ -88,5 +89,9 @@ export default {
 
 .nav-link:hover {
   color: #007bff;
+}
+
+.nav-item-left {
+  margin-right: auto;
 }
 </style>

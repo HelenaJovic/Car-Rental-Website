@@ -1,75 +1,54 @@
 [
-    {
-        "name": "AcinaKola",
-        "vehicles": [
-            "BMW",
-            "Porsche",
-            "RR"
-        ],
-        "workHours": "8",
-        "status": true,
-        "location": "Novi Sad",
-        "grade": "4.5",
-        "path": "../assets/images/aaaa.png",
-        "id": 1
-    },
-    
-    {
-        "name": "SrdinaKola",
-        "vehicles": [
-            "BMW",
-            "Porsche",
-            "RR"
-        ],
-        "workHours": "8",
-        "status": false,
-        "location": "Beograd",
-        "grade": "3.8",
-        "path": "../assets/images/aaaa.png",
-        "id": 2
-    },
-    
-    {
-        "name": "LeninaKola",
-        "vehicles": [
-            "BMW",
-            "Porsche",
-            "RR"
-        ],
-        "workHours": "8",
-        "status": true,
-        "location": "Novi Sad",
-        "grade": "5",
-        "imagePath": "../assets/images/aaaa.png",
-        "id": 3
-    },
-    {
-        "name": "Nis-autoK",
-        "vehicles": [
-            "BMW",
-            "Porsche",
-            "RR"
-        ],
-        "workHours": "10",
-        "status": false,
-        "location": "Nis",
-        "grade": "4.7",
-        "imagePath": "../assets/images/aaaa.png",
-        "id": 4
-    },
-    {
-        "name": "Mazga",
-        "vehicles": [
-            "BMW",
-            "Porsche",
-            "RR"
-        ],
-        "workHours": "12",
-        "status": true,
-        "location": "Zrenjanin",
-        "grade": "3",
-        "imagePath": "../assets/images/aaaa.png",
-        "id": 5
-    }
+  {
+    "name": "Marko Rental",
+    "vehicles": ["BMW", "Porsche", "RR"],
+    "workHours": "8",
+    "status": true,
+    "location": "Novi Sad",
+    "grade": "4.5",
+    "imagePath": "/static/rental.jpg",
+    "id": 1
+  },
 
+  {
+    "name": "Rent a car Suzuki",
+    "vehicles": ["BMW", "Porsche", "RR"],
+    "workHours": "8",
+    "status": false,
+    "location": "Beograd",
+    "grade": "3.8",
+    "imagePath": "/static/rental2.jpg",
+    "id": 2
+  },
+
+  {
+    "name": "Braca Bajic",
+    "vehicles": ["BMW", "Porsche", "RR"],
+    "workHours": "8",
+    "status": true,
+    "location": "Novi Sad",
+    "grade": "5",
+    "imagePath": "/static/rental3.jpg",
+    "id": 3
+  },
+  {
+    "name": "Nis-autoK",
+    "vehicles": ["BMW", "Porsche", "RR"],
+    "workHours": "10",
+    "status": false,
+    "location": "Nis",
+    "grade": "4.7",
+    "imagePath": "/static/rental4.jpg",
+    "id": 4
+  },
+  {
+    "name": "Mazda",
+    "vehicles": ["BMW", "Porsche", "RR"],
+    "workHours": "12",
+    "status": true,
+    "location": "Zrenjanin",
+    "grade": "3",
+    "imagePath": "/static/rental5.jpg",
+    "id": 5
+  }
 ]
