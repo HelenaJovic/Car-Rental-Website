@@ -74,5 +74,23 @@
         "gender": "female",
         "birthday": "2000-11-02",
         "id": 6
+    },
+    {
+        "username": "Nana",
+        "password": "nana123",
+        "name": "NanaA",
+        "surname": "Aleksic",
+        "gender": "female",
+        "birthday": "2023-05-29",
+        "id": 7
+    },
+    {
+        "username": "a",
+        "password": "aaa",
+        "name": "Ana",
+        "surname": "Medic",
+        "gender": "female",
+        "birthday": "2000-11-29",
+        "id": 8
     }
 ]

@@ -58,6 +58,7 @@ export default {
     submitForm() {
       axios.post("http://localhost:8081/users", this.form).then(response => {
         alert("User added successfully");
+       
       });
     }
   }

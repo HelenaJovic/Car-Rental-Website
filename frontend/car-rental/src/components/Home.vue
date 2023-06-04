@@ -2,7 +2,7 @@
   <div class="rent-a-car-container">
     <h1>Rent a car</h1>
     <div class="rent-a-car-list">
-      <RentACarCard v-for="car in cars" :key="car.id" :car="car" />    
+      <RentACarCard v-for="car in cars" :key="car.id" :car="car" />
     </div>
   </div>
 </template>
@@ -11,6 +11,7 @@
 import RentACarCard from './RentACarCard.vue';
 import 'regenerator-runtime/runtime';
 import axios from 'axios';
+
 export default {
   components: {
     RentACarCard,
@@ -21,7 +22,6 @@ export default {
   data() {
     return {
       cars: []
-      
     };
   },
   methods: {
@@ -34,8 +34,8 @@ export default {
         console.error(error);
       }
     },
+    
   }
-  
 };
 </script>
 
@@ -47,23 +47,28 @@ export default {
   flex-direction: column;
   align-items: center;
   overflow: hidden;
+  background-color: #030112;
 }
 
 .rent-a-car-container h1 {
-  color: wheat;
+ 
+  font-size: 2rem;
+  margin-bottom: 2rem;
 }
 
 .rent-a-car-list {
   padding: 2rem;
-  border: 1px black solid;
+  border: 1px solid #e0e0e0;
   height: 90%;
   width: 90%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 20px;
-  min-height: 90%;
   overflow-y: auto;
   scrollbar-width: thin;
-  overflow: hidden;
+  background-image: url(../assets/images/auto.jpg);
+  background-size: cover;
+  background-position: center;
+  
 }
 </style>

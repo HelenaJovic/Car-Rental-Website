@@ -23,8 +23,8 @@
         ],
         "workHours": "8",
         "status": false,
-        "location": "Novi Sad",
-        "grade": "4.5",
+        "location": "Beograd",
+        "grade": "3.8",
         "path": "../assets/images/aaaa.png",
         "id": 2
     },
@@ -39,9 +39,37 @@
         "workHours": "8",
         "status": true,
         "location": "Novi Sad",
-        "grade": "4.5",
-        "path": "../assets/images/aaaa.png",
+        "grade": "5",
+        "imagePath": "../assets/images/aaaa.png",
         "id": 3
+    },
+    {
+        "name": "Nis-autoK",
+        "vehicles": [
+            "BMW",
+            "Porsche",
+            "RR"
+        ],
+        "workHours": "10",
+        "status": false,
+        "location": "Nis",
+        "grade": "4.7",
+        "imagePath": "../assets/images/aaaa.png",
+        "id": 4
+    },
+    {
+        "name": "Mazga",
+        "vehicles": [
+            "BMW",
+            "Porsche",
+            "RR"
+        ],
+        "workHours": "12",
+        "status": true,
+        "location": "Zrenjanin",
+        "grade": "3",
+        "imagePath": "../assets/images/aaaa.png",
+        "id": 5
     }
 
 ]

@@ -1,5 +1,5 @@
 class RentalObject {
-  constructor(id, name, workHours, status, location, logo, grade,path) {
+  constructor(id, name, workHours, status, location, logo, grade,imagePath) {
     this.id = id;
     this.name = name;
     this.vehicles = []; // Initialize vehicles as an empty list
@@ -8,7 +8,7 @@ class RentalObject {
     this.location = location;
     this.logo = logo;
     this.grade = grade;
-    this.path = path;
+    this.imagePath = imagePath;
   }
 }
 
