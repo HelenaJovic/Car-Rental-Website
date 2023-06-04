@@ -32,7 +32,9 @@
         <input type="date" id="birthday" v-model="form.birthday" />
       </div>
       <div class="form-group">
-        <button type="submit" v-on:click="submitForm()">Register</button>
+        <button type="submit" v-on:click.prevent="submitForm()">
+          Register
+        </button>
       </div>
     </form>
   </div>
@@ -50,7 +52,8 @@ export default {
         name: "",
         surname: "",
         gender: "",
-        birthday: ""
+        birthday: "",
+        basket: null
       }
     };
   },
@@ -59,6 +62,9 @@ export default {
       axios.post("http://localhost:8081/users", this.form).then(response => {
         alert("User added successfully");
        
+
+        window.alert("User added successfully");
+        this.$router.push("/");
       });
     }
   }

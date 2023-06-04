@@ -1,12 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const userService = require("../service/user_service");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
+const secretKey = process.env.SECRET_KEY;
 
 router.use(express.json());
 
 router.get("/", (req, res) => {
   res.json(userService.getAll());
-
 });
 
 router.post("/", (req, res) => {
@@ -21,18 +24,14 @@ router.post("/", (req, res) => {
 });
 
 router.put("/:id", (req, res) => {
-
-
-
   const userId = req.params.id;
-  const updatedData = req.body; 
+  const updatedData = req.body;
   const updatedUser = userService.update(userId, updatedData);
 
   if (!updatedUser) {
     return res.status(404).json({ error: "User not found" });
   }
 
-  
   res.json(updatedUser);
 });
 
@@ -54,7 +53,6 @@ router.delete("/:id", (req, res) => {
   }
 });
 
-
 router.get("/:id", (req, res) => {
   const id = parseInt(req.params.id, 10);
 
@@ -64,6 +62,23 @@ router.get("/:id", (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     res.status(404).json({ error: "User not found" });
+  }
+});
+
+router.post("/login", (req, res) => {
+  const { username, password } = req.body;
+
+  var user = userService.getByUsername(username);
+
+  if (user && user.password == password) {
+    const token = jwt.sign(
+      { username: user.username, exp: Math.floor(Date.now() / 1000) + 60 * 60 },
+      secretKey
+    );
+
+    return res.status(200).json({ token });
+  } else {
+    return res.status(401).json({ error: "Invalid username or password" });
   }
 });
 
