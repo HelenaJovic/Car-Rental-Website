@@ -1,49 +1,56 @@
 <template>
-  <div class="register-form">
-    <h2>Create an Account</h2>
-    <form>
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" v-model="form.username" />
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model="form.password" />
-      </div>
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" v-model="form.name" />
-      </div>
-      <div class="form-group">
-        <label for="surname">Surname</label>
-        <input type="text" id="surname" v-model="form.surname" />
-      </div>
-      <div class="form-group">
-        <label for="gender">Gender</label>
-        <select id="gender" v-model="form.gender">
-          <option value="">Select Gender</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="birthday">Birthday</label>
-        <input type="date" id="birthday" v-model="form.birthday" />
-      </div>
-      <div class="form-group">
-        <button type="submit" v-on:click.prevent="submitForm()">
-          Register
-        </button>
-      </div>
-    </form>
+  <div>
+    <navBar></navBar>
+    <div class="register-form">
+      <h2>Create an Account</h2>
+      <form>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" v-model="form.username" />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" v-model="form.password" />
+        </div>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" v-model="form.name" />
+        </div>
+        <div class="form-group">
+          <label for="surname">Surname</label>
+          <input type="text" id="surname" v-model="form.surname" />
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select id="gender" v-model="form.gender">
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="birthday">Birthday</label>
+          <input type="date" id="birthday" v-model="form.birthday" />
+        </div>
+        <div class="form-group">
+          <button type="submit" v-on:click.prevent="submitForm()">
+            Register
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import Navbar from "./Navbar.vue";
 
 export default {
+  components: {
+    navBar: Navbar
+  },
   data() {
     return {
       form: {
@@ -60,10 +67,7 @@ export default {
   methods: {
     submitForm() {
       axios.post("http://localhost:8081/users", this.form).then(response => {
-        alert("User added successfully");
-       
-
-        window.alert("User added successfully");
+        this.$toastr.s("Successfully registered!");
         this.$router.push("/");
       });
     }

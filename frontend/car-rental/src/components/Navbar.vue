@@ -12,7 +12,7 @@
         >
       </li>
       <li class="nav-item">
-        <router-link to="/updateUser" v-if="!isLoggedIn" class="nav-link"
+        <router-link to="/updateUser" v-if="isLoggedIn" class="nav-link"
           >Update</router-link
         >
       </li>
@@ -23,11 +23,6 @@
           v-on:click.native="LogOut()"
           class="nav-link"
           >Log Out</router-link
-        >
-      </li>
-      <li class="nav-item">
-        <router-link to="/display" v-if="isLoggedIn" class="nav-link"
-          >Your Profile</router-link
         >
       </li>
     </ul>
@@ -41,18 +36,17 @@ import { isLoggedIn } from "../auth/auth-service";
 export default {
   data() {
     return {
-      isLoggedIn: false,
-      counter: 0
+      isLoggedIn: false
     };
   },
 
   mounted() {
     eventBus.$on("rerenderNavbar", () => {
       this.$forceUpdate();
+      this.$toastr.s("Successfully logged in!");
     });
 
     this.isLoggedIn = isLoggedIn();
-    this.$router.push("/");
   },
 
   destroyed() {
