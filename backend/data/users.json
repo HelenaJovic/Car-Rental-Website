@@ -1,0 +1,50 @@
+[
+    {
+        "username": "ancica1",
+        "password": "123",
+        "new_password": "123",
+        "name": "Ana",
+        "surname": "Boskovic",
+        "gender": "female",
+        "birthday": "2023-03-23",
+        "basket": null,
+        "role": "buyer",
+        "pastRentals": null,
+        "rentalObject": null,
+        "points": null,
+        "buyerType": null,
+        "id": 1
+    },
+    {
+        "username": "helenica",
+        "password": "122",
+        "new_password": "122",
+        "name": "Helena",
+        "surname": "Jovic",
+        "gender": "female",
+        "birthday": "2023-06-08",
+        "basket": null,
+        "role": "buyer",
+        "pastRentals": null,
+        "rentalObject": null,
+        "points": null,
+        "buyerType": null,
+        "id": 2
+    },
+    {
+        "username": "dzoni",
+        "password": "333",
+        "new_password": "333",
+        "name": "Nikola",
+        "surname": "Kolarov",
+        "gender": "male",
+        "birthday": "2023-06-06",
+        "basket": null,
+        "role": "buyer",
+        "pastRentals": null,
+        "rentalObject": null,
+        "points": null,
+        "buyerType": null,
+        "id": 3
+    }
+]

@@ -1,4 +1,4 @@
-export const OrderStatus = {
+const OrderStatus = {
   InProgress: "InProgress",
   Allowed: "Allowed",
   Received: "Received",
@@ -6,3 +6,5 @@ export const OrderStatus = {
   Rejected: "Rejected",
   Canceled: "Canceled",
 };
+
+module.exports = OrderStatus;

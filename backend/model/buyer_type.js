@@ -1,4 +1,4 @@
-export class BuyerType {
+class BuyerType {
   constructor(id, name, discount, points) {
     this.id = id;
     this.name = name;
@@ -6,3 +6,5 @@ export class BuyerType {
     this.points = points;
   }
 }
+
+module.exports = BuyerType;

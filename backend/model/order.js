@@ -1,4 +1,4 @@
-export class Order {
+class Order {
   constructor(
     id,
     orderId,
@@ -21,3 +21,5 @@ export class Order {
     this.orderStatus = orderStatus;
   }
 }
+
+module.exports = Order;

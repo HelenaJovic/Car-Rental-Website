@@ -1,4 +1,4 @@
-export class Comment {
+class Comment {
   constructor(id, buyer, rentalObject, body, grade) {
     this.id = id;
     this.buyer = buyer;
@@ -7,3 +7,5 @@ export class Comment {
     this.grade = grade;
   }
 }
+
+module.exports = Comment;
