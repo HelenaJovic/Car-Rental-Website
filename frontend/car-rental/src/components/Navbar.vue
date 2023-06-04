@@ -25,6 +25,11 @@
           >Log Out</router-link
         >
       </li>
+      <li class="nav-item">
+        <router-link to="/display" v-if="isLoggedIn" class="nav-link"
+          >Your Profile</router-link
+        >
+      </li>
     </ul>
   </nav>
 </template>
@@ -36,14 +41,18 @@ import { isLoggedIn } from "../auth/auth-service";
 export default {
   data() {
     return {
-      isLoggedIn: false
+      isLoggedIn: false,
+      counter: 0
     };
   },
 
-  created() {
-    eventBus.$on("rerenderNavbar", this.$forceUpdate());
-    this.$router.push("/");
+  mounted() {
+    eventBus.$on("rerenderNavbar", () => {
+      this.$forceUpdate();
+    });
+
     this.isLoggedIn = isLoggedIn();
+    this.$router.push("/");
   },
 
   destroyed() {

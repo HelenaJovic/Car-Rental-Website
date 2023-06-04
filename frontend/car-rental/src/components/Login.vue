@@ -32,9 +32,11 @@ export default {
         .then(response => {
           const data = response.data;
           const token = data.token;
-
           localStorage.setItem("token", token);
           eventBus.$emit("rerenderNavbar");
+        })
+        .catch(err => {
+          this.$toastr.e("Wrong username or password!");
         });
     }
   }

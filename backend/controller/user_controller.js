@@ -15,6 +15,9 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   const user = req.body;
 
+  if (userService.getByUsername(user.username))
+    res.status(409).json({ error: "Username already exists!" });
+
   try {
     userService.create(user);
     res.status(200).json({ message: "User created successfully" });
@@ -72,7 +75,7 @@ router.post("/login", (req, res) => {
 
   if (user && user.password == password) {
     const token = jwt.sign(
-      { username: user.username, exp: Math.floor(Date.now() / 1000) + 60 * 60 },
+      { id: user.id, exp: Math.floor(Date.now() / 1000) + 60 * 60 },
       secretKey
     );
 
