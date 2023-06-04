@@ -2,12 +2,12 @@
   <div class="rent-a-car-card">
     <div class="img-div">
       <div class="row-div">
-        <img src="../assets/images/aaaa.png" class="car-img" />
+        <img :src="car.imagePath" class="car-img" />
         <h3 class="name">{{ car.name }}</h3>
       </div>
       <div>
         <h4 class="location">Location:📍 {{ car.location }}</h4>
-      </div> 
+      </div>
     </div>
     <div class="bottom-div">
       <h4 class="grade">Grade⭐: {{ car.grade }}</h4>
@@ -17,12 +17,8 @@
 
 <script>
 export default {
-  name: 'RentACarCard',
-  props: ['car']
- 
-
-
-
+  name: "RentACarCard",
+  props: ["car"]
 };
 </script>
 <style scoped>
@@ -79,8 +75,7 @@ h3 {
 .name {
   font-size: 1.8rem;
   color: #ba1c07; /* Custom color for the name */
-  font-family: 'Arial', sans-serif; /* Custom font family for the name */
-  
+  font-family: "Arial", sans-serif; /* Custom font family for the name */
 }
 
 .location {

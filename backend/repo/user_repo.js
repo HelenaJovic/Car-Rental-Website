@@ -10,16 +10,16 @@ function create(user) {
 }
 
 function findIndex(users, id) {
-  return users.findIndex(user => user.id === parseInt(id));
+  return users.findIndex((user) => user.id === parseInt(id));
 }
-
 
 function update(id, updatedUser) {
   const users = json_utils.jsonReader(path);
-  console.log(users)
+
   index = findIndex(users, id);
-  console.log(index);
+
   users[index] = updatedUser;
+
   users[index].id = parseInt(id, 10);
 
   json_utils.saveDataToFile(users, path);
@@ -31,14 +31,13 @@ function remove(id) {
   const index = findIndex(users, id);
 
   if (index !== -1) {
-    const removedUser = users.splice(index, 1)[0]; // Remove the user at the specified index
+    const removedUser = users.splice(index, 1)[0];
     json_utils.saveDataToFile(users, path);
     return removedUser;
   } else {
     throw new Error("User not found");
   }
 }
-
 
 function getAll() {
   return json_utils.jsonReader(path);
