@@ -3,9 +3,9 @@
         "id": 1,
         "username": "Aca",
         "password": "123",
-        "name": "Nikola",
-        "surname": "Kolarov",
-        "gender": "F",
+        "name": "Aleksandar",
+        "surname": "Nikic",
+        "gender": "male",
         "birthday": "2001-11-17T23:00:00.000Z",
         "role": "buyer",
         "pastRentals": null,
@@ -22,8 +22,8 @@
     {
         "username": "ana",
         "password": "123",
-        "name": "ana",
-        "surname": "boskovic",
+        "name": "Ana",
+        "surname": "Boskovic",
         "gender": "female",
         "birthday": "2023-06-30",
         "id": 2
