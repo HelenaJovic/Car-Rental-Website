@@ -13,7 +13,7 @@
       </li>
       <li class="nav-item">
         <router-link to="/updateUser" v-if="isLoggedIn" class="nav-link"
-          >Update</router-link
+          >Your profile</router-link
         >
       </li>
       <li class="nav-item">

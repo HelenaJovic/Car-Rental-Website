@@ -2,7 +2,7 @@
   <div>
     <navBar></navBar>
     <div class="register-form">
-      <h2>Update Account</h2>
+      <h2>Your profile</h2>
       <form>
         <div class="form-group">
           <label for="username">Username</label>

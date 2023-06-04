@@ -60,7 +60,8 @@ export default {
         surname: "",
         gender: "",
         birthday: "",
-        basket: null
+        basket: null,
+        role: "buyer"
       }
     };
   },
