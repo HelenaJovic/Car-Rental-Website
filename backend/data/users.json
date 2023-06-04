@@ -80,5 +80,15 @@
         "birthday": "2023-05-31",
         "basket": null,
         "id": 8
+    },
+    {
+        "username": "nikolica",
+        "password": "123",
+        "name": "Nikola",
+        "surname": "Medic",
+        "gender": "male",
+        "birthday": "2023-06-21",
+        "basket": null,
+        "id": 9
     }
 ]
