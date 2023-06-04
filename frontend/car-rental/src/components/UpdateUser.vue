@@ -1,6 +1,6 @@
 <template>
     <div class="register-form">
-      <h2>Create an Account</h2>
+      <h2>Update Account</h2>
       <form>
         <div class="form-group">
           <label for="username">Username</label>
@@ -32,7 +32,7 @@
           <input type="date" id="birthday" v-model="form.birthday" />
         </div>
         <div class="form-group">
-          <button type="submit" v-on:click="submitForm()">Register</button>
+            <button type="button" v-on:click="submitForm()">Update</button>
         </div>
       </form>
     </div>
@@ -50,20 +50,43 @@
           name: "",
           surname: "",
           gender: "",
-          birthday: ""
+          birthday: "",
+          userId: null
         }
       };
     },
     methods: {
-      submitForm() {
-        axios.post("http://localhost:8081/users", this.form).then(response => {
-          alert("User added successfully");
-          response=>{ReadableStreamDefaultController.push('lov')}
+    submitForm() {
+      const userId = this.userId;
+      axios
+        .put("http://localhost:8081/users/${userId}", this.form)
+        .then(response => {
+          window.alert("User updated successfully");
+          this.$router.push("/");
+        })
+        .catch(error => {
+          console.log(this.form);
+          console.error(error);
+          window.alert("An error occurred while updating the user");
         });
-      }
+    },
+    getUserData() {
+      axios
+        .get("http://localhost:8081/users/1") 
+        .then(response => {
+          this.form = response.data; 
+        })
+        .catch(error => {
+          console.error(error);
+          window.alert("An error occurred while fetching user data");
+        });
     }
-  };
-  </script>
+  },
+  mounted() {
+    this.getUserData(); 
+  }
+};
+</script>
   
   <style scoped>
   .register-form {

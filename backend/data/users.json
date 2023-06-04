@@ -5,8 +5,8 @@
         "password": "123",
         "name": "Nikola",
         "surname": "Kolarov",
-        "gender": "F",
-        "birthday": "2001-11-17T23:00:00.000Z",
+        "gender": "male",
+        "birthday": "2003-06-30",
         "role": "buyer",
         "pastRentals": null,
         "basket": null,
@@ -79,7 +79,6 @@
         "id": 6
     },
     {
-
         "username": "Nana",
         "password": "nana123",
         "name": "NanaA",
@@ -96,5 +95,15 @@
         "gender": "female",
         "birthday": "2000-11-29",
         "id": 8
+    },
+    {
+        "username": "helenica",
+        "password": "helena123",
+        "name": "Helena",
+        "surname": "Jovic",
+        "gender": "female",
+        "birthday": "2000-11-29",
+        "basket": null,
+        "id": 9
     }
 ]

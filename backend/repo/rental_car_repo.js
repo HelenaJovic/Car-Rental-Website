@@ -18,18 +18,24 @@ function findIndex(cars_rental, id) {
 
 function update(id, updatedCar) {
   const cars_rental = json_utils.jsonReader(path);
-  //console.log(cars_rental)
-  index = findIndex(cars_rental, id);
- // console.log(index);
- console.log(updatedCar)
-  cars_rental[index] = updatedCar;
-  console.log(cars_rental[index])
-  cars_rental[index].id = parseInt(id, 10);
+  const index = findIndex(cars_rental, id);
+  
+  if (index !== -1) {
+    for (let prop in updatedCar) {
+      if (cars_rental[index].hasOwnProperty(prop)) {
+        cars_rental[index][prop] = updatedCar[prop];
+      }
+    }
 
-  json_utils.saveDataToFile(cars_rental, path);
+    cars_rental[index].id = parseInt(id, 10);
+    json_utils.saveDataToFile(cars_rental, path);
 
-  return cars_rental[index];
+    return cars_rental[index];
+  }
+
+  return null; 
 }
+
 
 function remove(id) {
   const cars_rental = json_utils.jsonReader(path);
