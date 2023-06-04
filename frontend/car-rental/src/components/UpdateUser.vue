@@ -1,4 +1,6 @@
 <template>
+  <div>
+    <navBar></navBar>
     <div class="register-form">
       <h2>Update Account</h2>
       <form>
@@ -32,34 +34,41 @@
           <input type="date" id="birthday" v-model="form.birthday" />
         </div>
         <div class="form-group">
-            <button type="button" v-on:click="submitForm()">Update</button>
+          <button type="button" v-on:click="submitForm()">Update</button>
         </div>
       </form>
     </div>
-  </template>
-  
-  <script>
-  import axios from "axios";
-  
-  export default {
-    data() {
-      return {
-        form: {
-          username: "",
-          password: "",
-          name: "",
-          surname: "",
-          gender: "",
-          birthday: "",
-          userId: null
-        }
-      };
-    },
-    methods: {
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+import jwt_decode from "jwt-decode";
+import Navbar from "./Navbar.vue";
+
+export default {
+  components: {
+    navBar: Navbar
+  },
+  data() {
+    return {
+      form: {
+        username: "",
+        password: "",
+        name: "",
+        surname: "",
+        gender: "",
+        birthday: ""
+      }
+    };
+  },
+
+  methods: {
     submitForm() {
-      const userId = this.userId;
+      const token = localStorage.getItem("token");
+      const decoded = jwt_decode(token);
       axios
-        .put("http://localhost:8081/users/${userId}", this.form)
+        .put(`http://localhost:8081/users/${decoded.id}`, this.form)
         .then(response => {
           window.alert("User updated successfully");
           this.$router.push("/");
@@ -71,10 +80,12 @@
         });
     },
     getUserData() {
+      const token = localStorage.getItem("token");
+      const decoded = jwt_decode(token);
       axios
-        .get("http://localhost:8081/users/1") 
+        .get(`http://localhost:8081/users/${decoded.id}`)
         .then(response => {
-          this.form = response.data; 
+          this.form = response.data;
         })
         .catch(error => {
           console.error(error);
@@ -83,57 +94,56 @@
     }
   },
   mounted() {
-    this.getUserData(); 
+    this.getUserData();
   }
 };
 </script>
-  
-  <style scoped>
-  .register-form {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f2f2f2;
-    border-radius: 5px;
-  }
-  
-  .register-form h2 {
-    text-align: center;
-  }
-  
-  .register-form .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .register-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .register-form input[type="text"],
-  .register-form input[type="password"],
-  .register-form select {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  .register-form button {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-  }
-  
-  .register-form button:hover {
-    background-color: #45a049;
-    cursor: pointer;
-  }
-  </style>
-  
+
+<style scoped>
+.register-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+}
+
+.register-form h2 {
+  text-align: center;
+}
+
+.register-form .form-group {
+  margin-bottom: 20px;
+}
+
+.register-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.register-form input[type="text"],
+.register-form input[type="password"],
+.register-form select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.register-form button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+}
+
+.register-form button:hover {
+  background-color: #45a049;
+  cursor: pointer;
+}
+</style>

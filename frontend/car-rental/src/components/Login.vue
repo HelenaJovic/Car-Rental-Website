@@ -1,20 +1,27 @@
 <template>
-  <form class="login-form">
-    <label for="username">Username</label>
-    <input type="text" id="username" v-model="username" required />
+  <div>
+    <navBar></navBar>
+    <form class="login-form">
+      <label for="username">Username</label>
+      <input type="text" id="username" v-model="username" required />
 
-    <label for="password">Password</label>
-    <input type="password" id="password" v-model="password" required />
+      <label for="password">Password</label>
+      <input type="password" id="password" v-model="password" required />
 
-    <button type="submit" v-on:click="LogIn()">Login</button>
-  </form>
+      <button type="submit" v-on:click.prevent="LogIn()">Login</button>
+    </form>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
 import { eventBus } from "../main.js";
+import Navbar from "./Navbar.vue";
 
 export default {
+  components: {
+    navBar: Navbar
+  },
   data() {
     return {
       username: "",
@@ -34,6 +41,7 @@ export default {
           const token = data.token;
           localStorage.setItem("token", token);
           eventBus.$emit("rerenderNavbar");
+          this.$router.push("/");
         })
         .catch(err => {
           this.$toastr.e("Wrong username or password!");

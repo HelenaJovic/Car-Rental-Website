@@ -1,23 +1,28 @@
 <template>
-  <div class="rent-a-car-container">
-    <h1>Rent a car</h1>
-    <div class="rent-a-car-list">
-      <RentACarCard v-for="car in cars" :key="car.id" :car="car" />
+  <div>
+    <navBar></navBar>
+    <div class="rent-a-car-container">
+      <h1>Rent a car</h1>
+      <div class="rent-a-car-list">
+        <RentACarCard v-for="car in cars" :key="car.id" :car="car" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import RentACarCard from './RentACarCard.vue';
-import 'regenerator-runtime/runtime';
-import axios from 'axios';
+import RentACarCard from "./RentACarCard.vue";
+import "regenerator-runtime/runtime";
+import axios from "axios";
+import Navbar from "./Navbar.vue";
 
 export default {
   components: {
     RentACarCard,
+    navBar: Navbar
   },
   mounted() {
-      this.getData();
+    this.getData();
   },
   data() {
     return {
@@ -27,14 +32,15 @@ export default {
   methods: {
     async getData() {
       try {
-        const response = await axios.get('http://localhost:8081/cars/sortedCars');
+        const response = await axios.get(
+          "http://localhost:8081/cars/sortedCars"
+        );
         this.cars = response.data;
-        console.log(this.cars)
+        console.log(this.cars);
       } catch (error) {
         console.error(error);
       }
-    },
-    
+    }
   }
 };
 </script>
@@ -51,7 +57,6 @@ export default {
 }
 
 .rent-a-car-container h1 {
- 
   font-size: 2rem;
   margin-bottom: 2rem;
 }
@@ -69,6 +74,5 @@ export default {
   background-image: url(../assets/images/auto.jpg);
   background-size: cover;
   background-position: center;
-  
 }
 </style>
