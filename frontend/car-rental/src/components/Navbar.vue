@@ -65,7 +65,7 @@ export default {
 
 <style>
 .navbar {
-  background-color: #f8f8f8;
+  background-color: lightslategray;
   padding: 16px;
 }
 
@@ -82,7 +82,7 @@ export default {
 }
 
 .nav-link {
-  color: #333;
+  color: whitesmoke;
   text-decoration: none;
   font-weight: bold;
 }

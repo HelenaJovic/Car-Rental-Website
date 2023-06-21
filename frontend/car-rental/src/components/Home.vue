@@ -12,6 +12,19 @@
           placeholder="Name,Location,Grade,Vehicle Type"
         />
         <p>🔍</p>
+        <div class="combobox-container">
+          <label for="sort-by">Sort By:</label>
+          <select
+            v-model="selectedSortField"
+            id="sort-by"
+            class="custom-select"
+          >
+            <option value="">Select</option>
+            <option value="name">Name</option>
+            <option value="grade">Grade</option>
+            <option value="location">Location</option>
+          </select>
+        </div>
       </div>
 
       <div class="rent-a-car-list">
@@ -38,7 +51,8 @@ export default {
   data() {
     return {
       cars: [],
-      search: ""
+      search: "",
+      selectedSortField: ""
     };
   },
   methods: {
@@ -52,6 +66,21 @@ export default {
       } catch (error) {
         console.error(error);
       }
+    },
+
+    sortByField(cars, field) {
+      cars.sort((car1, car2) => {
+        const field1 = car1[field];
+        const field2 = car2[field];
+
+        if (field1 < field2) {
+          return -1;
+        } else if (field1 > field2) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
     }
   },
 
@@ -59,7 +88,7 @@ export default {
     filterObjects: function() {
       const searchValues = this.search.split(",").map(value => value.trim());
 
-      return this.cars.filter(car => {
+      const filteredCars = this.cars.filter(car => {
         let matchesSearch = true;
 
         for (const searchValue of searchValues) {
@@ -86,6 +115,12 @@ export default {
 
         return matchesSearch;
       });
+
+      if (this.selectedSortField) {
+        this.sortByField(filteredCars, this.selectedSortField);
+      }
+
+      return filteredCars;
     }
   }
 };
@@ -148,5 +183,25 @@ export default {
 .rent-a-car-container > .search-container {
   align-self: flex-start;
   margin-left: 3rem;
+}
+
+.combobox-container {
+  display: flex;
+  align-items: center;
+  margin-left: 39rem;
+}
+
+.combobox-container label {
+  margin-right: 0.5rem;
+  font-size: 1.3rem;
+}
+
+.custom-select {
+  width: 100px;
+  height: 40px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
 }
 </style>
