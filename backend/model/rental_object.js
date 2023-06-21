@@ -1,8 +1,18 @@
 class RentalObject {
-  constructor(id, name, workHours, status, location, logo, grade,imagePath) {
+  constructor(
+    id,
+    name,
+    vehicles,
+    workHours,
+    status,
+    location,
+    logo,
+    grade,
+    imagePath
+  ) {
     this.id = id;
     this.name = name;
-    this.vehicles = []; // Initialize vehicles as an empty list
+    this.vehicles = vehicles;
     this.workHours = workHours;
     this.status = status;
     this.location = location;
@@ -11,6 +21,5 @@ class RentalObject {
     this.imagePath = imagePath;
   }
 }
-
 
 module.exports = RentalObject;

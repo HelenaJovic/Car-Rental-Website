@@ -1,6 +1,6 @@
 [
     {
-        "username": "ancica1",
+        "username": "ancica122",
         "password": "123",
         "new_password": "123",
         "name": "Ana",
@@ -46,5 +46,21 @@
         "points": null,
         "buyerType": null,
         "id": 3
+    },
+    {
+        "username": "niko",
+        "password": "333",
+        "new_password": "333",
+        "name": "Nikica",
+        "surname": "Nikic",
+        "gender": "male",
+        "birthday": "2023-05-29",
+        "basket": null,
+        "role": "buyer",
+        "pastRentals": null,
+        "rentalObject": null,
+        "points": null,
+        "buyerType": null,
+        "id": 4
     }
 ]
