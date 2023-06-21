@@ -4,7 +4,7 @@ class Vehicle {
     brand,
     model,
     price,
-    carType,
+    vehicleType,
     rentalObject,
     transType,
     fuelType,
@@ -19,7 +19,7 @@ class Vehicle {
     this.brand = brand;
     this.model = model;
     this.price = price;
-    this.carType = carType;
+    this.vehicleType = vehicleType;
     this.rentalObject = rentalObject;
     this.transType = transType;
     this.fuelType = fuelType;

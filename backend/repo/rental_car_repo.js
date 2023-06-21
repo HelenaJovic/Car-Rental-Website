@@ -6,20 +6,19 @@ function create(car_rental) {
   const cars_rental = json_utils.jsonReader(path);
   car_rental.id = json_utils.generateNextId(cars_rental);
   console.log(car_rental);
-  console.log("aca konj");
+
   cars_rental.push(car_rental);
   json_utils.saveDataToFile(cars_rental, path);
 }
 
 function findIndex(cars_rental, id) {
-  return cars_rental.findIndex(car_rental => car_rental.id === parseInt(id));
+  return cars_rental.findIndex((car_rental) => car_rental.id === parseInt(id));
 }
-
 
 function update(id, updatedCar) {
   const cars_rental = json_utils.jsonReader(path);
   const index = findIndex(cars_rental, id);
-  
+
   if (index !== -1) {
     for (let prop in updatedCar) {
       if (cars_rental[index].hasOwnProperty(prop)) {
@@ -33,9 +32,8 @@ function update(id, updatedCar) {
     return cars_rental[index];
   }
 
-  return null; 
+  return null;
 }
-
 
 function remove(id) {
   const cars_rental = json_utils.jsonReader(path);
@@ -49,7 +47,6 @@ function remove(id) {
     throw new Error("Car not found");
   }
 }
-
 
 function getAll() {
   return json_utils.jsonReader(path);

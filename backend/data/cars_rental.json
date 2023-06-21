@@ -1,7 +1,58 @@
 [
   {
     "name": "Marko Rental",
-    "vehicles": ["BMW", "Porsche", "RR"],
+    "vehicles": [
+      {
+        "id": 1,
+        "brand": "BMW",
+        "model": "x1",
+        "price": 6000,
+        "vehicleType": "car",
+        "rentalObject": "Marko Rental",
+        "transType": "manual",
+        "fuelType": "diesel",
+        "consumption": "6.6l/100km",
+        "doorsNum": 4,
+        "peopleNum": 5,
+        "description": "",
+        "image": "",
+        "status": false
+      },
+
+      {
+        "id": 3,
+        "brand": "Mercedes",
+        "model": "GLS",
+        "price": 2000,
+        "vehicleType": "car",
+        "rentalObject": "Marko Rental",
+        "transType": "automatic",
+        "fuelType": "diesel",
+        "consumption": "6.6l/100km",
+        "doorsNum": 4,
+        "peopleNum": 5,
+        "description": "",
+        "image": "",
+        "status": true
+      },
+
+      {
+        "id": 8,
+        "brand": "Audi",
+        "model": "A3",
+        "price": 6000,
+        "vehicleType": "truck",
+        "rentalObject": "Marko Rental",
+        "transType": "manual",
+        "fuelType": "diesel",
+        "consumption": "6.6l/100km",
+        "doorsNum": 4,
+        "peopleNum": 5,
+        "description": "",
+        "image": "",
+        "status": false
+      }
+    ],
     "workHours": "8",
     "status": true,
     "location": "Novi Sad",
@@ -11,8 +62,25 @@
   },
 
   {
-    "name": "Rent a car Suzuki",
-    "vehicles": ["BMW", "Porsche", "RR"],
+    "name": "Suzuki Rental",
+    "vehicles": [
+      {
+        "id": 2,
+        "brand": "BMW",
+        "model": "x1",
+        "price": 6000,
+        "vehicleType": "car",
+        "rentalObject": "Rent a car Suzuki",
+        "transType": "manual",
+        "fuelType": "petrol",
+        "consumption": "6.6l/100km",
+        "doorsNum": 4,
+        "peopleNum": 5,
+        "description": "",
+        "image": "",
+        "status": false
+      }
+    ],
     "workHours": "8",
     "status": false,
     "location": "Beograd",
@@ -23,7 +91,40 @@
 
   {
     "name": "Braca Bajic",
-    "vehicles": ["BMW", "Porsche", "RR"],
+    "vehicles": [
+      {
+        "id": 4,
+        "brand": "Ford",
+        "model": "nn",
+        "price": 4000,
+        "vehicleType": "mobilehome",
+        "rentalObject": "Braca Bajic",
+        "transType": "manual",
+        "fuelType": "petrol",
+        "consumption": "6.6l/100km",
+        "doorsNum": 4,
+        "peopleNum": 5,
+        "description": "",
+        "image": "",
+        "status": false
+      },
+      {
+        "id": 5,
+        "brand": "Mazda",
+        "model": "xr",
+        "price": 8000,
+        "vehicleType": "truck",
+        "rentalObject": "Braca Bajic",
+        "transType": "manual",
+        "fuelType": "electric",
+        "consumption": "6.6l/100km",
+        "doorsNum": 4,
+        "peopleNum": 5,
+        "description": "",
+        "image": "",
+        "status": false
+      }
+    ],
     "workHours": "8",
     "status": true,
     "location": "Novi Sad",
@@ -33,7 +134,24 @@
   },
   {
     "name": "Nis-autoK",
-    "vehicles": ["BMW", "Porsche", "RR"],
+    "vehicles": [
+      {
+        "id": 10,
+        "brand": "Mazda",
+        "model": "xr",
+        "price": 8000,
+        "vehicleType": "truck",
+        "rentalObject": "Nis-autoK",
+        "transType": "manual",
+        "fuelType": "electric",
+        "consumption": "6.6l/100km",
+        "doorsNum": 4,
+        "peopleNum": 5,
+        "description": "",
+        "image": "",
+        "status": false
+      }
+    ],
     "workHours": "10",
     "status": false,
     "location": "Nis",
@@ -43,7 +161,24 @@
   },
   {
     "name": "Mazda",
-    "vehicles": ["BMW", "Porsche", "RR"],
+    "vehicles": [
+      {
+        "id": 7,
+        "brand": "Kamioncic",
+        "model": "xr",
+        "price": 8000,
+        "vehicleType": "mobilehome",
+        "rentalObject": "Mazda",
+        "transType": "manual",
+        "fuelType": "petrol",
+        "consumption": "6.6l/100km",
+        "doorsNum": 4,
+        "peopleNum": 5,
+        "description": "",
+        "image": "",
+        "status": false
+      }
+    ],
     "workHours": "12",
     "status": true,
     "location": "Zrenjanin",
