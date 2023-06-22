@@ -87,6 +87,7 @@ export default {
         .then(response => {
           this.form = response.data;
         })
+
         .catch(error => {
           console.error(error);
           window.alert("An error occurred while fetching user data");

@@ -3,7 +3,9 @@
     <div class="img-div">
       <div class="row-div">
         <img :src="car.imagePath" class="car-img" />
-        <h3 class="name">{{ car.name }}</h3>
+        <router-link v-bind:to="'/singleObject/' + car.id">
+          <h3 class="name">{{ car.name }}</h3>
+        </router-link>
       </div>
       <div>
         <h4 class="location">Location:📍 {{ car.location }}</h4>
