@@ -20,12 +20,12 @@ router.post("/:id", (req, res) => {
   }
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:idV/:idC", (req, res) => {
 
-  const vehicleId = req.params.id;
+  const vehicleId = req.params.idV;
+  const carId=req.params.idC;
   const updatedData = req.body; 
-  console.log(updatedData);
-  const updatedVehicle = vehicleService.update(vehicleId, updatedData);
+  const updatedVehicle = vehicleService.update(vehicleId, updatedData,carId);
 
   if (!updatedVehicle) {
     return res.status(404).json({ error: "vehicle not found" });
@@ -35,15 +35,17 @@ router.put("/:id", (req, res) => {
   res.json(updatedVehicle);
 });
 
-router.delete("/:id", (req, res) => {
-  const id = parseInt(req.params.id, 10);
+router.delete("/:idV/:idC", (req, res) => {
+  const vehicleId = parseInt(req.params.idV, 10);
+  const carId=req.params.idC;
+  console
 
   try {
-    var vehicle = vehicleService.getById(id);
+    var vehicle = vehicleService.getById(vehicleId);
 
     if (vehicle) {
       // Delete the user
-      vehicleService.remove(id);
+      vehicleService.remove(vehicleId,carId);
       res.status(204).end(); // No content
     } else {
       res.status(404).json({ error: "vehicle not found" });

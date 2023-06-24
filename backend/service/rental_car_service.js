@@ -35,6 +35,46 @@ function addNewCar(id,vehicle)
   
 }
 
+function deleteNewCar(id,idCar)
+{
+  const rentalCar = rentalCarRepo.getById(idCar);
+  let index = -1;
+
+  for (let i = 0; i < rentalCar.vehicles.length; i++) {
+    if (rentalCar.vehicles[i].id === id) {
+      index = i;
+      break;
+    }
+  }
+
+  if (index !== -1) {
+    rentalCar.vehicles.splice(index, 1);
+    rentalCarRepo.update(idCar, rentalCar);
+  }
+  
+}
+
+
+function updateNewCar(id, updatedVehicle, idCar) {
+  const rentalCar = rentalCarRepo.getById(idCar);
+  let index = -1;
+
+  for (let i = 0; i < rentalCar.vehicles.length; i++) {
+    if (rentalCar.vehicles[i].id === updatedVehicle.id) {
+      index = i;
+      break;
+    }
+  }
+
+  if (index !== -1) {
+    rentalCar.vehicles[index] = updatedVehicle;
+    rentalCarRepo.update(idCar, rentalCar);
+    update(id, rentalCar, idCar);
+  }
+}
+
+
+
 function getById(id) {
   return rentalCarRepo.getById(id);
 }
@@ -50,5 +90,7 @@ module.exports = {
   getById,
   update,
   getSortedCarsByStatus,
-  addNewCar
+  addNewCar,
+  updateNewCar,
+  deleteNewCar
 };

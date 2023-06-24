@@ -7,7 +7,8 @@ function create(vehicle,id) {
  return savedVehicle;
 }
 
-function remove(id) {
+function remove(id,idCar) {
+  rental_car_service.deleteNewCar(id,idCar);
   return vehicleRepo.remove(id);
 }
 
@@ -20,8 +21,11 @@ function getById(id) {
   return vehicleRepo.getById(id);
 }
 
-function update(id, updatedCar) {
-  return vehicleRepo.update(id, updatedCar);
+function update(id, updatedVehicle,idCar) {
+  const savedVehicle= vehicleRepo.update(id, updatedVehicle);
+  rental_car_service.updateNewCar(id,savedVehicle,idCar);
+  return savedVehicle;
+
 }
 
 module.exports = { create, remove, getAll, getById, update };

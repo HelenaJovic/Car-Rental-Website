@@ -18,22 +18,16 @@ function findIndex(vehicles, id) {
 
 function update(id, updatedVehicle) {
   const vehicles = json_utils.jsonReader(path);
-  const index = findIndex(vehicles, id);
-  
-  if (index !== -1) {
-    for (let prop in updatedVehicle) {
-      if (vehicles[index].hasOwnProperty(prop)) {
-        vehicles[index][prop] = updatedVehicle[prop];
-      }
-    }
 
-    vehicles[index].id = parseInt(id, 10);
-    json_utils.saveDataToFile(vehicles, path);
+  index = findIndex(vehicles, id);
 
-    return vehicles[index];
-  }
+  vehicles[index] = updatedVehicle;
 
-  return null; 
+  vehicles[index].id = parseInt(id, 10);
+
+  json_utils.saveDataToFile(vehicles, path);
+
+  return vehicles[index];
 }
 
 
@@ -42,7 +36,7 @@ function remove(id) {
   const index = findIndex(vehicles, id);
 
   if (index !== -1) {
-    const removedCar = vehicles.splice(index, 1)[0]; // Remove the user at the specified index
+    const removedCar = vehicles.splice(index, 1)[0]; 
     json_utils.saveDataToFile(vehicles, path);
     return removedCar;
   } else {

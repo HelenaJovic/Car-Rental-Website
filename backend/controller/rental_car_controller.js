@@ -17,7 +17,6 @@ router.get("/sortedCars", (req, res) => {
 
 router.post("/", (req, res) => {
   const car = req.body;
-    console.log(car);
   try {
     rentalCarService.create(car);
     res.status(200).json({ message: "Car created successfully" });
@@ -31,7 +30,6 @@ router.put("/:id", (req, res) => {
 
   const carId = req.params.id;
   const updatedData = req.body; 
-  console.log(updatedData);
   const updatedCar = rentalCarService.update(carId, updatedData);
 
   if (!updatedCar) {

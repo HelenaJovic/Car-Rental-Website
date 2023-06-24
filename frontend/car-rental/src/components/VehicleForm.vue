@@ -14,7 +14,12 @@
         <input type="number" id="price" v-model="form.price" required>
   
         <label for="type">Type:</label>
-        <input type="text" id="type" v-model="form.type" required>
+        <select id="fuel" v-model="form.vehicleType" required>
+            <option value="">Select vehicle Type</option>
+            <option value="car">Car</option>
+            <option value="track">Track</option>
+            <option value="mobilehome">Mobile Home</option>
+            </select>
   
         <label for="fuel">Fuel Type:</label>
             <select id="fuel" v-model="form.fuelType" required>
@@ -65,21 +70,36 @@ export default {
         brand: "",
         model: "",
         price: 0,
-        type: "",
+        vehicleType: "",
+        rentalObject: null,
+        transType:"",
         fuelType: "",
-        numDoors: 0,
-        capacity: 0,
+        consumption:"",
+        doorsNum: 0,
+        peopleNum: 0,
+        description: "",
         image: "",
-        description: ""
+        status:"Available"
+
+       
+    
+    
+    
+   
+    
+   
       }
     };
   },
   methods: {
     addVehicleandUpdateRentalCar() {
+      this.form.rentalObject = this.rentalCarId; 
+
       axios
         .post(`http://localhost:8081/vehicles/${this.rentalCarId}`, this.form)
         .then(
           this.$toastr.s("Vehicle successfully added!")
+        
         )
           
          
@@ -103,6 +123,7 @@ export default {
   },
   mounted() {
     this.rentalCarId = this.$route.params.id;
+    
     console.log(this.rentalCarId)
 
   }
