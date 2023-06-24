@@ -1,0 +1,19 @@
+[
+    {
+        
+        "brand": "BMW",
+        "model": "x1",
+        "price": 6000,
+        "vehicleType": "car",
+        "rentalObject": "Marko Rental",
+        "transType": "manual",
+        "fuelType": "diesel",
+        "consumption": "6.6l/100km",
+        "doorsNum": 4,
+        "peopleNum": 5,
+        "description": "",
+        "image": "",
+        "status": false,
+        "id": 1
+    }
+]

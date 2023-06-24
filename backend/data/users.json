@@ -48,13 +48,14 @@
         "id": 3
     },
     {
-        "username": "niko",
-        "password": "333",
-        "new_password": "333",
-        "name": "Nikica",
-        "surname": "Nikic",
-        "gender": "male",
-        "birthday": "2023-05-29",
+
+        "username": "helenica1",
+        "password": "123",
+        "new_password": "123",
+        "name": "Helena",
+        "surname": "Jovic",
+        "gender": "female",
+        "birthday": "2023-07-05",
         "basket": null,
         "role": "buyer",
         "pastRentals": null,

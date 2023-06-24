@@ -5,7 +5,6 @@ const json_utils = require("../utils/json_utils");
 function create(car_rental) {
   const cars_rental = json_utils.jsonReader(path);
   car_rental.id = json_utils.generateNextId(cars_rental);
-  console.log(car_rental);
 
   cars_rental.push(car_rental);
   json_utils.saveDataToFile(cars_rental, path);
