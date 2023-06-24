@@ -1,0 +1,14 @@
+[
+    {
+        "brand": "Tesla",
+        "model": "S Plaid",
+        "price": "1050",
+        "type": "auto",
+        "fuelType": "electric",
+        "numDoors": "2",
+        "capacity": "3",
+        "image": "..",
+        "description": "some des",
+        "id": 1
+    }
+]

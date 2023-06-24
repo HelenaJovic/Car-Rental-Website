@@ -46,5 +46,21 @@
         "points": null,
         "buyerType": null,
         "id": 3
+    },
+    {
+        "username": "helenica1",
+        "password": "123",
+        "new_password": "123",
+        "name": "Helena",
+        "surname": "Jovic",
+        "gender": "female",
+        "birthday": "2023-07-05",
+        "basket": null,
+        "role": "buyer",
+        "pastRentals": null,
+        "rentalObject": null,
+        "points": null,
+        "buyerType": null,
+        "id": 4
     }
 ]
