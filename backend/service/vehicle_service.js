@@ -1,7 +1,10 @@
 const vehicleRepo = require("../repo/vehicle_repo");
+const rental_car_service=require("../service/rental_car_service")
 
-function create(vehicle) {
- return vehicleRepo.create(vehicle);
+function create(vehicle,id) {
+  const savedVehicle = vehicleRepo.create(vehicle)
+  rental_car_service.addNewCar(id,savedVehicle);
+ return savedVehicle;
 }
 
 function remove(id) {

@@ -1,189 +1,232 @@
 [
-  {
-    "name": "Marko Rental",
-    "vehicles": [
-      {
-        "id": 1,
-        "brand": "BMW",
-        "model": "x1",
-        "price": 6000,
-        "vehicleType": "car",
-        "rentalObject": "Marko Rental",
-        "transType": "manual",
-        "fuelType": "diesel",
-        "consumption": "6.6l/100km",
-        "doorsNum": 4,
-        "peopleNum": 5,
-        "description": "",
-        "image": "",
-        "status": false
-      },
-
-      {
-        "id": 3,
-        "brand": "Mercedes",
-        "model": "GLS",
-        "price": 2000,
-        "vehicleType": "car",
-        "rentalObject": "Marko Rental",
-        "transType": "automatic",
-        "fuelType": "diesel",
-        "consumption": "6.6l/100km",
-        "doorsNum": 4,
-        "peopleNum": 5,
-        "description": "",
-        "image": "",
-        "status": true
-      },
-
-      {
-        "id": 8,
-        "brand": "Audi",
-        "model": "A3",
-        "price": 6000,
-        "vehicleType": "truck",
-        "rentalObject": "Marko Rental",
-        "transType": "manual",
-        "fuelType": "diesel",
-        "consumption": "6.6l/100km",
-        "doorsNum": 4,
-        "peopleNum": 5,
-        "description": "",
-        "image": "",
-        "status": false
-      }
-    ],
-    "workHours": "8",
-    "status": true,
-    "location": "Novi Sad",
-    "grade": "4.5",
-    "imagePath": "/static/rental.jpg",
-    "id": 1
-  },
-
-  {
-    "name": "Suzuki Rental",
-    "vehicles": [
-      {
-        "id": 2,
-        "brand": "BMW",
-        "model": "x1",
-        "price": 6000,
-        "vehicleType": "car",
-        "rentalObject": "Rent a car Suzuki",
-        "transType": "manual",
-        "fuelType": "petrol",
-        "consumption": "6.6l/100km",
-        "doorsNum": 4,
-        "peopleNum": 5,
-        "description": "",
-        "image": "",
-        "status": false
-      }
-    ],
-    "workHours": "8",
-    "status": false,
-    "location": "Beograd",
-    "grade": "3.8",
-    "imagePath": "/static/rental2.jpg",
-    "id": 2
-  },
-
-  {
-    "name": "Braca Bajic",
-    "vehicles": [
-      {
-        "id": 4,
-        "brand": "Ford",
-        "model": "nn",
-        "price": 4000,
-        "vehicleType": "mobilehome",
-        "rentalObject": "Braca Bajic",
-        "transType": "manual",
-        "fuelType": "petrol",
-        "consumption": "6.6l/100km",
-        "doorsNum": 4,
-        "peopleNum": 5,
-        "description": "",
-        "image": "",
-        "status": false
-      },
-      {
-        "id": 5,
-        "brand": "Mazda",
-        "model": "xr",
-        "price": 8000,
-        "vehicleType": "truck",
-        "rentalObject": "Braca Bajic",
-        "transType": "manual",
-        "fuelType": "electric",
-        "consumption": "6.6l/100km",
-        "doorsNum": 4,
-        "peopleNum": 5,
-        "description": "",
-        "image": "",
-        "status": false
-      }
-    ],
-    "workHours": "8",
-    "status": true,
-    "location": "Novi Sad",
-    "grade": "5",
-    "imagePath": "/static/rental3.jpg",
-    "id": 3
-  },
-  {
-    "name": "Nis-autoK",
-    "vehicles": [
-      {
-        "id": 10,
-        "brand": "Mazda",
-        "model": "xr",
-        "price": 8000,
-        "vehicleType": "truck",
-        "rentalObject": "Nis-autoK",
-        "transType": "manual",
-        "fuelType": "electric",
-        "consumption": "6.6l/100km",
-        "doorsNum": 4,
-        "peopleNum": 5,
-        "description": "",
-        "image": "",
-        "status": false
-      }
-    ],
-    "workHours": "10",
-    "status": false,
-    "location": "Nis",
-    "grade": "4.7",
-    "imagePath": "/static/rental4.jpg",
-    "id": 4
-  },
-  {
-    "name": "Mazda",
-    "vehicles": [
-      {
-        "id": 7,
-        "brand": "Kamioncic",
-        "model": "xr",
-        "price": 8000,
-        "vehicleType": "mobilehome",
-        "rentalObject": "Mazda",
-        "transType": "manual",
-        "fuelType": "petrol",
-        "consumption": "6.6l/100km",
-        "doorsNum": 4,
-        "peopleNum": 5,
-        "description": "",
-        "image": "",
-        "status": false
-      }
-    ],
-    "workHours": "12",
-    "status": true,
-    "location": "Zrenjanin",
-    "grade": "3",
-    "imagePath": "/static/rental5.jpg",
-    "id": 5
-  }
+    {
+        "name": "Marko Rental",
+        "vehicles": [
+            {
+                "id": 1,
+                "brand": "BMW",
+                "model": "x1",
+                "price": 6000,
+                "vehicleType": "car",
+                "rentalObject": "Marko Rental",
+                "transType": "manual",
+                "fuelType": "diesel",
+                "consumption": "6.6l/100km",
+                "doorsNum": 4,
+                "peopleNum": 5,
+                "description": "",
+                "image": "",
+                "status": false
+            },
+            {
+                "id": 3,
+                "brand": "Mercedes",
+                "model": "GLS",
+                "price": 2000,
+                "vehicleType": "car",
+                "rentalObject": "Marko Rental",
+                "transType": "automatic",
+                "fuelType": "diesel",
+                "consumption": "6.6l/100km",
+                "doorsNum": 4,
+                "peopleNum": 5,
+                "description": "",
+                "image": "",
+                "status": true
+            },
+            {
+                "id": 8,
+                "brand": "Audi",
+                "model": "A3",
+                "price": 6000,
+                "vehicleType": "truck",
+                "rentalObject": "Marko Rental",
+                "transType": "manual",
+                "fuelType": "diesel",
+                "consumption": "6.6l/100km",
+                "doorsNum": 4,
+                "peopleNum": 5,
+                "description": "",
+                "image": "",
+                "status": false
+            },
+            {
+                "brand": "Tesla",
+                "model": "S Plaid",
+                "price": "10000",
+                "type": "auto",
+                "fuelType": "gasoline",
+                "numDoors": "5",
+                "capacity": "1",
+                "image": "..",
+                "description": ""
+            },
+            {
+                "brand": "Tesla",
+                "model": "S Plaid",
+                "price": "4000",
+                "type": "auto",
+                "fuelType": "gasoline",
+                "numDoors": "20",
+                "capacity": "10",
+                "image": "blob:http://localhost:8080/80bbe358-e51b-4e2c-af1f-232dd1e16e7f",
+                "description": "",
+                "id": 14
+            }
+        ],
+        "workHours": "8",
+        "status": true,
+        "location": "Novi Sad",
+        "grade": "4.5",
+        "imagePath": "/static/rental.jpg",
+        "id": 1
+    },
+    {
+        "name": "Suzuki Rental",
+        "vehicles": [
+            {
+                "id": 2,
+                "brand": "BMW",
+                "model": "x1",
+                "price": 6000,
+                "vehicleType": "car",
+                "rentalObject": "Rent a car Suzuki",
+                "transType": "manual",
+                "fuelType": "petrol",
+                "consumption": "6.6l/100km",
+                "doorsNum": 4,
+                "peopleNum": 5,
+                "description": "",
+                "image": "",
+                "status": false
+            }
+        ],
+        "workHours": "8",
+        "status": false,
+        "location": "Beograd",
+        "grade": "3.8",
+        "imagePath": "/static/rental2.jpg",
+        "id": 2
+    },
+    {
+        "name": "Braca Bajic",
+        "vehicles": [
+            {
+                "id": 4,
+                "brand": "Ford",
+                "model": "nn",
+                "price": 4000,
+                "vehicleType": "mobilehome",
+                "rentalObject": "Braca Bajic",
+                "transType": "manual",
+                "fuelType": "petrol",
+                "consumption": "6.6l/100km",
+                "doorsNum": 4,
+                "peopleNum": 5,
+                "description": "",
+                "image": "",
+                "status": false
+            },
+            {
+                "id": 5,
+                "brand": "Mazda",
+                "model": "xr",
+                "price": 8000,
+                "vehicleType": "truck",
+                "rentalObject": "Braca Bajic",
+                "transType": "manual",
+                "fuelType": "electric",
+                "consumption": "6.6l/100km",
+                "doorsNum": 4,
+                "peopleNum": 5,
+                "description": "",
+                "image": "",
+                "status": false
+            }
+        ],
+        "workHours": "8",
+        "status": true,
+        "location": "Novi Sad",
+        "grade": "5",
+        "imagePath": "/static/rental3.jpg",
+        "id": 3
+    },
+    {
+        "name": "Nis-autoK",
+        "vehicles": [
+            {
+                "id": 10,
+                "brand": "Mazda",
+                "model": "xr",
+                "price": 8000,
+                "vehicleType": "truck",
+                "rentalObject": "Nis-autoK",
+                "transType": "manual",
+                "fuelType": "electric",
+                "consumption": "6.6l/100km",
+                "doorsNum": 4,
+                "peopleNum": 5,
+                "description": "",
+                "image": "",
+                "status": false
+            }
+        ],
+        "workHours": "10",
+        "status": false,
+        "location": "Nis",
+        "grade": "4.7",
+        "imagePath": "/static/rental4.jpg",
+        "id": 4
+    },
+    {
+        "name": "Mazda",
+        "vehicles": [
+            {
+                "id": 7,
+                "brand": "Kamioncic",
+                "model": "xr",
+                "price": 8000,
+                "vehicleType": "mobilehome",
+                "rentalObject": "Mazda",
+                "transType": "manual",
+                "fuelType": "petrol",
+                "consumption": "6.6l/100km",
+                "doorsNum": 4,
+                "peopleNum": 5,
+                "description": "",
+                "image": "",
+                "status": false
+            },
+            {
+                "brand": "Tesla",
+                "model": "S Plaid",
+                "price": "2000",
+                "type": "auto",
+                "fuelType": "electric",
+                "numDoors": "6",
+                "capacity": "1",
+                "image": "..",
+                "description": "",
+                "id": 11
+            },
+            {
+                "brand": "BMW",
+                "model": "S Plaid",
+                "price": "230",
+                "type": "11",
+                "fuelType": "diesel",
+                "numDoors": "1",
+                "capacity": "3",
+                "image": "..",
+                "description": "",
+                "id": 12
+            }
+        ],
+        "workHours": "12",
+        "status": true,
+        "location": "Zrenjanin",
+        "grade": "3",
+        "imagePath": "/static/rental5.jpg",
+        "id": 5
+    }
 ]

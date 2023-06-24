@@ -8,6 +8,7 @@ function create(vehicle) {
   console.log(vehicle.id);
   vehicles.push(vehicle);
   json_utils.saveDataToFile(vehicles, path);
+  return vehicle;
 }
 
 function findIndex(vehicles, id) {

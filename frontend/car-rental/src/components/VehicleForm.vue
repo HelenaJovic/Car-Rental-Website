@@ -33,12 +33,17 @@
         <input type="number" id="capacity" v-model="form.capacity" required>
   
         <label for="image">Image URL:</label>
-        <input type="text" id="image" v-model="form.image" required>
+        <div class="image-input-container">
+          <input type="text" id="txt" v-model="form.image" required>
+
+          <input type="file" id="image" @change="handleImageUpload" style="display: none" ref="fileInput">
+          <button type="button" v-on:click.prevent="UploadImage()"  class="buttonForImg">...</button>
+        </div>
   
         <label for="description">Description:</label>
         <textarea id="description" v-model="form.description"></textarea>
   
-        <button type="submit" v-on:click.prevent="addVehicle()">
+        <button type="submit" v-on:click.prevent="addVehicleandUpdateRentalCar()">
               Add Vehicle
             </button>      </form>
       </div>
@@ -46,59 +51,63 @@
   </template>
   
   <script>
-  import Navbar from "./Navbar.vue";
-  import axios from "axios";
+import Navbar from "./Navbar.vue";
+import axios from "axios";
 
-  export default {
-    components: {
+export default {
+  components: {
     navBar: Navbar
   },
-    data() {
-      return {
-        form: {
-          brand: '',
-          model: '',
-          price: 0,
-          type: '',
-          fuelType: '',
-          numDoors: 0,
-          capacity: 0,
-          image: '',
-          description: ''
-        
-    }
-      };
-    },
-    methods: {
-      addVehicle() {
-        axios
-        .post("http://localhost:8081/vehicles", this.form)
-        .then(response => {
-          this.$toastr.s("Successfully vehicle added!");
-          this.$router.push("/");
-        })
-        .catch(err => {
-          this.$toastr.e("Some mistake!");
-        });
-        
-      },
-      resetForm() {
-        // Reset the form data
-        this.vehicle = {
-          brand: '',
-          model: '',
-          price: 0,
-          type: '',
-          fuelType: '',
-          numDoors: 0,
-          capacity: 0,
-          image: '',
-          description: ''
-        };
+  data() {
+    return {
+      rentalCarId: null,
+      form: {
+        brand: "",
+        model: "",
+        price: 0,
+        type: "",
+        fuelType: "",
+        numDoors: 0,
+        capacity: 0,
+        image: "",
+        description: ""
       }
-    }
-  };
-  </script>
+    };
+  },
+  methods: {
+    addVehicleandUpdateRentalCar() {
+      axios
+        .post(`http://localhost:8081/vehicles/${this.rentalCarId}`, this.form)
+        .then(
+          this.$toastr.s("Vehicle successfully added!")
+        )
+          
+         
+        .catch(err => {
+          console.log(err)
+          this.$toastr.e("Error adding vehicle!");
+        });
+    },
+    UploadImage() {
+      this.$refs.fileInput.click();
+    },
+    handleImageUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const imageURL = URL.createObjectURL(file);
+    this.form.image = imageURL;
+  }
+}
+
+  
+  },
+  mounted() {
+    this.rentalCarId = this.$route.params.id;
+    console.log(this.rentalCarId)
+
+  }
+};
+</script>
   
   <style scoped>
 /* Component-specific styles */
@@ -157,4 +166,24 @@ button:hover {
   color: #dc3545;
   margin-top: 0.5rem;
 }
+
+.image-input-container {
+  display: flex;
+  align-items: center;
+}
+
+.image-input-container input[type="text"] {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.image-input-container button {
+  margin-left: 10px;
+  
+}
+
+.buttonForImg{
+  background-color: gray;
+}
+
 </style>

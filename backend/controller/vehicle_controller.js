@@ -9,14 +9,13 @@ router.get("/", (req, res) => {
 
 });
 
-router.post("/", (req, res) => {
+router.post("/:id", (req, res) => {
   const vehicle = req.body;
-    console.log(vehicle);
+  const id = req.params.id;
   try {
-    vehicleService.create(vehicle);
+    vehicleService.create(vehicle,id);
     res.status(200).json({ message: "vehicle created successfully" });
   } catch (error) {
-    console.log(error)
     res.status(500).json({ error: "Failed to create  vehicle" });
   }
 });

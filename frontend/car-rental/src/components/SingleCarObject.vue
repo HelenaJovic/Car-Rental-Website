@@ -8,7 +8,8 @@
         <p>Location: {{ carObject.location }}</p>
         <img :src="carObject.imagePath" class="car-logo" alt="Car Logo" />
         <p v-if="carObject.grade">Average grade: {{ carObject.grade }}</p>
-      </div>
+        <button class="form-group" type="button" v-on:click="addVehicle(carObject.id)">Add Vehicle</button>
+        </div>
     </div>
   </div>
 </template>
@@ -31,7 +32,12 @@ export default {
       }
     };
   },
-
+  methods: {
+    addVehicle(id) {
+      this.$router.push({ path: "/vehicle/" + id });
+      
+    },
+  },
   mounted() {
     axios
       .get(`http://localhost:8081/cars/${this.id}`)
@@ -44,6 +50,7 @@ export default {
       });
   }
 };
+
 </script>
 
 <style scoped>
@@ -89,5 +96,15 @@ export default {
 .rent-a-car-card .grade-info span {
   color: #f00;
   font-weight: bold;
+}
+
+.form-group{
+  width: 50%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
 }
 </style>

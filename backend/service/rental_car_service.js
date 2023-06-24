@@ -27,6 +27,14 @@ function getSortedCarsByStatus() {
   return allCars;
 }
 
+function addNewCar(id,vehicle)
+{
+  const rentalCar=rentalCarRepo.getById(id);
+  rentalCar.vehicles.push(vehicle);
+  update(id,rentalCar);
+  
+}
+
 function getById(id) {
   return rentalCarRepo.getById(id);
 }
@@ -42,4 +50,5 @@ module.exports = {
   getById,
   update,
   getSortedCarsByStatus,
+  addNewCar
 };

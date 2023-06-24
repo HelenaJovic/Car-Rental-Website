@@ -16,6 +16,6 @@ export default [
   { path: "/display", component: YourProfile },
   { path: "/updateUser", component: UpdateUser },
   { path: "/singleObject/:id", component: SingleCarObject },
-  {path:"/vehicle",component:VehicleForm}
+  {path:"/vehicle/:id",component:VehicleForm}
 
 ];
