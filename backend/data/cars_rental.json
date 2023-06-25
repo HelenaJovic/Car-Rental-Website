@@ -77,7 +77,7 @@
         "doorsNum": 4,
         "peopleNum": 5,
         "description": "",
-        "image": "",
+        "image": "/static/aninakola.png",
         "status": false
       }
     ],
@@ -105,7 +105,7 @@
         "doorsNum": 4,
         "peopleNum": 5,
         "description": "",
-        "image": "",
+        "image": "/static/aninakola.png",
         "status": false
       },
       {
@@ -121,7 +121,7 @@
         "doorsNum": 4,
         "peopleNum": 5,
         "description": "",
-        "image": "",
+        "image": "/static/mercedes.png",
         "status": false
       }
     ],

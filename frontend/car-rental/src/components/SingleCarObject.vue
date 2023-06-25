@@ -15,6 +15,7 @@
           <p :class="['status', carObject.status ? 'opened' : 'closed']">
             Status: {{ carObject.status ? "Opened" : "Closed" }}
           </p>
+          <button class="form-group" type="button" v-on:click="addVehicle(carObject.id)">Add Vehicle</button>
         </div>
       </div>
 
