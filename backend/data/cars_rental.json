@@ -5,7 +5,7 @@
       {
         "id": 1,
         "brand": "BMW",
-        "model": "x1",
+        "model": "X1",
         "price": 6000,
         "vehicleType": "car",
         "rentalObject": 1,
@@ -53,7 +53,7 @@
         "status": false
       }
     ],
-    "workHours": "8",
+    "workHours": "09-18h",
     "status": true,
     "location": "Novi Sad",
     "grade": "4.5",
@@ -77,11 +77,11 @@
         "doorsNum": 4,
         "peopleNum": 5,
         "description": "",
-        "image": "",
+        "image": "/static/aninakola.png",
         "status": false
       }
     ],
-    "workHours": "8",
+    "workHours": "08-16h",
     "status": false,
     "location": "Beograd",
     "grade": "3.8",
@@ -95,7 +95,7 @@
       {
         "id": 4,
         "brand": "Ford",
-        "model": "nn",
+        "model": "KM7",
         "price": 4000,
         "vehicleType": "mobilehome",
         "rentalObject": 3,
@@ -105,7 +105,7 @@
         "doorsNum": 4,
         "peopleNum": 5,
         "description": "",
-        "image": "",
+        "image": "/static/van.png",
         "status": false
       },
       {
@@ -113,7 +113,7 @@
         "brand": "Mazda",
         "model": "xr",
         "price": 8000,
-        "vehicleType": "truck",
+        "vehicleType": "car",
         "rentalObject": 3,
         "transType": "Manual",
         "fuelType": "electric",
@@ -121,11 +121,11 @@
         "doorsNum": 4,
         "peopleNum": 5,
         "description": "",
-        "image": "",
+        "image": "/static/mazda.png",
         "status": false
       }
     ],
-    "workHours": "8",
+    "workHours": "09-20h",
     "status": true,
     "location": "Novi Sad",
     "grade": "5",
@@ -137,8 +137,8 @@
     "vehicles": [
       {
         "id": 10,
-        "brand": "Mazda",
-        "model": "xr",
+        "brand": "Toyota",
+        "model": "Fortuner",
         "price": 8000,
         "vehicleType": "truck",
         "rentalObject": 4,
@@ -148,11 +148,11 @@
         "doorsNum": 4,
         "peopleNum": 5,
         "description": "",
-        "image": "",
+        "image": "/static/toyota.png",
         "status": false
       }
     ],
-    "workHours": "10",
+    "workHours": "08-16h",
     "status": false,
     "location": "Nis",
     "grade": "4.7",
@@ -165,7 +165,7 @@
       {
         "id": 7,
         "brand": "Kamioncic",
-        "model": "xr",
+        "model": "XR",
         "price": 8000,
         "vehicleType": "mobilehome",
         "rentalObject": 5,
@@ -175,11 +175,11 @@
         "doorsNum": 4,
         "peopleNum": 5,
         "description": "",
-        "image": "",
+        "image": "/static/van.png",
         "status": false
       }
     ],
-    "workHours": "12",
+    "workHours": "07-17h",
     "status": true,
     "location": "Zrenjanin",
     "grade": "3",
