@@ -3,15 +3,17 @@
     <div class="img-div">
       <div class="row-div">
         <img :src="car.imagePath" class="car-img" />
-        <router-link v-bind:to="'/singleObject/' + car.id">
-          <h3 class="name">{{ car.name }}</h3>
-        </router-link>
+        <h3 class="name">{{ car.name }}</h3>
       </div>
+
       <div>
         <h4 class="location">Location:📍 {{ car.location }}</h4>
       </div>
     </div>
     <div class="bottom-div">
+      <router-link v-bind:to="'/singleObject/' + car.id">
+        <h3 class="details">View details</h3>
+      </router-link>
       <h4 class="grade">Grade⭐: {{ car.grade }}</h4>
     </div>
   </div>
@@ -25,8 +27,8 @@ export default {
 </script>
 <style scoped>
 .rent-a-car-card {
-  width: 100%;
-  height: 23rem;
+  width: 102%;
+  height: 21rem;
   border-radius: 5px;
   padding: 1rem;
   display: flex;
@@ -46,13 +48,13 @@ export default {
 .row-div {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .img-div {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
 }
 
 .car-img {
@@ -66,7 +68,6 @@ export default {
 
 .bottom-div {
   display: flex;
-  justify-content: flex-end;
 }
 
 h3 {
@@ -76,12 +77,16 @@ h3 {
 
 .name {
   font-size: 1.8rem;
-  color: #ba1c07; /* Custom color for the name */
+  color: rgb(15, 132, 182);
   font-family: "Arial", sans-serif; /* Custom font family for the name */
 }
 
+.details {
+  font-size: 1.2rem;
+  color: rgb(143, 140, 140);
+}
+
 .location {
-  margin-top: 1rem;
   font-size: 1.2rem;
   color: #565656;
 }
@@ -90,5 +95,10 @@ h3 {
   margin-top: auto;
   font-size: 1.2rem;
   color: #565656;
+  margin-left: 30%;
+}
+
+.details:hover {
+  color: black;
 }
 </style>
