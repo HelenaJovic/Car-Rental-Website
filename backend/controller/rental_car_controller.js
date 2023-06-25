@@ -6,14 +6,11 @@ router.use(express.json());
 
 router.get("/", (req, res) => {
   res.json(rentalCarService.getAll());
-
 });
 
 router.get("/sortedCars", (req, res) => {
-    res.json(rentalCarService.getSortedCarsByStatus());
-  
-  });
-
+  res.json(rentalCarService.getSortedCarsByStatus());
+});
 
 router.post("/", (req, res) => {
   const car = req.body;
@@ -21,13 +18,12 @@ router.post("/", (req, res) => {
     rentalCarService.create(car);
     res.status(200).json({ message: "Car created successfully" });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).json({ error: "Failed to create rental car" });
   }
 });
 
 router.put("/:id", (req, res) => {
-
   const carId = req.params.id;
   const updatedData = req.body; 
   const updatedCar = rentalCarService.update(carId, updatedData);
@@ -36,7 +32,6 @@ router.put("/:id", (req, res) => {
     return res.status(404).json({ error: "Car not found" });
   }
 
-  
   res.json(updatedCar);
 });
 
@@ -57,7 +52,6 @@ router.delete("/:id", (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
 
 router.get("/:id", (req, res) => {
   const id = parseInt(req.params.id, 10);

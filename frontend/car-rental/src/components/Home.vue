@@ -147,7 +147,7 @@ export default {
   padding: 2rem;
   border: 1px solid #e0e0e0;
   height: 90%;
-  width: 90%;
+  width: 95%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 20px;
@@ -167,7 +167,7 @@ export default {
 
 .search-container p {
   font-size: 1.7rem;
-  margin-left: 0.5rem;
+  margin-left: 0.7rem;
 }
 
 .search-input {
@@ -177,12 +177,11 @@ export default {
   font-size: 1rem;
   border-radius: 4px;
   border: 1px solid #ccc;
-  margin-left: 1rem;
 }
 
 .rent-a-car-container > .search-container {
   align-self: flex-start;
-  margin-left: 3rem;
+  margin-left: 3.2rem;
 }
 
 .combobox-container {

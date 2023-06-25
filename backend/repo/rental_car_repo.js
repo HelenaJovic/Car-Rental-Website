@@ -58,4 +58,10 @@ function getById(id) {
   return cars_rental[index];
 }
 
-module.exports = { create, update, remove, getAll, getById };
+function getAllVehicles(id) {
+  const car_object = getById(id);
+
+  return car_object.vehicles;
+}
+
+module.exports = { create, update, remove, getAll, getById, getAllVehicles };

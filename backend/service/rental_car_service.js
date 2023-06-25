@@ -83,6 +83,10 @@ function update(id, updatedCar) {
   return rentalCarRepo.update(id, updatedCar);
 }
 
+function getAllVehicles(id) {
+  return rentalCarRepo.getAllVehicles(id);
+}
+
 module.exports = {
   create,
   remove,
@@ -90,7 +94,11 @@ module.exports = {
   getById,
   update,
   getSortedCarsByStatus,
+
+  getAllVehicles,
+
   addNewCar,
   updateNewCar,
   deleteNewCar
+
 };
