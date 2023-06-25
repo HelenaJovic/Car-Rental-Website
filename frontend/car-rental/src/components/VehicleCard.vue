@@ -47,12 +47,12 @@ export default {
 </script>
 <style scoped>
 .vehicle-card {
-  width: 50rem;
+  width: 100%;
   height: 20rem;
   border-radius: 5px;
   padding: 1rem;
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 0.8fr 2fr;
   justify-content: stretch;
   align-content: center;
 
@@ -61,7 +61,7 @@ export default {
   box-shadow: 0px 2px 6px rgba(82, 42, 8, 0.3);
   transition: transform 0.3s ease;
   cursor: pointer;
-  background-color: #f2ede6;
+  background-color: rgba(242, 237, 230, 0.8);
 }
 
 .grid-item-1 {
@@ -107,8 +107,7 @@ export default {
 .labels {
   font-size: 21px;
   color: rgb(12, 75, 79);
-  padding: 6px;
-  margin-left: 8px;
+  padding: 5px;
 }
 
 .labels2 {
