@@ -74,10 +74,10 @@ router.get("/:id", (req, res) => {
   }
 });
 
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
-  var user = userService.getByUsername(username);
+  var user = await userService.getByUsername(username);
 
   if (user && user.password == password) {
     const token = jwt.sign(

@@ -53,7 +53,12 @@ export default {
       }
     };
   },
-
+  methods: {
+    addVehicle(id) {
+      this.$router.push({ path: "/vehicle/" + id });
+      
+    },
+  },
   mounted() {
     axios
       .get(`http://localhost:8081/cars/${this.id}`)
@@ -66,6 +71,7 @@ export default {
       });
   }
 };
+
 </script>
 
 <style scoped>
@@ -163,5 +169,15 @@ p.grade {
 /* Optional: Add hover effect to the car logo */
 .car-logo:hover {
   transform: scale(1.1);
+}
+
+.form-group{
+  width: 50%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
 }
 </style>
