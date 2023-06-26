@@ -15,8 +15,10 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   const user = req.body;
 
-  if (userService.getByUsername(user.username))
+  if (userService.getByUsername(user.username)) {
     res.status(409).json({ error: "Username already exists!" });
+    return;
+  }
 
   try {
     userService.create(user);
@@ -29,11 +31,15 @@ router.post("/", (req, res) => {
 router.put("/:id", (req, res) => {
   const userId = req.params.id;
   const updatedData = req.body;
-  const updatedUser = userService.update(userId, updatedData);
-
-  if (!updatedUser) {
-    return res.status(404).json({ error: "User not found" });
+  if (
+    userService.getByUsername(updatedData.username) &&
+    !(userService.getById(userId).username === updatedData.username)
+  ) {
+    res.status(409).json({ error: "Username already exists!" });
+    return;
   }
+
+  const updatedUser = userService.update(userId, updatedData);
 
   res.json(updatedUser);
 });
@@ -68,10 +74,10 @@ router.get("/:id", (req, res) => {
   }
 });
 
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
-  var user = userService.getByUsername(username);
+  var user = await userService.getByUsername(username);
 
   if (user && user.password == password) {
     const token = jwt.sign(

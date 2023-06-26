@@ -5,11 +5,15 @@
         <img :src="car.imagePath" class="car-img" />
         <h3 class="name">{{ car.name }}</h3>
       </div>
+
       <div>
         <h4 class="location">Location:📍 {{ car.location }}</h4>
-      </div> 
+      </div>
     </div>
     <div class="bottom-div">
+      <router-link v-bind:to="'/singleObject/' + car.id">
+        <h3 class="details">View details</h3>
+      </router-link>
       <h4 class="grade">Grade⭐: {{ car.grade }}</h4>
     </div>
   </div>
@@ -17,18 +21,14 @@
 
 <script>
 export default {
-  name: 'RentACarCard',
-  props: ['car']
- 
-
-
-
+  name: "RentACarCard",
+  props: ["car"]
 };
 </script>
 <style scoped>
 .rent-a-car-card {
-  width: 100%;
-  height: 23rem;
+  width: 102%;
+  height: 21rem;
   border-radius: 5px;
   padding: 1rem;
   display: flex;
@@ -37,8 +37,10 @@ export default {
   box-shadow: 0px 2px 6px rgba(82, 42, 8, 0.3);
   transition: transform 0.3s ease;
   cursor: pointer;
-  background-color: #f2ede6;
+  background-color: rgba(242, 237, 230, 0.8); /* Use RGBA color with desired transparency */
 }
+
+
 
 .rent-a-car-card:hover {
   transform: translateY(-2px);
@@ -48,13 +50,13 @@ export default {
 .row-div {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .img-div {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
 }
 
 .car-img {
@@ -68,7 +70,6 @@ export default {
 
 .bottom-div {
   display: flex;
-  justify-content: flex-end;
 }
 
 h3 {
@@ -78,13 +79,16 @@ h3 {
 
 .name {
   font-size: 1.8rem;
-  color: #ba1c07; /* Custom color for the name */
-  font-family: 'Arial', sans-serif; /* Custom font family for the name */
-  
+  color: rgb(15, 132, 182);
+  font-family: "Arial", sans-serif; /* Custom font family for the name */
+}
+
+.details {
+  font-size: 1.2rem;
+  color: rgb(143, 140, 140);
 }
 
 .location {
-  margin-top: 1rem;
   font-size: 1.2rem;
   color: #565656;
 }
@@ -93,5 +97,10 @@ h3 {
   margin-top: auto;
   font-size: 1.2rem;
   color: #565656;
+  margin-left: 30%;
+}
+
+.details:hover {
+  color: black;
 }
 </style>

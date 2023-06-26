@@ -2,9 +2,33 @@
   <div>
     <navBar></navBar>
     <div class="rent-a-car-container">
-      <h1>Rent a car</h1>
+      <h1>Rental objects</h1>
+
+      <div class="search-container">
+        <input
+          type="text"
+          v-model="search"
+          class="search-input"
+          placeholder="Name,Location,Grade,Vehicle Type"
+        />
+        <p>🔍</p>
+        <div class="combobox-container">
+          <label for="sort-by">Sort By:</label>
+          <select
+            v-model="selectedSortField"
+            id="sort-by"
+            class="custom-select"
+          >
+            <option value="">Select</option>
+            <option value="name">Name</option>
+            <option value="grade">Grade</option>
+            <option value="location">Location</option>
+          </select>
+        </div>
+      </div>
+
       <div class="rent-a-car-list">
-        <RentACarCard v-for="car in cars" :key="car.id" :car="car" />
+        <RentACarCard v-for="car in filterObjects" :key="car.id" :car="car" />
       </div>
     </div>
   </div>
@@ -26,7 +50,9 @@ export default {
   },
   data() {
     return {
-      cars: []
+      cars: [],
+      search: "",
+      selectedSortField: ""
     };
   },
   methods: {
@@ -40,6 +66,61 @@ export default {
       } catch (error) {
         console.error(error);
       }
+    },
+
+    sortByField(cars, field) {
+      cars.sort((car1, car2) => {
+        const field1 = car1[field];
+        const field2 = car2[field];
+
+        if (field1 < field2) {
+          return -1;
+        } else if (field1 > field2) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+    }
+  },
+
+  computed: {
+    filterObjects: function() {
+      const searchValues = this.search.split(",").map(value => value.trim());
+
+      const filteredCars = this.cars.filter(car => {
+        let matchesSearch = true;
+
+        for (const searchValue of searchValues) {
+          if (searchValue) {
+            const searchRegex = new RegExp(searchValue, "i");
+
+            const matchesName = car.name.match(searchRegex);
+
+            const matchesLocation = car.location.match(searchRegex);
+
+            const matchesGrade = car.grade.match(searchRegex);
+            const matchesVehicleType = car.vehicles.some(vehicle =>
+              vehicle.vehicleType.match(searchRegex)
+            );
+
+            matchesSearch =
+              matchesSearch &&
+              (matchesName ||
+                matchesGrade ||
+                matchesLocation ||
+                matchesVehicleType);
+          }
+        }
+
+        return matchesSearch;
+      });
+
+      if (this.selectedSortField) {
+        this.sortByField(filteredCars, this.selectedSortField);
+      }
+
+      return filteredCars;
     }
   }
 };
@@ -51,21 +132,22 @@ export default {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   overflow: hidden;
-  background-color: #030112;
+  background-color: lightgray;
 }
 
 .rent-a-car-container h1 {
   font-size: 2rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .rent-a-car-list {
   padding: 2rem;
   border: 1px solid #e0e0e0;
   height: 90%;
-  width: 90%;
+  width: 95%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 20px;
@@ -74,5 +156,51 @@ export default {
   background-image: url(../assets/images/auto.jpg);
   background-size: cover;
   background-position: center;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-direction: row;
+}
+
+.search-container p {
+  font-size: 1.7rem;
+  margin-left: 0.7rem;
+}
+
+.search-input {
+  width: 280px;
+  height: 40px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.rent-a-car-container > .search-container {
+  align-self: flex-start;
+  margin-left: 3.2rem;
+}
+
+.combobox-container {
+  display: flex;
+  align-items: center;
+  margin-left: 39rem;
+}
+
+.combobox-container label {
+  margin-right: 0.5rem;
+  font-size: 1.3rem;
+}
+
+.custom-select {
+  width: 100px;
+  height: 40px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
 }
 </style>

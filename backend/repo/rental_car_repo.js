@@ -5,21 +5,19 @@ const json_utils = require("../utils/json_utils");
 function create(car_rental) {
   const cars_rental = json_utils.jsonReader(path);
   car_rental.id = json_utils.generateNextId(cars_rental);
-  console.log(car_rental);
-  console.log("aca konj");
+
   cars_rental.push(car_rental);
   json_utils.saveDataToFile(cars_rental, path);
 }
 
 function findIndex(cars_rental, id) {
-  return cars_rental.findIndex(car_rental => car_rental.id === parseInt(id));
+  return cars_rental.findIndex((car_rental) => car_rental.id === parseInt(id));
 }
-
 
 function update(id, updatedCar) {
   const cars_rental = json_utils.jsonReader(path);
   const index = findIndex(cars_rental, id);
-  
+
   if (index !== -1) {
     for (let prop in updatedCar) {
       if (cars_rental[index].hasOwnProperty(prop)) {
@@ -33,9 +31,8 @@ function update(id, updatedCar) {
     return cars_rental[index];
   }
 
-  return null; 
+  return null;
 }
-
 
 function remove(id) {
   const cars_rental = json_utils.jsonReader(path);
@@ -50,7 +47,6 @@ function remove(id) {
   }
 }
 
-
 function getAll() {
   return json_utils.jsonReader(path);
 }
@@ -62,4 +58,10 @@ function getById(id) {
   return cars_rental[index];
 }
 
-module.exports = { create, update, remove, getAll, getById };
+function getAllVehicles(id) {
+  const car_object = getById(id);
+
+  return car_object.vehicles;
+}
+
+module.exports = { create, update, remove, getAll, getById, getAllVehicles };

@@ -1,7 +1,12 @@
 <template>
   <nav class="navbar">
     <ul class="navbar-nav">
-      <li class="nav-item">
+      <li class="nav-item nav-item-logo">
+        <router-link to="/" class="nav-link">
+          <img src="../assets/images/rental22.png" alt="Car Rental Logo" class="nav-logo" />
+        </router-link>
+      </li>
+      <li class="nav-item nav-item-left">
         <router-link to="/login" v-if="!isLoggedIn" class="nav-link"
           >Login</router-link
         >
@@ -64,9 +69,22 @@ export default {
 
 <style>
 .navbar {
-  background-color: #f8f8f8;
+  background-color: lightslategray;
   padding: 16px;
+  position: relative; /* Dodajte relativnu poziciju na navbar */
 }
+
+
+.nav-logo {
+  width: 100px;
+  height: 120px;
+  position: absolute;
+  top: 50%;
+  left: 3%;
+  transform: translate(-50%, -50%);
+}
+
+
 
 .navbar-nav {
   display: flex;
@@ -81,7 +99,7 @@ export default {
 }
 
 .nav-link {
-  color: #333;
+  color: whitesmoke;
   text-decoration: none;
   font-weight: bold;
 }
@@ -89,4 +107,9 @@ export default {
 .nav-link:hover {
   color: #007bff;
 }
+
+.nav-item-left {
+  margin-right: 1%;
+}
+
 </style>
