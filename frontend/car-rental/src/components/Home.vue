@@ -2,8 +2,12 @@
   <div>
     <navBar></navBar>
     <div class="rent-a-car-container">
-      <h1>Rental objects</h1>
-
+      <div class="first-container">
+        <h1>Rental objects</h1>
+        <router-link to="/addObject" v-if="IsAdministrator">
+          <img src="../assets/images/add.png" alt="Add logo" class="image" />
+        </router-link>
+      </div>
       <div class="search-container">
         <input
           type="text"
@@ -39,6 +43,7 @@ import RentACarCard from "./RentACarCard.vue";
 import "regenerator-runtime/runtime";
 import axios from "axios";
 import Navbar from "./Navbar.vue";
+import jwt_decode from "jwt-decode";
 
 export default {
   components: {
@@ -47,12 +52,14 @@ export default {
   },
   mounted() {
     this.getData();
+    this.checkIfAdministrator();
   },
   data() {
     return {
       cars: [],
       search: "",
-      selectedSortField: ""
+      selectedSortField: "",
+      IsAdministrator: false
     };
   },
   methods: {
@@ -81,6 +88,15 @@ export default {
           return 0;
         }
       });
+    },
+
+    checkIfAdministrator() {
+      const token = localStorage.getItem("token");
+      const decoded = jwt_decode(token);
+
+      if (decoded.role == "Administrator") {
+        this.IsAdministrator = true;
+      }
     }
   },
 
@@ -202,5 +218,20 @@ export default {
   font-size: 1rem;
   border-radius: 4px;
   border: 1px solid #ccc;
+}
+.first-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+}
+
+.image {
+  width: 32px;
+  height: 33px;
+
+  position: absolute;
+  top: 28%;
+  right: 1.2%;
+  transform: translate(-50%, -50%);
 }
 </style>
