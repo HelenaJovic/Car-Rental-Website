@@ -64,14 +64,14 @@
             {
                 "brand": "Audi",
                 "model": "A6",
-                "price": "6700",
+                "price": "7000",
                 "vehicleType": "track",
                 "rentalObject": "3",
                 "transType": "Manual",
                 "fuelType": "gasoline",
                 "consumption": "",
                 "doorsNum": "2",
-                "peopleNum": "2",
+                "peopleNum": "3",
                 "description": "",
                 "image": "/static/audiTruck.png",
                 "status": "Available",
@@ -91,7 +91,7 @@
             {
                 "brand": "Toyota",
                 "model": "2755",
-                "price": "4000",
+                "price": "4500",
                 "vehicleType": "car",
                 "rentalObject": "4",
                 "transType": "Manual",
@@ -107,7 +107,7 @@
             {
                 "brand": "Suzuki",
                 "model": "53",
-                "price": "4600",
+                "price": "4700",
                 "vehicleType": "car",
                 "rentalObject": "4",
                 "transType": "Manual",
@@ -134,7 +134,7 @@
             {
                 "brand": "Mazda",
                 "model": "Hatchback",
-                "price": "7000",
+                "price": "7100",
                 "vehicleType": "car",
                 "rentalObject": "5",
                 "transType": "Manual",

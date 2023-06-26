@@ -81,11 +81,11 @@
   methods: {
     updateCar(id, rentalCarId) {
       axios
-        .put(`http://localhost:8081/vehicles/${id}/${rentalCarId}`, this.form)
+        .put(`http://localhost:8081/vehicles/${this.form.id}/${rentalCarId}`, this.form)
         .then(() => {
 
           this.$toastr.s("Successfully updated!");
-          this.$router.push({ path: '/singleObject/' + id });
+          this.$router.push({ path: '/singleObject/' + rentalCarId});
 
         })
         .catch(error => {

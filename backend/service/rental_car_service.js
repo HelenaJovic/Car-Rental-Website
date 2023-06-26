@@ -69,7 +69,7 @@ function updateNewCar(id, updatedVehicle, idCar) {
   if (index !== -1) {
     rentalCar.vehicles[index] = updatedVehicle;
     rentalCarRepo.update(idCar, rentalCar);
-    update(id, rentalCar, idCar);
+    //update(id, rentalCar, idCar);
   }
 }
 
