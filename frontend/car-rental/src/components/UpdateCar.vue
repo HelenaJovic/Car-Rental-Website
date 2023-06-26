@@ -1,0 +1,209 @@
+<template>
+    <div>
+      <navBar></navBar>
+      <div class="main-container">
+        <form>
+          <h2 id="header">Update Vehicle</h2>
+          <label for="brand">Brand:</label>
+          <input type="text" id="brand" v-model="form.brand" required>
+  
+          <label for="model">Model:</label>
+          <input type="text" id="model" v-model="form.model" required>
+  
+          <label for="price">Price:</label>
+          <input type="number" id="price" v-model="form.price" required>
+  
+          <label for="type">Type:</label>
+          <select id="fuel" v-model="form.vehicleType" required>
+            <option value="">Select vehicle Type</option>
+            <option value="car">Car</option>
+            <option value="track">Track</option>
+            <option value="mobilehome">Mobile Home</option>
+          </select>
+  
+          <label for="fuel">Fuel Type:</label>
+          <select id="fuel" v-model="form.fuelType" required>
+            <option value="">Select Fuel Type</option>
+            <option value="diesel">Diesel</option>
+            <option value="gasoline">Gasoline</option>
+            <option value="hybrid">Hybrid</option>
+            <option value="electric">Electric</option>
+          </select>
+  
+          <label for="doors">Number of Doors:</label>
+          <input type="number" id="doors" v-model="form.doorsNum" required>
+  
+          <label for="capacity">Capacity:</label>
+          <input type="number" id="capacity" v-model="form.peopleNum" required>
+  
+          <label for="image">Image URL:</label>
+          <div class="image-input-container">
+            <input type="text" id="txt" v-model="form.image" required>
+            <input type="file" id="image" @change="handleImageUpload" style="display: none" ref="fileInput">
+            <button type="button" v-on:click.prevent="UploadImage()" class="buttonForImg">...</button>
+          </div>
+  
+          <label for="description">Description:</label>
+          <textarea id="description" v-model="form.description"></textarea>
+  
+          <button type="submit" v-on:click.prevent="updateCar(form.id, rentalCarId)">Update Car</button>
+        </form>
+      </div>
+    </div>
+  </template>
+  
+  <script>
+  import axios from "axios";
+  import Navbar from "./Navbar.vue";
+  
+  export default {
+  components: {
+    navBar: Navbar
+  },
+  data() {
+    return {
+      rentalCarId: null,
+      form: {
+        id: null,
+        brand: "",
+        model: "",
+        price: 0,
+        vehicleType: "",
+        fuelType: "",
+        doorsNum: 0,
+        peopleNum: 0,
+        description: "",
+        image: ""
+      }
+    };
+  },
+
+  methods: {
+    updateCar(id, rentalCarId) {
+      axios
+        .put(`http://localhost:8081/vehicles/${id}/${rentalCarId}`, this.form)
+        .then(() => {
+
+          this.$toastr.s("Successfully updated!");
+          this.$router.push({ path: '/singleObject/' + id });
+
+        })
+        .catch(error => {
+          console.log(error);
+          this.$toastr.e("Cannot update car!");
+        });
+    },
+    UploadImage() {
+      this.$refs.fileInput.click();
+    },
+    handleImageUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    this.form.image = `/static/${file.name}`;
+  }
+
+}
+
+  },
+
+  mounted() {
+    this.rentalCarId = this.$route.params.id2;
+    this.form.id = this.$route.params.id1;
+    axios
+      .get(`http://localhost:8081/vehicles/${this.form.id}`)
+      .then(response => {
+        this.form = response.data;
+      })
+      .catch(error => {
+        console.error(error);
+        window.alert("An error occurred while fetching vehicle data");
+      });
+
+    console.log(this.$route.params.id1, this.$route.params.id2);
+  }
+};
+
+</script>
+
+  
+  
+  <style scoped>
+    
+/* Component-specific styles */
+.main-container {
+  background-image: url(../assets/images/auto.jpg);
+  background-size: cover;
+  background-position: center;
+  padding: 60px;
+}
+form {
+  display: grid;
+  gap: 1rem;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+h2#header {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  color: #dc3545;
+  margin-top: 0.5rem;
+}
+
+.image-input-container {
+  display: flex;
+  align-items: center;
+}
+
+.image-input-container input[type="text"] {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.image-input-container button {
+  margin-left: 10px;
+  
+}
+
+.buttonForImg{
+  background-color: gray;
+}
+
+</style>
+  

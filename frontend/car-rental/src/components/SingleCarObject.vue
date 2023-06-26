@@ -1,6 +1,7 @@
 <template>
   <div>
     <navBar></navBar>
+
     <div class="rent-a-car-container">
       <div class="grid-item-1">
         <div class="flex-item">
@@ -19,12 +20,22 @@
         </div>
       </div>
 
-      <div class="grid-item-2">
-        <vehicleCard
+      <div class="helping-container">
+        <div class="grid-item-2">
+         
+          <vehicleCard
           v-for="vehicle in carObject.vehicles"
           :key="vehicle.id"
           :vehicle="vehicle"
+          :rental-car-id="id"
+          :update-car="updateCar"
+          :delete-car="deleteCar"
         ></vehicleCard>
+
+    
+
+
+        </div>
       </div>
     </div>
   </div>
@@ -43,6 +54,7 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
+      vehicleId:0,
       carObject: {
         name: "",
         workHours: "",
@@ -51,14 +63,33 @@ export default {
         imagePath: "",
         grade: "",
         vehicles: []
-      }
+      },
     };
   },
   methods: {
     addVehicle(id) {
       this.$router.push({ path: "/vehicle/" + id });
-      
     },
+    deleteCar(vehicleId,id) {
+      // Implement your logic to delete the car with the given ID
+      // For example:
+      
+      axios
+      .delete(`http://localhost:8081/vehicles/${vehicleId}/${id}`)
+        .then(()=>{
+          this.$router.push({ path: '/singleObject/' + id })
+          this.$toastr.s("Succesufully deleted!")
+        }
+        )
+        .catch(error => {
+          console.log(error)
+          this.$toastr.e("Can not delete car!");
+        });
+    },
+    updateCar(vehicleId, id) {
+  this.$router.push({ path: '/updateCar/' + vehicleId + '/' + id });
+}
+
   },
   mounted() {
     axios
@@ -72,59 +103,59 @@ export default {
       });
   }
 };
-
 </script>
 
 <style scoped>
 .rent-a-car-container {
   display: grid;
   grid-template-columns: 0.8fr 2fr;
-  grid-template-rows: 250px 250px;
   justify-content: stretch;
   align-content: center;
-
+  min-height: 100vh;
   background-image: url("../assets/images/auto.jpg");
   background-size: cover;
   background-position: center;
 }
 
+.helping-container {
+  padding: 20px;
+}
 .grid-item-1 {
   grid-column: 1/2;
   grid-row: span 2;
+  padding: 20px;
 }
 
 .grid-item-2 {
   grid-row: span 2;
-  padding: 2rem;
+  padding: 20px;
+
   border: 1px solid #e0e0e0;
   height: 90%;
-  width: 95%;
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
   grid-gap: 20px;
   overflow-y: auto;
   scrollbar-width: thin;
-
-  margin-top: 3%;
 }
 
 .flex-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 30px;
+  gap: 1rem;
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 6x;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 300px;
 }
 
 h2 {
   font-size: 30px;
   font-weight: bold;
   color: rgb(27, 26, 26);
-  margin-bottom: 20px;
+  padding: 10px;
   text-transform: uppercase;
   font-family: "Arial", sans-serif;
 }
@@ -132,14 +163,13 @@ h2 {
 p {
   font-size: 20px;
   color: rgb(27, 26, 26);
-  margin-bottom: 12px;
+  padding: 10px;
   text-align: left;
 }
 
 .car-logo {
   width: 200px;
   height: 180px;
-  margin-bottom: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
@@ -167,12 +197,11 @@ p.grade {
   text-align: left;
 }
 
-/* Optional: Add hover effect to the car logo */
 .car-logo:hover {
   transform: scale(1.1);
 }
 
-.form-group{
+.form-group {
   width: 50%;
   padding: 10px;
   font-size: 16px;
@@ -180,5 +209,7 @@ p.grade {
   background-color: #4caf50;
   color: #fff;
   border: none;
+  padding: 10px;
+
 }
 </style>

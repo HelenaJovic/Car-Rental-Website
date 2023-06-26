@@ -8,7 +8,7 @@ function create(vehicle,id) {
 }
 
 function remove(id,idCar) {
-  return rental_car_service.deleteNewCar(id,idCar);
+  rental_car_service.deleteNewCar(id,idCar);
   return vehicleRepo.remove(id);
 }
 

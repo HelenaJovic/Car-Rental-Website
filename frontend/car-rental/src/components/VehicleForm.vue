@@ -32,10 +32,10 @@
 
   
         <label for="doors">Number of Doors:</label>
-        <input type="number" id="doors" v-model="form.numDoors" required>
+        <input type="number" id="doors" v-model="form.doorsNum" required>
   
         <label for="capacity">Capacity:</label>
-        <input type="number" id="capacity" v-model="form.capacity" required>
+        <input type="number" id="capacity" v-model="form.peopleNum" required>
   
         <label for="image">Image URL:</label>
         <div class="image-input-container">
@@ -72,7 +72,7 @@ export default {
         price: 0,
         vehicleType: "",
         rentalObject: null,
-        transType:"",
+        transType:"Manual",
         fuelType: "",
         consumption:"",
         doorsNum: 0,
@@ -80,14 +80,6 @@ export default {
         description: "",
         image: "",
         status:"Available"
-
-       
-    
-    
-    
-   
-    
-   
       }
     };
   },
@@ -97,13 +89,13 @@ export default {
 
       axios
         .post(`http://localhost:8081/vehicles/${this.rentalCarId}`, this.form)
-        .then(
-          this.$toastr.s("Vehicle successfully added!")
-        
+        .then(()=>{
+          this.$toastr.s("Vehicle successfully added!") 
+          this.$router.push({ path: '/singleObject/' + id })
+
+        }
         )
-          
-         
-        .catch(err => {
+          .catch(err => {
           console.log(err)
           this.$toastr.e("Error adding vehicle!");
         });
@@ -114,24 +106,19 @@ export default {
     handleImageUpload(event) {
   const file = event.target.files[0];
   if (file) {
-    const imageURL = URL.createObjectURL(file);
-    this.form.image = imageURL;
+    this.form.image = `/static/${file.name}`;
   }
-}
-
-  
+} 
   },
   mounted() {
     this.rentalCarId = this.$route.params.id;
-    
     console.log(this.rentalCarId)
-
+  
   }
 };
 </script>
   
   <style scoped>
-/* Component-specific styles */
 .main-container {
   background-image: url(../assets/images/auto.jpg);
   background-size: cover;

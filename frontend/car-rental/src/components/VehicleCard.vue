@@ -34,6 +34,13 @@
       <div class="grid-item-2-5">
         <label class="labels2">Price:</label>
         <p class="paragraph2">{{ vehicle.price }}</p>
+        <button type="submit" v-on:click.prevent="updateCar(vehicle.id,rentalCarId)">
+          Update
+        </button>
+        <button type="submit" v-on:click.prevent="deleteCar(vehicle.id,rentalCarId)">
+          Delete
+        </button>
+ 
       </div>
     </div>
   </div>
@@ -42,17 +49,17 @@
 <script>
 export default {
   name: "VehicleCard",
-  props: ["vehicle"]
+  props: ["vehicle", "deleteCar","rentalCarId","updateCar"]
 };
 </script>
 <style scoped>
 .vehicle-card {
-  width: 50rem;
+  width: 100%;
   height: 20rem;
   border-radius: 5px;
   padding: 1rem;
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 0.8fr 2fr;
   justify-content: stretch;
   align-content: center;
 
@@ -61,7 +68,7 @@ export default {
   box-shadow: 0px 2px 6px rgba(82, 42, 8, 0.3);
   transition: transform 0.3s ease;
   cursor: pointer;
-  background-color: #f2ede6;
+  background-color: rgba(242, 237, 230, 0.8);
 }
 
 .grid-item-1 {
@@ -107,8 +114,7 @@ export default {
 .labels {
   font-size: 21px;
   color: rgb(12, 75, 79);
-  padding: 6px;
-  margin-left: 8px;
+  padding: 5px;
 }
 
 .labels2 {
@@ -160,11 +166,26 @@ export default {
   grid-row-start: 5;
   grid-row-end: 6;
   display: flex;
+  gap: 1rem;
   flex-direction: row;
 }
 
 .vehicle-card:hover {
   transform: translateY(-2px);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+button {
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  height: 30px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
 </style>
