@@ -10,7 +10,7 @@
         "status": true,
         "location": "Novi Sad",
         "grade": "4.5",
-        "path": "../assets/images/aaaa.png",
+        "path": ".static/images/aaaa.png",
         "id": 1
     },
     

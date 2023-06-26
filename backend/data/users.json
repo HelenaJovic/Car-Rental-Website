@@ -90,5 +90,16 @@
         "birthday": "2023-06-21",
         "basket": null,
         "id": 9
+    },
+    {
+        "username": "mica",
+        "password": "123",
+        "name": "Milica",
+        "surname": "Kralj",
+        "gender": "female",
+        "birthday": "2023-06-28",
+        "basket": null,
+        "role": "buyer",
+        "id": 10
     }
 ]

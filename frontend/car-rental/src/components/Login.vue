@@ -34,8 +34,9 @@ export default {
       axios
         .post("http://localhost:8081/users/login", {
           username: this.username,
-          password: this.password
-        })
+          password: this.password,
+          
+        } )
         .then(response => {
           const data = response.data;
           const token = data.token;
@@ -44,6 +45,8 @@ export default {
           this.$router.push("/");
         })
         .catch(err => {
+          // console.log(err)
+          console.log(username);
           this.$toastr.e("Wrong username or password!");
         });
     }

@@ -2,7 +2,7 @@
   <div class="rent-a-car-card">
     <div class="img-div">
       <div class="row-div">
-        <img src="../assets/images/aaaa.png" class="car-img" />
+        <img :src="car.imagePath" class="car-img" />
         <h3 class="name">{{ car.name }}</h3>
       </div>
       <div>
