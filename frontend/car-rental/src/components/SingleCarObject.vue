@@ -16,16 +16,25 @@
           <p :class="['status', carObject.status ? 'opened' : 'closed']">
             Status: {{ carObject.status ? "Opened" : "Closed" }}
           </p>
+          <button class="form-group" type="button" v-on:click="addVehicle(carObject.id)">Add Vehicle</button>
         </div>
       </div>
 
       <div class="helping-container">
         <div class="grid-item-2">
+         
           <vehicleCard
-            v-for="vehicle in carObject.vehicles"
-            :key="vehicle.id"
-            :vehicle="vehicle"
-          ></vehicleCard>
+          v-for="vehicle in carObject.vehicles"
+          :key="vehicle.id"
+          :vehicle="vehicle"
+          :rental-car-id="id"
+          :update-car="updateCar"
+          :delete-car="deleteCar"
+        ></vehicleCard>
+
+    
+
+
         </div>
       </div>
     </div>
@@ -45,6 +54,7 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
+      vehicleId:0,
       carObject: {
         name: "",
         workHours: "",
@@ -53,13 +63,33 @@ export default {
         imagePath: "",
         grade: "",
         vehicles: []
-      }
+      },
     };
   },
   methods: {
     addVehicle(id) {
       this.$router.push({ path: "/vehicle/" + id });
-    }
+    },
+    deleteCar(vehicleId,id) {
+      // Implement your logic to delete the car with the given ID
+      // For example:
+      
+      axios
+      .delete(`http://localhost:8081/vehicles/${vehicleId}/${id}`)
+        .then(()=>{
+          this.$router.push({ path: '/singleObject/' + id })
+          this.$toastr.s("Succesufully deleted!")
+        }
+        )
+        .catch(error => {
+          console.log(error)
+          this.$toastr.e("Can not delete car!");
+        });
+    },
+    updateCar(vehicleId, id) {
+  this.$router.push({ path: '/updateCar/' + vehicleId + '/' + id });
+}
+
   },
   mounted() {
     axios
@@ -114,7 +144,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  gap: 1rem;
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 6x;
@@ -179,5 +209,7 @@ p.grade {
   background-color: #4caf50;
   color: #fff;
   border: none;
+  padding: 10px;
+
 }
 </style>

@@ -34,6 +34,13 @@
       <div class="grid-item-2-5">
         <label class="labels2">Price:</label>
         <p class="paragraph2">{{ vehicle.price }}</p>
+        <button type="submit" v-on:click.prevent="updateCar(vehicle.id,rentalCarId)">
+          Update
+        </button>
+        <button type="submit" v-on:click.prevent="deleteCar(vehicle.id,rentalCarId)">
+          Delete
+        </button>
+ 
       </div>
     </div>
   </div>
@@ -42,7 +49,7 @@
 <script>
 export default {
   name: "VehicleCard",
-  props: ["vehicle"]
+  props: ["vehicle", "deleteCar","rentalCarId","updateCar"]
 };
 </script>
 <style scoped>
@@ -159,11 +166,26 @@ export default {
   grid-row-start: 5;
   grid-row-end: 6;
   display: flex;
+  gap: 1rem;
   flex-direction: row;
 }
 
 .vehicle-card:hover {
   transform: translateY(-2px);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+button {
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  height: 30px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
 </style>

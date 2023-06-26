@@ -1,189 +1,193 @@
 [
-  {
-    "name": "Marko Rental",
-    "vehicles": [
-      {
-        "id": 1,
-        "brand": "BMW",
-        "model": "X1",
-        "price": 6000,
-        "vehicleType": "car",
-        "rentalObject": 1,
-        "transType": "Manual",
-        "fuelType": "diesel",
-        "consumption": "6.6l/100km",
-        "doorsNum": 4,
-        "peopleNum": 5,
-        "description": "",
-        "image": "/static/aninakola.png",
-        "status": false
-      },
-
-      {
-        "id": 3,
-        "brand": "Mercedes",
-        "model": "GLS",
-        "price": 2000,
-        "vehicleType": "car",
-        "rentalObject": 1,
-        "transType": "Automatic",
-        "fuelType": "diesel",
-        "consumption": "6.6l/100km",
-        "doorsNum": 4,
-        "peopleNum": 5,
-        "description": "",
-        "image": "/static/mercedes.png",
-        "status": true
-      },
-
-      {
-        "id": 8,
-        "brand": "Audi",
-        "model": "A3",
-        "price": 6000,
-        "vehicleType": "truck",
-        "rentalObject": 1,
-        "transType": "Manual",
-        "fuelType": "diesel",
-        "consumption": "6.6l/100km",
-        "doorsNum": 4,
-        "peopleNum": 5,
-        "description": "",
-        "image": "/static/audiTruck.png",
-        "status": false
-      }
-    ],
-    "workHours": "09-18h",
-    "status": true,
-    "location": "Novi Sad",
-    "grade": "4.5",
-    "imagePath": "/static/rental.jpg",
-    "id": 1
-  },
-
-  {
-    "name": "Suzuki Rental",
-    "vehicles": [
-      {
-        "id": 2,
-        "brand": "BMW",
-        "model": "x1",
-        "price": 6000,
-        "vehicleType": "car",
-        "rentalObject": 2,
-        "transType": "Manual",
-        "fuelType": "petrol",
-        "consumption": "6.6l/100km",
-        "doorsNum": 4,
-        "peopleNum": 5,
-        "description": "",
-        "image": "/static/aninakola.png",
-        "status": false
-      }
-    ],
-    "workHours": "08-16h",
-    "status": false,
-    "location": "Beograd",
-    "grade": "3.8",
-    "imagePath": "/static/rental2.jpg",
-    "id": 2
-  },
-
-  {
-    "name": "Braca Bajic",
-    "vehicles": [
-      {
-        "id": 4,
-        "brand": "Ford",
-        "model": "KM7",
-        "price": 4000,
-        "vehicleType": "mobilehome",
-        "rentalObject": 3,
-        "transType": "Manual",
-        "fuelType": "petrol",
-        "consumption": "6.6l/100km",
-        "doorsNum": 4,
-        "peopleNum": 5,
-        "description": "",
-        "image": "/static/van.png",
-        "status": false
-      },
-      {
-        "id": 5,
-        "brand": "Mazda",
-        "model": "xr",
-        "price": 8000,
-        "vehicleType": "car",
-        "rentalObject": 3,
-        "transType": "Manual",
-        "fuelType": "electric",
-        "consumption": "6.6l/100km",
-        "doorsNum": 4,
-        "peopleNum": 5,
-        "description": "",
-        "image": "/static/mazda.png",
-        "status": false
-      }
-    ],
-    "workHours": "09-20h",
-    "status": true,
-    "location": "Novi Sad",
-    "grade": "5",
-    "imagePath": "/static/rental3.jpg",
-    "id": 3
-  },
-  {
-    "name": "Nis-autoK",
-    "vehicles": [
-      {
-        "id": 10,
-        "brand": "Toyota",
-        "model": "Fortuner",
-        "price": 8000,
-        "vehicleType": "truck",
-        "rentalObject": 4,
-        "transType": "Manual",
-        "fuelType": "electric",
-        "consumption": "6.6l/100km",
-        "doorsNum": 4,
-        "peopleNum": 5,
-        "description": "",
-        "image": "/static/toyota.png",
-        "status": false
-      }
-    ],
-    "workHours": "08-16h",
-    "status": false,
-    "location": "Nis",
-    "grade": "4.7",
-    "imagePath": "/static/rental4.jpg",
-    "id": 4
-  },
-  {
-    "name": "Mazda",
-    "vehicles": [
-      {
-        "id": 7,
-        "brand": "Kamioncic",
-        "model": "XR",
-        "price": 8000,
-        "vehicleType": "mobilehome",
-        "rentalObject": 5,
-        "transType": "Manual",
-        "fuelType": "petrol",
-        "consumption": "6.6l/100km",
-        "doorsNum": 4,
-        "peopleNum": 5,
-        "description": "",
-        "image": "/static/van.png",
-        "status": false
-      }
-    ],
-    "workHours": "07-17h",
-    "status": true,
-    "location": "Zrenjanin",
-    "grade": "3",
-    "imagePath": "/static/rental5.jpg",
-    "id": 5
-  }
+    {
+        "name": "Marko Rental",
+        "vehicles": [
+            {
+                "brand": "Tesla",
+                "model": "S Plaid",
+                "price": "5500",
+                "vehicleType": "car",
+                "rentalObject": "1",
+                "transType": "Manual",
+                "fuelType": "gasoline",
+                "consumption": "",
+                "doorsNum": "3",
+                "peopleNum": "3",
+                "description": "",
+                "image": "/static/tesla.png",
+                "status": "Available",
+                "id": 1
+            },
+            {
+                "brand": "BMW",
+                "model": "X1",
+                "price": "20000",
+                "vehicleType": "car",
+                "rentalObject": "1",
+                "transType": "Manual",
+                "fuelType": "gasoline",
+                "consumption": "",
+                "doorsNum": "3",
+                "peopleNum": "3",
+                "description": "",
+                "image": "/static/bmw.png",
+                "status": "Available",
+                "id": 2
+            },
+            {
+                "brand": "Audi",
+                "model": "A8",
+                "price": "16000",
+                "vehicleType": "car",
+                "rentalObject": "2",
+                "transType": "Manual",
+                "fuelType": "diesel",
+                "consumption": "",
+                "doorsNum": "4",
+                "peopleNum": "5",
+                "description": "",
+                "image": "/static/audi8.png",
+                "status": "Available",
+                "id": 3
+            }
+        ],
+        "workHours": "8",
+        "status": true,
+        "location": "Novi Sad",
+        "grade": "4.5",
+<<<<<<< HEAD
+        "path": ".static/images/aaaa.png",
+        "id": 1
+    },
+    
+    {
+        "name": "SrdinaKola",
+        "vehicles": [
+            "BMW",
+            "Porsche",
+            "RR"
+        ],
+        "workHours": "8",
+        "status": false,
+        "location": "Beograd",
+        "grade": "3.8",
+        "path": "../assets/images/aaaa.png",
+=======
+        "imagePath": "/static/rental.jpg",
+>>>>>>> e04009714e482c61ddf50c3f19333ad10891b8e3
+        "id": 2
+    },
+    {
+        "name": "Braca Bajic",
+        "vehicles": [
+            {
+                "brand": "Audi",
+                "model": "A6",
+                "price": "6700",
+                "vehicleType": "track",
+                "rentalObject": "3",
+                "transType": "Manual",
+                "fuelType": "gasoline",
+                "consumption": "",
+                "doorsNum": "2",
+                "peopleNum": "2",
+                "description": "",
+                "image": "/static/audiTruck.png",
+                "status": "Available",
+                "id": 4
+            }
+        ],
+        "workHours": "8",
+        "status": true,
+        "location": "Novi Sad",
+        "grade": "5",
+        "imagePath": "/static/rental3.jpg",
+        "id": 3
+    },
+    {
+        "name": "Nis-autoK",
+        "vehicles": [
+            {
+                "brand": "Toyota",
+                "model": "2755",
+                "price": "4000",
+                "vehicleType": "car",
+                "rentalObject": "4",
+                "transType": "Manual",
+                "fuelType": "gasoline",
+                "consumption": "",
+                "doorsNum": "4",
+                "peopleNum": "4",
+                "description": "",
+                "image": "/static/toyota.png",
+                "status": "Available",
+                "id": 5
+            },
+            {
+                "brand": "Suzuki",
+                "model": "53",
+                "price": "4600",
+                "vehicleType": "car",
+                "rentalObject": "4",
+                "transType": "Manual",
+                "fuelType": "diesel",
+                "consumption": "",
+                "doorsNum": "4",
+                "peopleNum": "5",
+                "description": "",
+                "image": "/static/suzuki.png",
+                "status": "Available",
+                "id": 6
+            }
+        ],
+        "workHours": "10",
+        "status": false,
+        "location": "Nis",
+        "grade": "4.7",
+        "imagePath": "/static/rental4.jpg",
+        "id": 4
+    },
+    {
+        "name": "Mazda",
+        "vehicles": [
+            {
+                "brand": "Mazda",
+                "model": "Hatchback",
+                "price": "7000",
+                "vehicleType": "car",
+                "rentalObject": "5",
+                "transType": "Manual",
+                "fuelType": "gasoline",
+                "consumption": "",
+                "doorsNum": "5",
+                "peopleNum": "5",
+                "description": "",
+                "image": "/static/mazda2.png",
+                "status": "Available",
+                "id": 7
+            },
+            {
+                "brand": "Mazda",
+                "model": "CX-30",
+                "price": "8000",
+                "vehicleType": "track",
+                "rentalObject": "5",
+                "transType": "Manual",
+                "fuelType": "hybrid",
+                "consumption": "",
+                "doorsNum": "3",
+                "peopleNum": "3",
+                "description": "",
+                "image": "/static/mazda.png",
+                "status": "Available",
+                "id": 8
+            }
+        ],
+        "workHours": "12",
+        "status": true,
+        "location": "Zrenjanin",
+        "grade": "3",
+        "imagePath": "/static/rental5.jpg",
+        "id": 5
+    }
 ]
