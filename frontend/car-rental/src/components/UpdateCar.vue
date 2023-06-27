@@ -30,6 +30,9 @@
             <option value="electric">Electric</option>
           </select>
   
+          <label for="consumption">Consumption:</label>
+        <input type="text" id="cons" v-model="form.consumption" required>
+        
           <label for="doors">Number of Doors:</label>
           <input type="number" id="doors" v-model="form.doorsNum" required>
   

@@ -1,4 +1,5 @@
 const rentalCarRepo = require("../repo/rental_car_repo");
+const orderService=require("../service/order_service");
 
 function create(car_rental) {
   return rentalCarRepo.create(car_rental);
@@ -87,6 +88,8 @@ function getAllVehicles(id) {
   return rentalCarRepo.getAllVehicles(id);
 }
 
+
+
 module.exports = {
   create,
   remove,
@@ -94,7 +97,6 @@ module.exports = {
   getById,
   update,
   getSortedCarsByStatus,
-
   getAllVehicles,
 
   addNewCar,

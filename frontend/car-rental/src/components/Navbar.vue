@@ -3,7 +3,7 @@
     <ul class="navbar-nav">
       <li class="nav-item nav-item-logo">
         <router-link to="/" class="nav-link">
-          <img src="../assets/images/rental22.png" alt="Car Rental Logo" class="nav-logo" />
+          <img src="../assets/images/rental222.png" alt="Car Rental Logo" class="nav-logo" />
         </router-link>
       </li>
       <li class="nav-item nav-item-left">
@@ -77,10 +77,10 @@ export default {
 
 .nav-logo {
   width: 100px;
-  height: 120px;
+  height: 50px;
   position: absolute;
   top: 50%;
-  left: 3%;
+  left: 4%;
   transform: translate(-50%, -50%);
 }
 

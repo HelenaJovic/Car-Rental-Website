@@ -50,6 +50,7 @@ export default {
   components: {
     navBar: Navbar,
     vehicleCard: VehicleCard
+
   },
   data() {
     return {

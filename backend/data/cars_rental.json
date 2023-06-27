@@ -11,7 +11,7 @@
                 "transType": "Manual",
                 "fuelType": "gasoline",
                 "consumption": "",
-                "doorsNum": "3",
+                "doorsNum": "4",
                 "peopleNum": "3",
                 "description": "",
                 "image": "/static/tesla.png",
@@ -134,7 +134,7 @@
             {
                 "brand": "Mazda",
                 "model": "Hatchback",
-                "price": "7100",
+                "price": "7200",
                 "vehicleType": "car",
                 "rentalObject": "5",
                 "transType": "Manual",

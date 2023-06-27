@@ -1,7 +1,6 @@
 class Order {
   constructor(
     id,
-    orderId,
     vehicles,
     rentalObject,
     date,
@@ -10,8 +9,7 @@ class Order {
     buyer,
     orderStatus
   ) {
-    this.id;
-    this.orderId = orderId;
+        this.id = id;
     this.vehicles = vehicles;
     this.rentalObject = rentalObject;
     this.date = date;
