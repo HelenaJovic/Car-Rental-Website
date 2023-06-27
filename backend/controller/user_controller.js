@@ -81,7 +81,11 @@ router.post("/login", async (req, res) => {
 
   if (user && user.password == password) {
     const token = jwt.sign(
-      { id: user.id, exp: Math.floor(Date.now() / 1000) + 60 * 60 },
+      {
+        id: user.id,
+        role: user.role,
+        exp: Math.floor(Date.now() / 1000) + 60 * 60,
+      },
       secretKey
     );
 

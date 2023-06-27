@@ -3,7 +3,9 @@
     <ul class="navbar-nav">
       <li class="nav-item nav-item-logo">
         <router-link to="/" class="nav-link">
+
           <img src="../assets/images/rental222.png" alt="Car Rental Logo" class="nav-logo" />
+
         </router-link>
       </li>
       <li class="nav-item nav-item-left">
@@ -71,9 +73,8 @@ export default {
 .navbar {
   background-color: lightslategray;
   padding: 16px;
-  position: relative; /* Dodajte relativnu poziciju na navbar */
+  position: relative;
 }
-
 
 .nav-logo {
   width: 100px;
@@ -83,8 +84,6 @@ export default {
   left: 4%;
   transform: translate(-50%, -50%);
 }
-
-
 
 .navbar-nav {
   display: flex;
@@ -111,5 +110,4 @@ export default {
 .nav-item-left {
   margin-right: 1%;
 }
-
 </style>
