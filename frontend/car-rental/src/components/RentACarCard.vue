@@ -105,5 +105,5 @@ h3 {
 
 .details:hover {
   color: black;
-}
+align-content: flex-end;}
 </style>

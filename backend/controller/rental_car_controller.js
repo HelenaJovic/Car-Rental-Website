@@ -12,6 +12,8 @@ router.get("/sortedCars", (req, res) => {
   res.json(rentalCarService.getSortedCarsByStatus());
 });
 
+
+
 router.post("/", (req, res) => {
   const car = req.body;
   try {

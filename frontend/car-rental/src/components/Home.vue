@@ -165,7 +165,7 @@ export default {
   height: 90%;
   width: 95%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
   grid-gap: 20px;
   overflow-y: auto;
   scrollbar-width: thin;
@@ -176,9 +176,8 @@ export default {
 
 .search-container {
   display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-  flex-direction: row;
+  align-self: flex-start;
+  padding:  5px 5px 5px 5px;
 }
 
 .search-container p {
