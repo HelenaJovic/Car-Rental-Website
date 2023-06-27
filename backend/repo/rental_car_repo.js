@@ -8,6 +8,7 @@ function create(car_rental) {
 
   cars_rental.push(car_rental);
   json_utils.saveDataToFile(cars_rental, path);
+  return car_rental.id;
 }
 
 function findIndex(cars_rental, id) {

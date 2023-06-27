@@ -3,7 +3,7 @@
     <navBar></navBar>
     <div class="main-container">
       <div class="register-form">
-        <h2>Your profile</h2>
+        <h2>Register new manager</h2>
         <form>
           <div class="form-group">
             <label for="username">Username</label>
@@ -14,12 +14,24 @@
             <input type="password" id="password" v-model="form.password" />
           </div>
           <div class="form-group">
+            <label for="new_password">Confirm password</label>
+            <input
+              type="password"
+              id="new_password"
+              v-model="form.new_password"
+            />
+          </div>
+          <div class="form-group">
             <label for="name">Name</label>
             <input type="text" id="name" v-model="form.name" />
           </div>
           <div class="form-group">
             <label for="surname">Surname</label>
             <input type="text" id="surname" v-model="form.surname" />
+          </div>
+          <div class="form-group">
+            <label for="role">User role</label>
+            <input type="text" id="role" v-model="form.role" />
           </div>
           <div class="form-group">
             <label for="gender">Gender</label>
@@ -35,7 +47,9 @@
             <input type="date" id="birthday" v-model="form.birthday" />
           </div>
           <div class="form-group">
-            <button type="button" v-on:click="submitForm()">Update</button>
+            <button type="submit" v-on:click.prevent="submitForm()">
+              Register
+            </button>
           </div>
         </form>
       </div>
@@ -45,7 +59,6 @@
 
 <script>
 import axios from "axios";
-import jwt_decode from "jwt-decode";
 import Navbar from "./Navbar.vue";
 
 export default {
@@ -57,45 +70,36 @@ export default {
       form: {
         username: "",
         password: "",
+        new_password: "",
         name: "",
         surname: "",
         gender: "",
-        birthday: ""
+        birthday: "",
+        basket: null,
+        role: "Manager",
+        pastRentals: null,
+        rentalObject: null,
+        points: null,
+        buyerType: null
       }
     };
   },
-
   methods: {
     submitForm() {
-      const token = localStorage.getItem("token");
-      const decoded = jwt_decode(token);
+      if (this.form.password !== this.form.new_password) {
+        this.$toastr.e("Passwords do not match!");
+        return;
+      }
       axios
-        .put(`http://localhost:8081/users/${decoded.id}`, this.form)
+        .post("http://localhost:8081/users", this.form)
         .then(response => {
-          this.$toastr.s("Successfully updated!");
-          this.$forceUpdate();
+          this.$toastr.s("Successfully registered!");
+          this.$router.push("/");
         })
-        .catch(error => {
+        .catch(err => {
           this.$toastr.e("This username already exists!");
         });
-    },
-    getUserData() {
-      const token = localStorage.getItem("token");
-      const decoded = jwt_decode(token);
-      axios
-        .get(`http://localhost:8081/users/${decoded.id}`)
-        .then(response => {
-          this.form = response.data;
-        })
-
-        .catch(error => {
-          console.error(error);
-          window.alert("An error occurred while fetching user data");
-        });
     }
-  },
-  mounted() {
-    this.getUserData();
   }
 };
 </script>
@@ -113,6 +117,7 @@ export default {
   padding: 20px;
   background-color: #f2f2f2;
   border-radius: 5px;
+  background-color: #f5f5f5;
 }
 
 .register-form h2 {
@@ -144,7 +149,7 @@ export default {
   padding: 10px;
   font-size: 16px;
   border-radius: 5px;
-  background-color: #4caf50;
+  background-color: black;
   color: #fff;
   border: none;
 }

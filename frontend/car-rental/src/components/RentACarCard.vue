@@ -7,7 +7,7 @@
       </div>
 
       <div>
-        <h4 class="location">Location:📍 {{ car.location }}</h4>
+        <h4 class="location">Location:📍 {{ car.location.adress }}</h4>
       </div>
     </div>
     <div class="bottom-div">
@@ -37,10 +37,13 @@ export default {
   box-shadow: 0px 2px 6px rgba(82, 42, 8, 0.3);
   transition: transform 0.3s ease;
   cursor: pointer;
-  background-color: rgba(242, 237, 230, 0.8); /* Use RGBA color with desired transparency */
+  background-color: rgba(
+    242,
+    237,
+    230,
+    0.8
+  ); /* Use RGBA color with desired transparency */
 }
-
-
 
 .rent-a-car-card:hover {
   transform: translateY(-2px);

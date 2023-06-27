@@ -13,6 +13,20 @@ function findIndex(users, id) {
   return users.findIndex((user) => user.id === parseInt(id));
 }
 
+function updateManager(id, rentalObjectId) {
+  const users = json_utils.jsonReader(path);
+
+  index = findIndex(users, id);
+
+  users[index].rentalObject = rentalObjectId;
+
+  users[index].id = parseInt(id, 10);
+
+  json_utils.saveDataToFile(users, path);
+
+  return users[index];
+}
+
 function update(id, updatedUser) {
   const users = json_utils.jsonReader(path);
 
@@ -57,4 +71,21 @@ function getByUsername(username) {
   return user;
 }
 
-module.exports = { create, update, remove, getAll, getById, getByUsername };
+function getAvailableManagers() {
+  var users = json_utils.jsonReader(path);
+  var availableManagers = users.filter(
+    (user) => user.role == "Manager" && user.rentalObject == null
+  );
+  return availableManagers;
+}
+
+module.exports = {
+  create,
+  update,
+  remove,
+  getAll,
+  getById,
+  getByUsername,
+  getAvailableManagers,
+  updateManager,
+};
