@@ -17,8 +17,8 @@ router.get("/sortedCars", (req, res) => {
 router.post("/", (req, res) => {
   const car = req.body;
   try {
-    rentalCarService.create(car);
-    res.status(200).json({ message: "Car created successfully" });
+    const id = rentalCarService.create(car);
+    res.status(200).json({ id: id });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Failed to create rental car" });
@@ -27,7 +27,7 @@ router.post("/", (req, res) => {
 
 router.put("/:id", (req, res) => {
   const carId = req.params.id;
-  const updatedData = req.body; 
+  const updatedData = req.body;
   const updatedCar = rentalCarService.update(carId, updatedData);
 
   if (!updatedCar) {
@@ -60,7 +60,7 @@ router.get("/:id", (req, res) => {
 
   try {
     var car = rentalCarService.getById(id);
-    console.log(car);
+
     res.status(200).json(car);
   } catch (error) {
     res.status(404).json({ error: "Car not found" });

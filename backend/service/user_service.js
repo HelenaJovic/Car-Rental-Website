@@ -24,4 +24,21 @@ function getByUsername(username) {
   return userRepo.getByUsername(username);
 }
 
-module.exports = { create, remove, getAll, getById, update, getByUsername };
+function getAvailableManagers() {
+  return userRepo.getAvailableManagers();
+}
+
+function updateManager(id, rentalObjectId) {
+  return userRepo.updateManager(id, rentalObjectId);
+}
+
+module.exports = {
+  create,
+  remove,
+  getAll,
+  getById,
+  update,
+  getByUsername,
+  getAvailableManagers,
+  updateManager,
+};

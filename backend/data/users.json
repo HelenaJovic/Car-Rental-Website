@@ -62,5 +62,53 @@
     "points": null,
     "buyerType": null,
     "id": 4
+  },
+  {
+    "username": "marko car",
+    "password": "markic",
+    "new_password": "markic",
+    "name": "Marko",
+    "surname": "Markovic",
+    "gender": "male",
+    "birthday": "1996-07-16",
+    "basket": null,
+    "role": "Manager",
+    "pastRentals": null,
+    "rentalObject": 7,
+    "points": null,
+    "buyerType": null,
+    "id": 5
+  },
+  {
+    "username": "Aca manager",
+    "password": "111",
+    "new_password": "111",
+    "name": "Aleksa",
+    "surname": "Milic",
+    "gender": "male",
+    "birthday": "1998-06-16",
+    "basket": null,
+    "role": "Manager",
+    "pastRentals": null,
+    "rentalObject": 2,
+    "points": null,
+    "buyerType": null,
+    "id": 6
+  },
+  {
+    "username": "Lessort",
+    "password": "123",
+    "new_password": "123",
+    "name": "Mathias",
+    "surname": "Lessort",
+    "gender": "male",
+    "birthday": "1992-06-16",
+    "basket": null,
+    "role": "Manager",
+    "pastRentals": null,
+    "rentalObject": 4,
+    "points": null,
+    "buyerType": null,
+    "id": 7
   }
 ]

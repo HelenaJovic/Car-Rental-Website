@@ -229,7 +229,7 @@ export default {
   height: 33px;
 
   position: absolute;
-  top: 28%;
+  top: 24%;
   right: 1.2%;
   transform: translate(-50%, -50%);
 }
