@@ -13,6 +13,7 @@
     "rentalObject": null,
     "points": null,
     "buyerType": null,
+    "image": "/static/user2.png",
     "id": 1
   },
   {
@@ -29,6 +30,7 @@
     "rentalObject": null,
     "points": null,
     "buyerType": null,
+    "image": "/static/user4.png",
     "id": 2
   },
   {
@@ -45,6 +47,7 @@
     "rentalObject": null,
     "points": null,
     "buyerType": null,
+    "image": "/static/administrator.png",
     "id": 3
   },
   {
@@ -56,11 +59,12 @@
     "gender": "female",
     "birthday": "2023-07-05",
     "basket": null,
-    "role": "buyer",
+    "role": "Manager",
     "pastRentals": null,
-    "rentalObject": null,
+    "rentalObject": 2,
     "points": null,
     "buyerType": null,
+    "image": "/static/user5.png",
     "id": 4
   }
 ]

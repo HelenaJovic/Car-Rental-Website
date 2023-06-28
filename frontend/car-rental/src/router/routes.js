@@ -13,7 +13,7 @@ export default [
   { path: "/", component: Home },
   { path: "/register", component: Register },
   { path: "/login", component: Login },
-  { path: "/display", component: YourProfile },
+  { path: "/display/:id", component: YourProfile },
   { path: "/updateUser", component: UpdateUser },
   { path: "/singleObject/:id", component: SingleCarObject },
   { path: "/vehicle/:id", component: VehicleForm },

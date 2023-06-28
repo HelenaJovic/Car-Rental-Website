@@ -4,8 +4,10 @@ const orderService = require("../service/order_service");
 
 router.use(express.json());
 
-router.get("/", (req, res) => {
-  res.json(orderService.getAllOrders());
+router.get("/:idUser", (req, res) => {
+    const id = parseInt(req.params.idUser, 10);
+
+  res.json(orderService.getAllOrders(id));
 });
 
 router.post("/", (req, res) => {

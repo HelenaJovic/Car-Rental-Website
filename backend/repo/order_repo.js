@@ -2,6 +2,7 @@ const path = "./data/orders.json";
 const fs = require("fs");
 const json_utils = require("../utils/json_utils");
 const rentalRepo=require("../repo/rental_car_repo");
+const userRepo=require("../repo/user_repo");
 
 function create(order) {
   const orders = json_utils.jsonReader(path);
@@ -27,6 +28,23 @@ function getDate(orderId) {
     }
   }
 
+
+  function getByRole(currentUserId) {
+    const orders = getAll();
+    const user=userRepo.getById(currentUserId);
+
+  
+    if (user.role === 'Buyer') {
+      const buyerOrders = orders.filter(order => order.buyer === currentUserId);
+      return buyerOrders;
+    } else if (user.role === 'Manager') {
+      const managerOrders = orders.filter(order => order.rentalObject === user.rentalObject);
+      return managerOrders;
+    } else {
+      return [];
+    }
+  }
+  
 
  
   function getAllVehicles(id) {
@@ -101,19 +119,30 @@ function getRental(id) {
     const rentalId = order.rentalObject;
     const rentalObject = rentalRepo.getById(rentalId);
   
-    console.log(order);
-    console.log(rentalObject);
-    console.log(rentalId);
+  
     return rentalObject;
   }
+
+  function getUser(id) {
+    const order = getById(id);
+
+    const userId = order.buyer;
+    const user = userRepo.getById(userId);
+  
+    
+    return user;
+  }
+
+  
   
 
 function getById(id) {
   const orders = json_utils.jsonReader(path);
   index = findIndex(orders, id);
 
+
   return orders[index];
 }
 
-module.exports = { create, update, remove, getAll, getById,getDate,getDuration,getPrice,getStatus,getAllVehicles,getRental
+module.exports = { create, update, remove, getAll, getById,getDate,getDuration,getPrice,getStatus,getAllVehicles,getRental,getByRole,getUser
 };
