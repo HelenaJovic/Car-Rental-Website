@@ -10,7 +10,8 @@ class OrderByerDTO {
     vehicles,
     userName,
     surname,
-    idUser
+    idUser,
+    rentalId
   ) {
     this.orderId = orderId;
     this.date = date;
@@ -23,6 +24,7 @@ class OrderByerDTO {
     this.userName=userName;
     this.surname=surname;
     this.idUser=idUser;
+    this.rentalId=rentalId;
   }
 }
 

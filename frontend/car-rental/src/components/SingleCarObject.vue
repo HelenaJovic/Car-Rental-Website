@@ -16,7 +16,7 @@
           <p :class="['status', carObject.status ? 'opened' : 'closed']">
             Status: {{ carObject.status ? "Opened" : "Closed" }}
           </p>
-          <button class="form-group" type="button" v-on:click="addVehicle(carObject.id)" >Add Vehicle</button>
+          <button class="form-group" type="button" v-on:click="addVehicle(carObject.id)" v-if="IsManager">Add Vehicle</button>
         </div>
       </div>
 
@@ -30,6 +30,7 @@
           :rental-car-id="id"
           :update-car="updateCar"
           :delete-car="deleteCar"
+          :is-manager="IsManager"
         ></vehicleCard>
 
     
@@ -45,6 +46,8 @@
 import axios from "axios";
 import Navbar from "./Navbar.vue";
 import VehicleCard from "./VehicleCard.vue";
+import jwt_decode from "jwt-decode";
+
 
 export default {
   components: {
@@ -65,16 +68,16 @@ export default {
         grade: "",
         vehicles: []
       },
-      IsManager:false
+      IsManager:false,
+      IsManagerHelper:false
     };
   },
   methods: {
     addVehicle(id) {
       this.$router.push({ path: "/vehicle/" + id });
     },
+    
     deleteCar(vehicleId,id) {
-      // Implement your logic to delete the car with the given ID
-      // For example:
       
       axios
       .delete(`http://localhost:8081/vehicles/${vehicleId}/${id}`)
@@ -94,10 +97,23 @@ export default {
 
   },
   mounted() {
-    axios
+    const token = localStorage.getItem("token");
+      const decoded = jwt_decode(token);
+          axios
       .get(`http://localhost:8081/cars/${this.id}`)
       .then(response => {
         this.carObject = response.data;
+      })
+      .catch(error => {
+        console.error(error);
+        window.alert("An error occurred while fetching user data");
+      });
+
+      axios
+      .get(`http://localhost:8081/cars/${this.id}/${decoded.id}`)
+      .then(response => {
+        this.IsManager = response.data;
+        console.log(this.IsManager)
       })
       .catch(error => {
         console.error(error);

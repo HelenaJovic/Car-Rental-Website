@@ -25,10 +25,12 @@ function getAllOrders(userId) {
       orderDto.duration = orderRepo.getDuration(order.id);
       orderDto.vehicles=order.vehicles;
       const user=orderRepo.getUser(order.id);
-
+      const rentalObject=orderRepo.getRental(order.id);
+      orderDto.rentalId=rentalObject.id;
+      console.log(orderDto.rentalId)
 
       if(loggedUser.role==="Buyer")
-      {const rentalObject=orderRepo.getRental(order.id);
+      {
         orderDto.name = rentalObject.name;
         orderDto.logo = rentalObject.imagePath;}
       else if(loggedUser.role=="Manager")

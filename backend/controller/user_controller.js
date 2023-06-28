@@ -8,8 +8,21 @@ const secretKey = process.env.SECRET_KEY;
 
 router.use(express.json());
 
+router.get("/managers", (req, res) => {
+  res.json(userService.getAvailableManagers());
+});
+
 router.get("/", (req, res) => {
   res.json(userService.getAll());
+});
+
+router.put("/:id/:rentalObjectId", (req, res) => {
+  const userId = parseInt(req.params.id, 10);
+  const rentalObjectId = parseInt(req.params.rentalObjectId, 10);
+
+  const updateManager = userService.updateManager(userId, rentalObjectId);
+
+  res.json(updateManager);
 });
 
 router.post("/", (req, res) => {

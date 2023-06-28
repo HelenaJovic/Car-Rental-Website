@@ -53,7 +53,9 @@
         ],
         "workHours": "8",
         "status": true,
-        "location": "Novi Sad",
+        "location": {
+            "adress": "Gunduliceva 67, Novi Sad"
+        },
         "grade": "4.5",
         "imagePath": "/static/rental.jpg",
         "id": 2
@@ -80,7 +82,9 @@
         ],
         "workHours": "8",
         "status": true,
-        "location": "Novi Sad",
+        "location": {
+            "adress": "Puskinova 43, Novi Sad"
+        },
         "grade": "5",
         "imagePath": "/static/rental3.jpg",
         "id": 3
@@ -91,7 +95,7 @@
             {
                 "brand": "Toyota",
                 "model": "2755",
-                "price": "4500",
+                "price": "4000",
                 "vehicleType": "car",
                 "rentalObject": "4",
                 "transType": "Manual",
@@ -107,7 +111,7 @@
             {
                 "brand": "Suzuki",
                 "model": "53",
-                "price": "4700",
+                "price": "4600",
                 "vehicleType": "car",
                 "rentalObject": "4",
                 "transType": "Manual",
@@ -123,7 +127,9 @@
         ],
         "workHours": "10",
         "status": false,
-        "location": "Nis",
+        "location": {
+            "adress": "Pasiceva 1, Nis"
+        },
         "grade": "4.7",
         "imagePath": "/static/rental4.jpg",
         "id": 4
@@ -134,7 +140,7 @@
             {
                 "brand": "Mazda",
                 "model": "Hatchback",
-                "price": "7200",
+                "price": "7000",
                 "vehicleType": "car",
                 "rentalObject": "5",
                 "transType": "Manual",
@@ -166,9 +172,35 @@
         ],
         "workHours": "12",
         "status": true,
-        "location": "Zrenjanin",
+        "location": {
+            "adress": "Gajeva 26, Nis"
+        },
         "grade": "3",
         "imagePath": "/static/rental5.jpg",
         "id": 5
+    },
+    {
+        "name": "Ana Rental",
+        "workHours": "09-18h",
+        "vehicles": [],
+        "location": {
+            "adress": "Skenderbegova 3, Beograd"
+        },
+        "status": false,
+        "grade": null,
+        "imagePath": "/static/rental3.jpg",
+        "id": 6
+    },
+    {
+        "name": "Rental SLK",
+        "workHours": "10-18h",
+        "vehicles": [],
+        "location": {
+            "adress": "Skadarlijska 28, Beograd"
+        },
+        "status": false,
+        "grade": null,
+        "imagePath": "/static/rental2.jpg",
+        "id": 7
     }
 ]

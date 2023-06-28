@@ -117,7 +117,10 @@
 
   </div>
   <div class="title-container"  >
+  <router-link :to="'/singleObject/' + rentalId">
+
 <h2 class="changeName">{{name}}</h2>
+</router-link>
 </div>
   <div class="filter-box">
     <label for="sort-by">Sort By:</label>
@@ -200,7 +203,8 @@ export default {
       selectedSortField: "",
       IsBuyer:false,
       IsManager:false,
-      name:""
+      name:"",
+      rentalId:0
 
     };
   },
@@ -330,6 +334,8 @@ export default {
         .then(response => {
           this.orders = response.data; 
           this.name=this.orders[0].name;
+          this.rentalId=this.orders[0].rentalId;
+          console.log(this.rentalId);
 
         })
         .catch(error => {
@@ -453,6 +459,10 @@ padding: 10px;}
 
 .name:hover{
   color: darkblue;
+}
+.changeName:hover{
+  color: darkblue;
+  font-size: 40px;
 }
 
 .order-list {

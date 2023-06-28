@@ -19,6 +19,14 @@
         >
       </li>
       <li class="nav-item">
+        <router-link
+          to="/registerManager"
+          v-if="isAdministrator"
+          class="nav-link"
+          >Register manager</router-link
+        >
+      </li>
+      <li class="nav-item">
         <router-link to="/updateUser" v-if="isLoggedIn" class="nav-link"
           >Your profile</router-link
         >
@@ -37,13 +45,15 @@
 </template>
 
 <script>
+import jwt_decode from "jwt-decode";
 import { eventBus } from "../main.js";
 import { isLoggedIn } from "../auth/auth-service";
 
 export default {
   data() {
     return {
-      isLoggedIn: false
+      isLoggedIn: false,
+      isAdministrator: false
     };
   },
 
@@ -54,6 +64,7 @@ export default {
     });
 
     this.isLoggedIn = isLoggedIn();
+    this.checkIfAdministrator();
   },
 
   destroyed() {
@@ -64,6 +75,15 @@ export default {
     LogOut() {
       localStorage.removeItem("token");
       window.location.reload();
+    },
+
+    checkIfAdministrator() {
+      const token = localStorage.getItem("token");
+      const decoded = jwt_decode(token);
+
+      if (decoded.role == "Administrator") {
+        this.isAdministrator = true;
+      }
     }
   }
 };
