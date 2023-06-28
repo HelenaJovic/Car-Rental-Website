@@ -8,6 +8,7 @@ import SingleCarObject from "../components/SingleCarObject.vue";
 
 import VehicleForm from "../components/VehicleForm.vue";
 import AddCarObject from "../components/AddCarObject.vue";
+import RegisterManager from "../components/RegisterManager.vue";
 
 export default [
   { path: "/", component: Home },
@@ -18,5 +19,6 @@ export default [
   { path: "/singleObject/:id", component: SingleCarObject },
   { path: "/vehicle/:id", component: VehicleForm },
   { path: "/updateCar/:id1/:id2", component: UpdateAddedCar },
-  { path: "/addObject", component: AddCarObject }
+  { path: "/addObject", component: AddCarObject },
+  { path: "/registerManager", component: RegisterManager }
 ];
