@@ -63,7 +63,7 @@
         "vehicles": [
             {
                 "brand": "Audi",
-                "model": "A6",
+                "model": "A5",
                 "price": "7000",
                 "vehicleType": "track",
                 "rentalObject": "3",
