@@ -49,7 +49,7 @@
     },
     {
         "brand": "Audi",
-        "model": "A6",
+        "model": "A3",
         "price": "6700",
         "vehicleType": "track",
         "rentalObject": "3",
@@ -98,7 +98,7 @@
     {
         "brand": "Mazda",
         "model": "Hatchback",
-        "price": "7000",
+        "price": "6000",
         "vehicleType": "car",
         "rentalObject": "5",
         "transType": "Manual",
