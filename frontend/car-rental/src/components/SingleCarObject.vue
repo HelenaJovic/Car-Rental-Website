@@ -10,7 +10,7 @@
 
           <p>Working hours: {{ carObject.workHours }}</p>
 
-          <p>Location: {{ carObject.location }}</p>
+          <p>Location: {{ carObject.location.adress }}</p>
 
           <p v-if="carObject.grade">Average grade: {{ carObject.grade }}</p>
           <p :class="['status', carObject.status ? 'opened' : 'closed']">
@@ -22,7 +22,6 @@
 
       <div class="helping-container">
         <div class="grid-item-2">
-         
           <vehicleCard
           v-for="vehicle in carObject.vehicles"
           :key="vehicle.id"
@@ -58,12 +57,14 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      vehicleId:0,
+      vehicleId: 0,
       carObject: {
         name: "",
         workHours: "",
         status: "",
-        location: "",
+        location: {
+          adress: ""
+        },
         imagePath: "",
         grade: "",
         vehicles: []
@@ -80,21 +81,19 @@ export default {
     deleteCar(vehicleId,id) {
       
       axios
-      .delete(`http://localhost:8081/vehicles/${vehicleId}/${id}`)
-        .then(()=>{
-          this.$router.push({ path: '/singleObject/' + id })
-          this.$toastr.s("Succesufully deleted!")
-        }
-        )
+        .delete(`http://localhost:8081/vehicles/${vehicleId}/${id}`)
+        .then(() => {
+          this.$router.push({ path: "/singleObject/" + id });
+          this.$toastr.s("Succesufully deleted!");
+        })
         .catch(error => {
-          console.log(error)
+          console.log(error);
           this.$toastr.e("Can not delete car!");
         });
     },
     updateCar(vehicleId, id) {
-  this.$router.push({ path: '/updateCar/' + vehicleId + '/' + id });
-}
-
+      this.$router.push({ path: "/updateCar/" + vehicleId + "/" + id });
+    }
   },
   mounted() {
     const token = localStorage.getItem("token");
@@ -228,6 +227,5 @@ p.grade {
   color: #fff;
   border: none;
   padding: 10px;
-
 }
 </style>
