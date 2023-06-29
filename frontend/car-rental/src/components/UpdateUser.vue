@@ -6,6 +6,9 @@
         <h2>Your profile</h2>
         <form>
           <div class="form-group">
+            <div class="image-manager">
+            <img :src="form.image" class="order-logo"> 
+          </div>
             <label for="username">Username</label>
             <input type="text" id="username" v-model="form.username" />
           </div>
@@ -39,7 +42,8 @@
           </div>
         </form>
       </div>
-      <div class="displayOrder ">
+      <div class="displayOrder " v-if="IsBuyer">
+
         <div class="order-header">
           <div class="search-box">
             <input
@@ -123,8 +127,74 @@
             </div>
           </li>
         </ul>
+        </div>
+      <div class="displayOrder " v-if="IsManager">
+
+<div class="order-header">
+  <div class="search-box">
+    <input
+  type="text"
+  v-model="search"
+  class="search-input"
+  placeholder="Price1 - Price2,Date1 - Date2"
+/><label>🔍</label>
+
+  </div>
+  <div class="title-container"  >
+  <router-link :to="'/singleObject/' + rentalId">
+
+<h2 class="changeName">{{name}}</h2>
+</router-link>
+</div>
+  <div class="filter-box">
+    <label for="sort-by">Sort By:</label>
+  <select
+    v-model="selectedSortField"
+    id="sort-by"
+    class="custom-select"
+  >
+    <option value="">Select</option>
+    <option value="cheapest">Cheapest</option>
+    <option value="mostExpensive">Most Expensive</option>
+
+    <option value="date">Date</option>
+  </select>
+  </div>
+</div>
+<ul class="order-list">
+    <li v-for="order in filterObjects" :key="order.orderId" class="order-orderd">
+      <div class="order-orderd-container">
+
+      <div class="order-container"><router-link :to="'/display/' + order.idUser">
+  <h2 class="name">{{ order.userName }} {{ order.surname }}</h2>
+</router-link>
+
+        <img :src="order.logo" class="order-logo" alt="Logo" />
+
+        <p class="labels2"> Date 📅: {{ order.date }} </p>
+
+        <p class="labels2"> Duration ⌛: {{ order.duration }} </p>
+        <p class="labels2"> Final Price 💸: {{ order.price }} </p>
+        <p :class="['orderStatus', order.orderStatus.toLowerCase() === 'approved' ? 'approved' : order.orderStatus.toLowerCase() === 'picked-up' ? 'picked-up' : order.orderStatus.toLowerCase() === 'returned' ? 'returned' : order.orderStatus.toLowerCase() === 'rejected' ? 'rejected' : 'canceled']">
+Status: {{ order.orderStatus.toLowerCase() === 'approved' ? 'Approved' : order.orderStatus.toLowerCase() === 'picked-up' ? 'Picked Up' : order.orderStatus.toLowerCase() === 'returned' ? 'Returned' : order.orderStatus.toLowerCase() === 'rejected' ? 'Rejected' : 'Canceled' }}
+</p>
+
+      </div>
+      <div class="vehicle-container">
+        <div class="vehicle-scroll">
+          <OrderCard
+            v-for="vehicle in order.vehicles"
+            :key="vehicle.id"
+            :vehicle="vehicle"
+          ></OrderCard>
+        </div>
       </div>
     </div>
+
+    </li>
+</ul>
+</div>
+  </div>
   </div>
 </template>
 
@@ -147,11 +217,17 @@ export default {
         name: "",
         surname: "",
         gender: "",
-        birthday: ""
+        birthday: "",
+        image:"",
       },
       orders: [],
       search: "",
-      selectedSortField: ""
+      selectedSortField: "",
+      IsBuyer:false,
+      IsManager:false,
+      name:"",
+      rentalId:0
+
     };
   },
 
@@ -169,8 +245,34 @@ export default {
         );
       }
 
-      return price.match(searchRegex);
-    },
+    return price.match(searchRegex);
+  },
+  matchDateRange: function(date, searchValue) {
+  const dateRangeRegex = /\d{4}-\d{2}-\d{2}\s*-\s*\d{4}-\d{2}-\d{2}/; // Pattern for date range like "2023-07-05 - 2023-07-09"
+  const searchRegex = new RegExp(searchValue, "i");
+
+  if (dateRangeRegex.test(searchValue)) {
+    const [startDate, endDate] = searchValue.split(" - ").map(value => value.trim());
+    const currentDate = new Date(date);
+    const startDateObj = new Date(startDate);
+    const endDateObj = new Date(endDate);
+    return currentDate >= startDateObj && currentDate <= endDateObj;
+  }
+
+  return searchRegex.test(date);
+}
+
+
+
+
+
+
+
+
+
+
+
+,
     submitForm() {
       const token = localStorage.getItem("token");
       const decoded = jwt_decode(token);
@@ -233,50 +335,74 @@ export default {
           }
         }
       });
-    }
+    },
+
+    checkIfBuyer() {
+      const token = localStorage.getItem("token");
+      const decoded = jwt_decode(token);
+
+      if (decoded.role == "Buyer") {
+        this.IsBuyer = true;
+      }
+    else if(decoded.role =="Manager"){
+        this.IsManager=true;
+    }    }
   },
   mounted() {
     this.getUserData();
+    this.checkIfBuyer()
+    ;
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    console.log(decoded)
     axios
-      .get("http://localhost:8081/orders")
-      .then(response => {
-        this.orders = response.data;
-      })
-      .catch(error => {
-        console.error(error);
-        window.alert("An error occurred while fetching orders data");
-      });
-  },
-  computed: {
-    filterObjects: function() {
-      const searchValues = this.search.split(",").map(value => value.trim());
+        .get(`http://localhost:8081/orders/${decoded.id}`)
+        .then(response => {
+          this.orders = response.data; 
+          this.name=this.orders[0].name;
+          this.rentalId=this.orders[0].rentalId;
+          console.log(this.rentalId);
 
-      const filteredOrders = this.orders.filter(order => {
-        let matchesSearch = true;
+        })
+        .catch(error => {
+          console.error(error);
+          window.alert("An error occurred while fetching orders data");
+        });
+    },
+    computed: {
+   
+      filterObjects: function() {
+  const searchValues = this.search.split(",").map(value => value.trim());
 
-        for (const searchValue of searchValues) {
-          if (searchValue) {
-            const searchRegex = new RegExp(searchValue, "i");
+  const filteredOrders = this.orders.filter(order => {
+    let matchesSearch = true;
 
-            const matchesName = order.name.match(searchRegex);
-            const matchesDate = order.date.match(searchRegex);
-            const matchesPrice = this.matchPriceRange(order.price, searchValue);
+    for (const searchValue of searchValues) {
+      if (searchValue) {
+        const searchRegex = new RegExp(searchValue, "i");
 
-            matchesSearch =
-              matchesSearch && (matchesName || matchesDate || matchesPrice);
-          }
-        }
+        const matchesName = order.name.match(searchRegex);
+        const matchesDate = this.matchDateRange(order.date, searchValue);
+        const matchesPrice = this.matchPriceRange(order.price, searchValue);
 
-        return matchesSearch;
-      });
-
-      if (this.selectedSortField) {
-        this.sortByField(filteredOrders, this.selectedSortField);
+        matchesSearch =
+          matchesSearch &&
+          (matchesName || matchesDate || matchesPrice);
       }
-
-      return filteredOrders;
     }
+
+    return matchesSearch;
+  });
+
+  if (this.selectedSortField) {
+    this.sortByField(filteredOrders, this.selectedSortField);
   }
+
+  return filteredOrders;
+}
+    }
+  
+  
 };
 </script>
 
@@ -296,13 +422,22 @@ export default {
   flex-grow: 2;
   padding: 30px;
   background-color: #f2f2f2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  width: 40%; /* Povećana širina forme */
-  margin: 0 auto; /* Centriranje forme */
+  background-color: rgba(122, 136, 220, 0.2);
+  width: 18%;
+  margin: 0 auto;
+  border: 1px solid #ccc; /* Updated border style */
+  border-width: 2px; /* Increased border width */
+  border-style: solid; /* Added border style */
+  border-radius: 10px; /* Increased border radius */
 }
+
 
 .register-form h2 {
   text-align: center;
+  font-size: 35px;
+  color:#fff;
 }
 
 .displayOrder {
@@ -337,7 +472,7 @@ export default {
   padding: 10px;
   font-size: 16px;
   border-radius: 5px;
-  background-color: #4caf50;
+  background-color: lightslategray;
   color: #fff;
   border: none;
 }
@@ -345,6 +480,14 @@ export default {
 .register-form button:hover {
   background-color: #45a049;
   cursor: pointer;
+}
+
+.name:hover{
+  color: darkblue;
+}
+.changeName:hover{
+  color: darkblue;
+  font-size: 40px;
 }
 
 .order-list {
@@ -442,7 +585,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: rgb(96, 96, 226);
+  background-color: rgb(31, 31, 158,0.6);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -500,6 +643,7 @@ export default {
 
 .order-logo {
   width: 45%;
+  align-items: center;
   border-radius: 50%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
@@ -545,4 +689,13 @@ p.orderStatus.canceled {
   align-self: center;
   text-align: center;
 }
+
+.image-manager {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
 </style>

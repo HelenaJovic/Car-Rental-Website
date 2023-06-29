@@ -7,7 +7,11 @@ class OrderByerDTO {
     orderStatus,
     logo,
     name,
-    vehicles
+    vehicles,
+    userName,
+    surname,
+    idUser,
+    rentalId
   ) {
     this.orderId = orderId;
     this.date = date;
@@ -17,6 +21,10 @@ class OrderByerDTO {
     this.logo=logo;
     this.name=name;
     this.vehicles=vehicles;
+    this.userName=userName;
+    this.surname=surname;
+    this.idUser=idUser;
+    this.rentalId=rentalId;
   }
 }
 

@@ -4,8 +4,8 @@
         "vehicles": [
             {
                 "brand": "Tesla",
-                "model": "A Plaid",
-                "price": "5500",
+                "model": "S Plaid",
+                "price": "5600",
                 "vehicleType": "car",
                 "rentalObject": "1",
                 "transType": "Manual",
@@ -66,7 +66,7 @@
             {
                 "brand": "Audi",
                 "model": "A6",
-                "price": "7000",
+                "price": "7002",
                 "vehicleType": "track",
                 "rentalObject": "3",
                 "transType": "Manual",

@@ -36,6 +36,11 @@ function addNewCar(id,vehicle)
   
 }
 
+function IsManager(idRental,idUser)
+{
+  return rentalCarRepo.IsManager(idRental,idUser);
+}
+
 function deleteNewCar(id,idCar)
 {
   const rentalCar = rentalCarRepo.getById(idCar);
@@ -101,6 +106,7 @@ module.exports = {
 
   addNewCar,
   updateNewCar,
-  deleteNewCar
+  deleteNewCar,
+  IsManager
 
 };
