@@ -32,6 +32,10 @@ function updateManager(id, rentalObjectId) {
   return userRepo.updateManager(id, rentalObjectId);
 }
 
+function getUsersForAdmin(id) {
+  return userRepo.getUsersForAdmin(id);
+}
+
 module.exports = {
   create,
   remove,
@@ -41,4 +45,5 @@ module.exports = {
   getByUsername,
   getAvailableManagers,
   updateManager,
+  getUsersForAdmin,
 };

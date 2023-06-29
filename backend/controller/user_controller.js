@@ -8,6 +8,11 @@ const secretKey = process.env.SECRET_KEY;
 
 router.use(express.json());
 
+router.get("/usersForAdmin/:id", (req, res) => {
+  const userId = parseInt(req.params.id, 10);
+  res.json(userService.getUsersForAdmin(userId));
+});
+
 router.get("/managers", (req, res) => {
   res.json(userService.getAvailableManagers());
 });
