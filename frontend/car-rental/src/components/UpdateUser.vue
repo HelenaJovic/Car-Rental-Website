@@ -239,16 +239,21 @@
               class="custom-select"
             >
               <option value="">Select</option>
-              <option value="name">Name</option>
-              <option value="surname">Grade</option>
-              <option value="username">Username</option>
+              <option value="name-up">Name 🔼 </option>
+              <option value="name-down">Name🔽 </option>
+              <option value="surname-up">Surname🔼 </option>
+              <option value="surname-down">Surname🔽 </option>
+              <option value="username-up">Username 🔼 </option>
+              <option value="username-down">Username🔽 </option>
+              <option value="points-up">Points 🔼 </option>
+              <option value="points-down">Points🔽 </option>
             </select>
           </div>
         </div>
 
         <div class="profile-items">
           <ProfileCard
-            v-for="profile in profiles"
+            v-for="profile in filteredProfiles"
             :key="profile.id"
             :profile="profile"
           ></ProfileCard>
@@ -285,6 +290,7 @@ export default {
       orders: [],
       profiles: [],
       search: "",
+
       selectedSortField: "",
       IsBuyer: false,
       IsManager: false,
@@ -354,40 +360,34 @@ export default {
           window.alert("An error occurred while fetching user data");
         });
     },
-    sortByField(orders, field) {
-      return orders.sort((order1, order2) => {
-        const field1 = order1[field];
-        const field2 = order2[field];
 
-        if (field === "price") {
-          const price1 = parseFloat(field1);
-          const price2 = parseFloat(field2);
+    sortProfile(profiles, field) {
+      let sortOrder = "asc";
 
-          return price1 - price2;
-        } else if (field === "date") {
-          const date1 = new Date(field1);
-          const date2 = new Date(field2);
+      if (field.includes("-up")) {
+        field = field.replace("-up", "");
+      } else if (field.includes("-down")) {
+        field = field.replace("-down", "");
+        sortOrder = "desc";
+      }
 
-          return date1 - date2;
-        } else if (field === "cheapest") {
-          const price1 = parseFloat(order1.price);
-          const price2 = parseFloat(order2.price);
+      profiles.sort((profile1, profile2) => {
+        const value1 = profile1[field];
+        const value2 = profile2[field];
 
-          return price1 - price2;
-        } else if (field === "mostExpensive") {
-          const price1 = parseFloat(order1.price);
-          const price2 = parseFloat(order2.price);
+        let comparison = 0;
 
-          return price2 - price1;
-        } else {
-          if (field1 < field2) {
-            return -1;
-          } else if (field1 > field2) {
-            return 1;
-          } else {
-            return 0;
-          }
+        if (value1 < value2) {
+          comparison = -1;
+        } else if (value1 > value2) {
+          comparison = 1;
         }
+
+        if (sortOrder === "desc") {
+          comparison *= -1;
+        }
+
+        return comparison;
       });
     },
 
@@ -463,6 +463,36 @@ export default {
       }
 
       return filteredOrders;
+    },
+
+    filteredProfiles() {
+      const searchValues = this.search.split(",").map(value => value.trim());
+
+      let filteredProfiles = this.profiles.filter(profile => {
+        let matchesSearch = true;
+
+        for (const searchValue of searchValues) {
+          if (searchValue) {
+            const searchRegex = new RegExp(searchValue, "i");
+
+            const matchesName = profile.name.match(searchRegex);
+            const matchesSurname = profile.surname.match(searchRegex);
+            const matchesUsername = profile.username.match(searchRegex);
+
+            matchesSearch =
+              matchesSearch &&
+              (matchesName || matchesSurname || matchesUsername);
+          }
+        }
+
+        return matchesSearch;
+      });
+
+      if (this.selectedSortField) {
+        this.sortProfile(filteredProfiles, this.selectedSortField);
+      }
+
+      return filteredProfiles;
     }
   }
 };
@@ -500,6 +530,7 @@ export default {
 
 .search-box {
   height: 8%;
+
   margin-top: 10px;
   box-shadow: 0 2px 4px rgba(37, 37, 37, 0.1);
   background-color: rgba(199, 224, 224, 0.5);
@@ -533,6 +564,7 @@ export default {
 .search-container {
   display: flex;
   align-items: center;
+  width: 32%;
   padding: 0px 0px 5px 10px;
   padding: 5px;
 }
@@ -543,7 +575,7 @@ export default {
 
 .search-input {
   flex: 1;
-  width: 280px;
+  width: 250px;
   height: 40px;
   padding: 0.5rem;
   font-size: 1rem;

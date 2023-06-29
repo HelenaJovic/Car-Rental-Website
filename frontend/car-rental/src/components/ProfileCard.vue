@@ -21,6 +21,10 @@
           <label>Gender:</label>
           <p>{{ profile.gender }}</p>
         </div>
+        <div class="items" v-if="isBuyer">
+          <label>Points:</label>
+          <p>{{ profile.points }}</p>
+        </div>
       </div>
       <div class="helping">
         <p class="box">{{ profile.role }}</p>
@@ -32,7 +36,18 @@
 <script>
 export default {
   name: "ProfileCard",
-  props: ["profile"]
+  props: ["profile"],
+  data() {
+    return {
+      isBuyer: false
+    };
+  },
+
+  mounted() {
+    if (this.profile.role == "Buyer") {
+      this.isBuyer = true;
+    }
+  }
 };
 </script>
 <style scoped>
@@ -101,7 +116,7 @@ export default {
   justify-content: flex-start;
   gap: 15px;
   padding: 0px 15px 0px 15px;
-  margin-top: -25px;
+  margin-top: -35px;
 }
 
 .helping {
