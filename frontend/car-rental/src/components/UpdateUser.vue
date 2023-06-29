@@ -40,52 +40,76 @@
         </form>
       </div>
       <div class="displayOrder ">
-
         <div class="order-header">
           <div class="search-box">
             <input
-          type="text"
-          v-model="search"
-          class="search-input"
-          placeholder="Name,Price1 - Price2,Date"
-        /><label>🔍</label>
-        
+              type="text"
+              v-model="search"
+              class="search-input"
+              placeholder="Name,Price1 - Price2,Date"
+            /><label>🔍</label>
           </div>
           <div class="title-container">
-    <h2 >Your orders</h2>
-  </div>
+            <h2>Your orders</h2>
+          </div>
           <div class="filter-box">
             <label for="sort-by">Sort By:</label>
-          <select
-            v-model="selectedSortField"
-            id="sort-by"
-            class="custom-select"
-          >
-            <option value="">Select</option>
-            <option value="name">Name</option>
-            <option value="cheapest">Cheapest</option>
-            <option value="mostExpensive">Most Expensive</option>
+            <select
+              v-model="selectedSortField"
+              id="sort-by"
+              class="custom-select"
+            >
+              <option value="">Select</option>
+              <option value="name">Name</option>
+              <option value="cheapest">Cheapest</option>
+              <option value="mostExpensive">Most Expensive</option>
 
-            <option value="date">Date</option>
-          </select>
+              <option value="date">Date</option>
+            </select>
           </div>
         </div>
         <ul class="order-list">
-            <li v-for="order in filterObjects" :key="order.orderId" class="order-orderd">
-              <div class="order-orderd-container">
-
+          <li
+            v-for="order in filterObjects"
+            :key="order.orderId"
+            class="order-orderd"
+          >
+            <div class="order-orderd-container">
               <div class="order-container">
                 <h2 class="name">{{ order.name }}</h2>
                 <img :src="order.logo" class="order-logo" alt="Logo" />
 
-                <p class="labels2"> Date 📅: {{ order.date }} </p>
+                <p class="labels2">Date 📅: {{ order.date }}</p>
 
-                <p class="labels2"> Duration ⌛: {{ order.duration }} </p>
-                <p class="labels2"> Final Price 💸: {{ order.price }} </p>
-                <p :class="['orderStatus', order.orderStatus.toLowerCase() === 'approved' ? 'approved' : order.orderStatus.toLowerCase() === 'picked-up' ? 'picked-up' : order.orderStatus.toLowerCase() === 'returned' ? 'returned' : order.orderStatus.toLowerCase() === 'rejected' ? 'rejected' : 'canceled']">
-  Status: {{ order.orderStatus.toLowerCase() === 'approved' ? 'Approved' : order.orderStatus.toLowerCase() === 'picked-up' ? 'Picked Up' : order.orderStatus.toLowerCase() === 'returned' ? 'Returned' : order.orderStatus.toLowerCase() === 'rejected' ? 'Rejected' : 'Canceled' }}
-</p>
-
+                <p class="labels2">Duration ⌛: {{ order.duration }}</p>
+                <p class="labels2">Final Price 💸: {{ order.price }}</p>
+                <p
+                  :class="[
+                    'orderStatus',
+                    order.orderStatus.toLowerCase() === 'approved'
+                      ? 'approved'
+                      : order.orderStatus.toLowerCase() === 'picked-up'
+                      ? 'picked-up'
+                      : order.orderStatus.toLowerCase() === 'returned'
+                      ? 'returned'
+                      : order.orderStatus.toLowerCase() === 'rejected'
+                      ? 'rejected'
+                      : 'canceled'
+                  ]"
+                >
+                  Status:
+                  {{
+                    order.orderStatus.toLowerCase() === "approved"
+                      ? "Approved"
+                      : order.orderStatus.toLowerCase() === "picked-up"
+                      ? "Picked Up"
+                      : order.orderStatus.toLowerCase() === "returned"
+                      ? "Returned"
+                      : order.orderStatus.toLowerCase() === "rejected"
+                      ? "Rejected"
+                      : "Canceled"
+                  }}
+                </p>
               </div>
               <div class="vehicle-container">
                 <div class="vehicle-scroll">
@@ -97,16 +121,8 @@
                 </div>
               </div>
             </div>
-
-            </li>
+          </li>
         </ul>
-       
-         
-         
-
-   
-
-
       </div>
     </div>
   </div>
@@ -118,13 +134,10 @@ import jwt_decode from "jwt-decode";
 import Navbar from "./Navbar.vue";
 import OrderCard from "./OrderCard.vue";
 
-
 export default {
   components: {
     navBar: Navbar,
-    OrderCard: OrderCard,
-    
-
+    OrderCard: OrderCard
   },
   data() {
     return {
@@ -136,25 +149,28 @@ export default {
         gender: "",
         birthday: ""
       },
-      orders: [] ,
+      orders: [],
       search: "",
       selectedSortField: ""
-
     };
   },
 
   methods: {
     matchPriceRange: function(price, searchValue) {
-    const priceRangeRegex = /\d+\s*-\s*\d+/; // Pattern for price range like "10 - 20"
-    const searchRegex = new RegExp(searchValue, "i");
+      const priceRangeRegex = /\d+\s*-\s*\d+/; // Pattern for price range like "10 - 20"
+      const searchRegex = new RegExp(searchValue, "i");
 
-    if (priceRangeRegex.test(searchValue)) {
-      const [minPrice, maxPrice] = searchValue.split("-").map(value => value.trim());
-      return Number(price) >= Number(minPrice) && Number(price) <= Number(maxPrice);
-    }
+      if (priceRangeRegex.test(searchValue)) {
+        const [minPrice, maxPrice] = searchValue
+          .split("-")
+          .map(value => value.trim());
+        return (
+          Number(price) >= Number(minPrice) && Number(price) <= Number(maxPrice)
+        );
+      }
 
-    return price.match(searchRegex);
-  },
+      return price.match(searchRegex);
+    },
     submitForm() {
       const token = localStorage.getItem("token");
       const decoded = jwt_decode(token);
@@ -217,54 +233,50 @@ export default {
           }
         }
       });
-    },
+    }
   },
   mounted() {
     this.getUserData();
     axios
-        .get("http://localhost:8081/orders")
-        .then(response => {
-          this.orders = response.data; 
-        })
-        .catch(error => {
-          console.error(error);
-          window.alert("An error occurred while fetching orders data");
-        });
-    },
-    computed: {
-   
-  filterObjects: function() {
-    const searchValues = this.search.split(",").map(value => value.trim());
+      .get("http://localhost:8081/orders")
+      .then(response => {
+        this.orders = response.data;
+      })
+      .catch(error => {
+        console.error(error);
+        window.alert("An error occurred while fetching orders data");
+      });
+  },
+  computed: {
+    filterObjects: function() {
+      const searchValues = this.search.split(",").map(value => value.trim());
 
-    const filteredOrders = this.orders.filter(order => {
-      let matchesSearch = true;
+      const filteredOrders = this.orders.filter(order => {
+        let matchesSearch = true;
 
-      for (const searchValue of searchValues) {
-        if (searchValue) {
-          const searchRegex = new RegExp(searchValue, "i");
+        for (const searchValue of searchValues) {
+          if (searchValue) {
+            const searchRegex = new RegExp(searchValue, "i");
 
-          const matchesName = order.name.match(searchRegex);
-          const matchesDate = order.date.match(searchRegex);
-          const matchesPrice = this.matchPriceRange(order.price, searchValue);
+            const matchesName = order.name.match(searchRegex);
+            const matchesDate = order.date.match(searchRegex);
+            const matchesPrice = this.matchPriceRange(order.price, searchValue);
 
-          matchesSearch =
-            matchesSearch &&
-            (matchesName || matchesDate || matchesPrice);
+            matchesSearch =
+              matchesSearch && (matchesName || matchesDate || matchesPrice);
+          }
         }
+
+        return matchesSearch;
+      });
+
+      if (this.selectedSortField) {
+        this.sortByField(filteredOrders, this.selectedSortField);
       }
 
-      return matchesSearch;
-    });
-
-    if (this.selectedSortField) {
-      this.sortByField(filteredOrders, this.selectedSortField);
+      return filteredOrders;
     }
-
-    return filteredOrders;
   }
-  }
-  
-  
 };
 </script>
 
@@ -279,7 +291,7 @@ export default {
   background-position: center;
   padding: 40px;
 }
-  .register-form {
+.register-form {
   height: min-content;
   flex-grow: 2;
   padding: 30px;
@@ -293,13 +305,12 @@ export default {
   text-align: center;
 }
 
-.displayOrder{
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-flex-grow: 3;
-gap: 5rem;
-padding: 10px;}
-
-
+.displayOrder {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-grow: 3;
+  gap: 5rem;
+  padding: 10px;
+}
 
 .register-form .form-group {
   margin-bottom: 20px;
@@ -348,13 +359,15 @@ padding: 10px;}
 .order-orderd {
   gap: 20rem;
   flex-wrap: wrap;
-  background-color: rgba(242, 242, 242, 0.7); /* Promenjen kod za postavljanje transparentnosti */
+  background-color: rgba(
+    242,
+    242,
+    242,
+    0.7
+  ); /* Promenjen kod za postavljanje transparentnosti */
   padding: 20px;
   border-radius: 5px;
 }
-
-
-
 
 .order-orderd-container {
   display: flex;
@@ -375,18 +388,23 @@ padding: 10px;}
   border-radius: 5px; /* Dodat border-radius za blago zaobljen izgled */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Dodat box-shadow efekat */
   padding: 20px; /* Dodat padding za unutrašnji prostor */
-  background-color: rgba(26, 101, 141, 0.1)/* Promenjen kod za postavljanje transparentnosti */
-
-
+  background-color: rgba(
+    26,
+    101,
+    141,
+    0.1
+  ); /* Promenjen kod za postavljanje transparentnosti */
 }
 
 .order-container:hover {
   transform: scale(1.1);
-  background-color: rgba(142, 194, 220, 0.8)/* Promenjen kod za postavljanje transparentnosti */
-
+  background-color: rgba(
+    142,
+    194,
+    220,
+    0.8
+  ); /* Promenjen kod za postavljanje transparentnosti */
 }
-
-
 
 .vehicle-container {
   flex-grow: 1;
@@ -398,9 +416,13 @@ padding: 10px;}
   transition: transform 0.3s ease;
   cursor: pointer;
   justify-items: center;
-  background-color: rgba(144, 15, 15, 0)/* Promenjen kod za postavljanje transparentnosti */
+  background-color: rgba(
+    144,
+    15,
+    15,
+    0
+  ); /* Promenjen kod za postavljanje transparentnosti */
 }
-
 
 .vehicle-scroll {
   flex-grow: 1;
@@ -413,7 +435,6 @@ padding: 10px;}
   gap: 1rem;
   flex-direction: column;
   justify-content: center; /* Center items horizontally */
-
 }
 
 .order-header {
@@ -468,17 +489,16 @@ padding: 10px;}
 }
 
 .labels2 {
-    font-size: 15px;
-    color: rgb(12, 75, 79);
-    padding: 6px;
-    margin-left: 8px;
-    align-items: flex-end;
-    font-family: "Lato", Arial, sans-serif;
-    text-align: center;
+  font-size: 15px;
+  color: rgb(12, 75, 79);
+  padding: 6px;
+  margin-left: 8px;
+  align-items: flex-end;
+  font-family: "Lato", Arial, sans-serif;
+  text-align: center;
+}
 
-  }
-
-  .order-logo {
+.order-logo {
   width: 45%;
   border-radius: 50%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -505,8 +525,6 @@ p.orderStatus {
   text-align: center;
 }
 
-
-
 p.orderStatus.approved {
   background-color: #28a745;
 }
@@ -527,6 +545,4 @@ p.orderStatus.canceled {
   align-self: center;
   text-align: center;
 }
-
-
 </style>

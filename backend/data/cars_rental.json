@@ -4,14 +4,14 @@
         "vehicles": [
             {
                 "brand": "Tesla",
-                "model": "S Plaid",
+                "model": "A Plaid",
                 "price": "5500",
                 "vehicleType": "car",
                 "rentalObject": "1",
                 "transType": "Manual",
                 "fuelType": "gasoline",
                 "consumption": "",
-                "doorsNum": "3",
+                "doorsNum": "4",
                 "peopleNum": "3",
                 "description": "",
                 "image": "/static/tesla.png",
