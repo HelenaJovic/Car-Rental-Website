@@ -79,6 +79,15 @@ function getAvailableManagers() {
   return availableManagers;
 }
 
+function getUsersForAdmin(id) {
+  var users = json_utils.jsonReader(path);
+  var filteredUsers = users.filter(function (user) {
+    return user.id !== id;
+  });
+
+  return filteredUsers;
+}
+
 module.exports = {
   create,
   update,
@@ -88,4 +97,5 @@ module.exports = {
   getByUsername,
   getAvailableManagers,
   updateManager,
+  getUsersForAdmin,
 };

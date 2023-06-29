@@ -81,6 +81,7 @@
     "rentalObject": 7,
     "points": null,
     "buyerType": null,
+    "image": "/static/marko.png",
     "id": 5
   },
   {
@@ -97,6 +98,7 @@
     "rentalObject": 2,
     "points": null,
     "buyerType": null,
+    "image": "/static/aca.jpg",
     "id": 6
   },
   {
@@ -113,6 +115,7 @@
     "rentalObject": null,
     "points": null,
     "buyerType": null,
+    "image": "/static/administrator.png",
     "id": 7
   }
 ]
