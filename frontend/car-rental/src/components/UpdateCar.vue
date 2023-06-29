@@ -30,6 +30,9 @@
             <option value="electric">Electric</option>
           </select>
   
+          <label for="consumption">Consumption:</label>
+        <input type="text" id="cons" v-model="form.consumption" required>
+        
           <label for="doors">Number of Doors:</label>
           <input type="number" id="doors" v-model="form.doorsNum" required>
   
@@ -81,11 +84,11 @@
   methods: {
     updateCar(id, rentalCarId) {
       axios
-        .put(`http://localhost:8081/vehicles/${id}/${rentalCarId}`, this.form)
+        .put(`http://localhost:8081/vehicles/${this.form.id}/${rentalCarId}`, this.form)
         .then(() => {
 
           this.$toastr.s("Successfully updated!");
-          this.$router.push({ path: '/singleObject/' + id });
+          this.$router.push({ path: '/singleObject/' + rentalCarId});
 
         })
         .catch(error => {

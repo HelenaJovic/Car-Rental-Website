@@ -15,6 +15,9 @@ function findIndex(cars_rental, id) {
   return cars_rental.findIndex((car_rental) => car_rental.id === parseInt(id));
 }
 
+
+
+
 function update(id, updatedCar) {
   const cars_rental = json_utils.jsonReader(path);
   const index = findIndex(cars_rental, id);
@@ -40,7 +43,7 @@ function remove(id) {
   const index = findIndex(cars_rental, id);
 
   if (index !== -1) {
-    const removedCar = cars_rental.splice(index, 1)[0]; // Remove the user at the specified index
+    const removedCar = cars_rental.splice(index, 1)[0]; 
     json_utils.saveDataToFile(cars_rental, path);
     return removedCar;
   } else {
@@ -58,11 +61,11 @@ function getById(id) {
 
   return cars_rental[index];
 }
-
 function getAllVehicles(id) {
   const car_object = getById(id);
 
   return car_object.vehicles;
 }
 
-module.exports = { create, update, remove, getAll, getById, getAllVehicles };
+
+module.exports = { create, update, remove, getAll, getById,getAllVehicles};
