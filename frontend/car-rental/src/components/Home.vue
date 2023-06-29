@@ -4,18 +4,17 @@
     <div class="rent-a-car-container">
       <div class="first-container">
         <h1>Rental objects</h1>
-        <router-link to="/addObject" v-if="IsAdministrator">
-          <img src="../assets/images/add.png" alt="Add logo" class="image" />
-        </router-link>
       </div>
-      <div class="search-container">
-        <input
-          type="text"
-          v-model="search"
-          class="search-input"
-          placeholder="Name,Location,Grade,Vehicle Type"
-        />
-        <p>🔍</p>
+      <div class="second-container">
+        <div class="search-container">
+          <input
+            type="text"
+            v-model="search"
+            class="search-input"
+            placeholder="Name,Location,Grade,Vehicle Type"
+          />
+          <p>🔍</p>
+        </div>
         <div class="combobox-container">
           <label for="sort-by">Sort By:</label>
           <select
@@ -28,6 +27,9 @@
             <option value="grade">Grade</option>
             <option value="location">Location</option>
           </select>
+          <router-link to="/addObject" v-if="IsAdministrator">
+            <img src="../assets/images/add.png" alt="Add logo" class="image" />
+          </router-link>
         </div>
       </div>
 
@@ -174,18 +176,26 @@ export default {
   background-position: center;
 }
 
-.search-container {
+.second-container {
   display: flex;
-  align-self: flex-start;
-  padding:  5px 5px 5px 5px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  width: 100%;
 }
 
+.search-container {
+  display: flex;
+  align-items: center;
+  padding: 0px 0px 5px 30px;
+}
 .search-container p {
   font-size: 1.7rem;
   margin-left: 0.7rem;
 }
 
 .search-input {
+  flex: 1;
   width: 280px;
   height: 40px;
   padding: 0.5rem;
@@ -194,15 +204,11 @@ export default {
   border: 1px solid #ccc;
 }
 
-.rent-a-car-container > .search-container {
-  align-self: flex-start;
-  margin-left: 3.2rem;
-}
-
 .combobox-container {
   display: flex;
   align-items: center;
-  margin-left: 39rem;
+  gap: 10px;
+  padding: 0px 40px 5px 0px;
 }
 
 .combobox-container label {
@@ -227,10 +233,6 @@ export default {
 .image {
   width: 32px;
   height: 33px;
-
-  position: absolute;
-  top: 24%;
-  right: 1.2%;
-  transform: translate(-50%, -50%);
+  margin-left: 5px;
 }
 </style>
