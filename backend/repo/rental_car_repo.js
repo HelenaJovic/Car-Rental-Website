@@ -1,6 +1,7 @@
 const path = "./data/cars_rental.json";
 const fs = require("fs");
 const json_utils = require("../utils/json_utils");
+const userRepo=require("../repo/user_repo");
 
 function create(car_rental) {
   const cars_rental = json_utils.jsonReader(path);
@@ -9,6 +10,17 @@ function create(car_rental) {
   cars_rental.push(car_rental);
   json_utils.saveDataToFile(cars_rental, path);
   return car_rental.id;
+}
+function IsManager(idRental,idUser)
+{
+  const user=userRepo.getById(idUser);
+
+
+  if(user.rentalObject!=null && user.rentalObject==idRental)
+  {
+    return true;
+  }
+  return false;
 }
 
 function findIndex(cars_rental, id) {
@@ -68,4 +80,4 @@ function getAllVehicles(id) {
 }
 
 
-module.exports = { create, update, remove, getAll, getById,getAllVehicles};
+module.exports = { create, update, remove, getAll, getById,getAllVehicles,IsManager};

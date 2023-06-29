@@ -8,6 +8,13 @@ router.get("/", (req, res) => {
   res.json(rentalCarService.getAll());
 });
 
+router.get("/:idRental/:idUser",(req,res)=>{
+  const idRental = parseInt(req.params.idRental, 10);
+  const idUser=parseInt(req.params.idUser, 10);
+
+  res.json(rentalCarService.IsManager(idRental,idUser));
+})
+
 router.get("/sortedCars", (req, res) => {
   res.json(rentalCarService.getSortedCarsByStatus());
 });

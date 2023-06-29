@@ -61,7 +61,8 @@ export default {
       cars: [],
       search: "",
       selectedSortField: "",
-      IsAdministrator: false
+      IsAdministrator: false,
+      name:""
     };
   },
   methods: {
