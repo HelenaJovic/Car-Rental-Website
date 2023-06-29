@@ -1,10 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const userController = require("./controller/user_controller");
-const carController= require("./controller/rental_car_controller");
-const vehicleController=require("./controller/vehicle_controller");
-const orderController=require("./controller/order_controller");
-
+const carController = require("./controller/rental_car_controller");
+const vehicleController = require("./controller/vehicle_controller");
+const orderController = require("./controller/order_controller");
+const basketController = require("./controller/basket_controller");
 
 const app = express();
 
@@ -15,7 +15,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use("/users", userController);
-app.use("/cars",carController);
-app.use("/vehicles",vehicleController);
-app.use("/orders",orderController);
+app.use("/cars", carController);
+app.use("/vehicles", vehicleController);
+app.use("/orders", orderController);
+app.use("/baskets", basketController);
 app.listen(8081, () => console.log("Server running!"));
