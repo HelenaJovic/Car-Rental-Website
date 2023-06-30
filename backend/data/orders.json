@@ -19,84 +19,27 @@
         },
         {
             "brand": "Audi",
-            "model": "A6",
-            "price": "7000",
-            "vehicleType": "track",
-            "rentalObject": "3",
-            "transType": "Manual",
-            "fuelType": "gasoline",
-            "consumption": "",
-            "doorsNum": "2",
-            "peopleNum": "3",
-            "description": "",
-            "image": "/static/audiTruck.png",
-            "status": "Available",
-            "id": 4
-        },
-        {
-            "brand": "BMW",
-            "model": "X1",
-            "price": "20000",
+            "model": "A8",
+            "price": "16000",
             "vehicleType": "car",
-            "rentalObject": "1",
+            "rentalObject": "2",
             "transType": "Manual",
-            "fuelType": "gasoline",
+            "fuelType": "diesel",
             "consumption": "",
-            "doorsNum": "3",
-            "peopleNum": "3",
+            "doorsNum": "4",
+            "peopleNum": "5",
             "description": "",
-            "image": "/static/bmw.png",
+            "image": "/static/audi8.png",
             "status": "Available",
-            "id": 2
+            "id": 3
         }],
         "rentalObject": 2,
         "date": "2023-07-05",
-        "duration": "5 days",
+        "duration": "5",
         "price": "13000",
         "buyer": 1,
         "orderStatus": "approved",
         "id": 1
-    },
-    {
-
-        "vehicles": [{
-            "brand": "BMW",
-            "model": "X1",
-            "price": "20000",
-            "vehicleType": "car",
-            "rentalObject": "1",
-            "transType": "Manual",
-            "fuelType": "gasoline",
-            "consumption": "",
-            "doorsNum": "3",
-            "peopleNum": "3",
-            "description": "",
-            "image": "/static/bmw.png",
-            "status": "Available",
-            "id": 2
-        }, {
-            "brand": "Audi",
-            "model": "A6",
-            "price": "7000",
-            "vehicleType": "track",
-            "rentalObject": "3",
-            "transType": "Manual",
-            "fuelType": "gasoline",
-            "consumption": "",
-            "doorsNum": "2",
-            "peopleNum": "3",
-            "description": "",
-            "image": "/static/audiTruck.png",
-            "status": "Available",
-            "id": 4
-        }],
-        "rentalObject": 2,
-        "date": "2023-09-06",
-        "duration": "4 days",
-        "price": "12000",
-        "buyer": 2,
-        "orderStatus": "approved",
-        "id": 2
     },
     {
 
@@ -133,12 +76,12 @@
             "id": 6
         }],
         "rentalObject": 4,
-        "date": "2023-17-06",
-        "duration": "5 days",
+        "date": "2023-06-06",
+        "duration": "5",
         "price": "1300",
         "buyer": 3,
         "orderStatus": "approved",
-        "id": 3
+        "id": 2
     }
     
 ]

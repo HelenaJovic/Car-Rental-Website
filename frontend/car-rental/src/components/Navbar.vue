@@ -23,7 +23,14 @@
           to="/registerManager"
           v-if="isAdministrator"
           class="nav-link"
-          >Register manager</router-link
+          >Register manager</router-link>
+      </li>
+      <li class="nav-item">
+        <router-link
+          to="/makeOrder"
+          v-if="isBuyer"
+          class="nav-link"
+          >Make order</router-link
         >
       </li>
       <li class="nav-item">
@@ -53,7 +60,8 @@ export default {
   data() {
     return {
       isLoggedIn: false,
-      isAdministrator: false
+      isAdministrator: false,
+      isBuyer: false
     };
   },
 
@@ -64,7 +72,7 @@ export default {
     });
 
     this.isLoggedIn = isLoggedIn();
-    this.checkIfAdministrator();
+    this.checkIfAdministratororBuyer();
   },
 
   destroyed() {
@@ -77,12 +85,16 @@ export default {
       window.location.reload();
     },
 
-    checkIfAdministrator() {
+    checkIfAdministratororBuyer() {
       const token = localStorage.getItem("token");
       const decoded = jwt_decode(token);
 
       if (decoded.role == "Administrator") {
         this.isAdministrator = true;
+      }
+      else if(decoded.role=="Buyer")
+      {
+        this.isBuyer=true;
       }
     }
   }
