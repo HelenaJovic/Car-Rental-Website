@@ -57,10 +57,14 @@
             {{ option.name }}
           </option>
         </select>
+        <p>❗CheckBox will be blocked as long as you add the object</p>
       </div>
 
       <div class="second-item-2" v-if="!isThereAnyManagers">
-        <label for="username" class="labels">Username</label>
+        <p>
+          ❗ There are no available managers, so you should register new one
+        </p>
+        <label for="username" class="labels">Username:</label>
         <input
           type="text"
           id="username"
@@ -68,7 +72,7 @@
           class="neki"
         />
 
-        <label for="password" class="labels">Password</label>
+        <label for="password" class="labels">Password:</label>
         <input
           type="password"
           id="password"
@@ -76,7 +80,7 @@
           class="neki"
         />
 
-        <label for="new_password" class="labels">Confirm password</label>
+        <label for="new_password" class="labels">Confirm password:</label>
         <input
           type="password"
           id="new_password"
@@ -84,13 +88,13 @@
           class="neki"
         />
 
-        <label class="labels">Name</label>
+        <label class="labels">Name:</label>
         <input type="text" v-model="form1.name" class="neki" />
 
-        <label for="surname" class="labels">Surname</label>
+        <label for="surname" class="labels">Surname:</label>
         <input type="text" id="surname" v-model="form1.surname" class="neki" />
 
-        <label for="gender" class="labels">Gender</label>
+        <label for="gender" class="labels">Gender:</label>
         <select id="gender" v-model="form1.gender" class="neki">
           <option value="">Select Gender</option>
           <option value="male">Male</option>
@@ -244,7 +248,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 40px 0px 40px 40px;
+  padding: 74px 0px 40px 40px;
 }
 
 .input {
@@ -252,6 +256,10 @@ export default {
   height: 35px;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+p {
+  color: rgb(82, 78, 78);
 }
 
 .input1 {
@@ -300,7 +308,7 @@ export default {
   height: 35px;
   position: absolute;
   left: 10%;
-  top: 82%;
+  top: 87%;
   border-radius: 5px;
 }
 
@@ -315,7 +323,7 @@ export default {
   flex-direction: column;
 
   gap: 10px;
-  padding: 40px 40px 40px 0px;
+  padding: 70px 40px 40px 0px;
 }
 .second-item-2 {
   grid-column: 2/3;
@@ -335,9 +343,5 @@ export default {
   border: none;
   margin-top: 30px;
   margin-left: 80px;
-}
-.second-item-2 button:hover {
-  background-color: #45a049;
-  cursor: pointer;
 }
 </style>
