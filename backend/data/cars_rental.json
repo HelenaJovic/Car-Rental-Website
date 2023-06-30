@@ -51,7 +51,7 @@
                 "id": 3
             }
         ],
-        "workHours": "8",
+        "workHours":"8",
         "status": true,
         "location": {
             "adress": "Gunduliceva 67, Novi Sad"
@@ -125,7 +125,7 @@
                 "id": 6
             }
         ],
-        "workHours": "10",
+        "workHours":"10",
         "status": false,
         "location": {
             "adress": "Pasiceva 1, Nis"
@@ -170,7 +170,7 @@
                 "id": 8
             }
         ],
-        "workHours": "12",
+        "workHours":"12",
         "status": true,
         "location": {
             "adress": "Gajeva 26, Nis"

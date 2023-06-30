@@ -54,17 +54,13 @@ export default {
 </script>
 <style scoped>
 .vehicle-card {
-  width: 100%;
+  width: 90%;
   height: 20rem;
   border-radius: 5px;
   padding: 1rem;
-  display: grid;
-  grid-template-columns: 0.8fr 2fr;
+  display: flex;
   justify-content: stretch;
   align-content: center;
-
-  grid-gap: 20px;
-
   box-shadow: 0px 2px 6px rgba(82, 42, 8, 0.3);
   transition: transform 0.3s ease;
   cursor: pointer;

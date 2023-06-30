@@ -26,7 +26,7 @@
   </script>
   <style scoped>
   .vehicle-card {
-    width: 40%;
+    width: 35%;
     height: 14rem;
     border-radius: 5px;
     padding: 1rem;

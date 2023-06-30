@@ -55,6 +55,11 @@ function getAll() {
   return orderRepo.getAll();
 }
 
+function getFilteredVehicles(rental,startDate,endDate)
+{
+    return orderRepo.getFreeVehicles(rental,startDate,endDate);
+}
+
 function getById(id) {
   return orderRepo.getById(id);
 }
@@ -72,4 +77,5 @@ module.exports = {
   getById,
   update,
   getAllOrders,
+  getFilteredVehicles
 };
