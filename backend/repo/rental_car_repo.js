@@ -3,6 +3,7 @@ const fs = require("fs");
 const json_utils = require("../utils/json_utils");
 const userRepo=require("../repo/user_repo");
 
+
 function create(car_rental) {
   const cars_rental = json_utils.jsonReader(path);
   car_rental.id = json_utils.generateNextId(cars_rental);
@@ -22,6 +23,17 @@ function IsManager(idRental,idUser)
   }
   return false;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 function findIndex(cars_rental, id) {
   return cars_rental.findIndex((car_rental) => car_rental.id === parseInt(id));
@@ -63,6 +75,8 @@ function remove(id) {
   }
 }
 
+
+
 function getAll() {
   return json_utils.jsonReader(path);
 }
@@ -78,6 +92,8 @@ function getAllVehicles(id) {
 
   return car_object.vehicles;
 }
+
+
 
 
 module.exports = { create, update, remove, getAll, getById,getAllVehicles,IsManager};

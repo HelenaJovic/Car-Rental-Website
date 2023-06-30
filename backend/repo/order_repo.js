@@ -144,5 +144,51 @@ function getById(id) {
   return orders[index];
 }
 
-module.exports = { create, update, remove, getAll, getById,getDate,getDuration,getPrice,getStatus,getAllVehicles,getRental,getByRole,getUser
+function formatDate(date) {
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (dateRegex.test(date)) {
+      return date;
+    } else {
+      return new Date(date).toISOString().split("T")[0];
+    }
+  }
+
+function getFreeVehicles(rental, startDate, endDate) {
+    const orders = getAll();
+    const vehicles = rental.vehicles.filter(vehicle => {
+      const matchingOrders = orders.filter(order => order.rentalObject === rental.id);
+      if (matchingOrders.length > 0) {
+        for (const order of matchingOrders) {
+          const orderStartDate = new Date(order.date);
+          const orderEndDate = new Date(orderStartDate.getTime() + order.duration * 24 * 60 * 60 * 1000);
+  
+            
+          const formattedstartODate = formatDate(orderStartDate);
+          const formattedendODate = formatDate(orderEndDate);
+          const formattedendDate = formatDate(endDate);
+          const formattedstartDate = formatDate(startDate);
+
+            console.log(formattedstartDate)
+            console.log(formattedendDate)
+          if (formattedstartDate <= formattedendODate && formattedendDate >= formattedstartODate) {
+            console.log("ludilo")
+            const matchingVehicles = order.vehicles.map(orderVehicle => orderVehicle.id);
+            if (matchingVehicles.includes(vehicle.id)) {
+              return false; // Izuzeti vozilo iz rezultata
+            }
+          }
+        }
+      }
+  
+      return true; // Zadržati vozilo u rezultatu
+    });
+    return vehicles;
+  }
+  
+  
+  
+  
+
+
+module.exports = { create, update, remove, getAll, getById,getDate,getDuration,getPrice,getStatus,getAllVehicles,getRental,getByRole,getUser,getFreeVehicles
 };

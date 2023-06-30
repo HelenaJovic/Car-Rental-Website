@@ -1,9 +1,59 @@
 const rentalCarRepo = require("../repo/rental_car_repo");
 const orderService=require("../service/order_service");
+const rentalDTO=require("../dto/rentalDTO");
 
 function create(car_rental) {
   return rentalCarRepo.create(car_rental);
 }
+
+
+
+
+function getFreeRentals(startDate, endDate) {
+  const rentals = rentalCarRepo.getAll();
+
+  const response = rentals.map(rental => {
+    const vehicles = orderService.getFilteredVehicles(rental, startDate, endDate);
+
+    if (vehicles.length === 0) {
+      return null; 
+    }
+
+    const rentalDto = new rentalDTO(); 
+    rentalDto.id = rental.id;
+    rentalDto.nameRental = rental.name;
+    rentalDto.logoR = rental.imagePath;
+    rentalDto.rentalId=rental.id;
+    rentalDto.vehicles = vehicles;
+
+    return rentalDto;
+  }).filter(rentalDto => rentalDto !== null); 
+
+  return response;
+}
+
+function getFreeRentalById(rentalId, startDate, endDate) {
+  const rental=rentalCarRepo.getById(rentalId);
+  const vehicles = orderService.getFilteredVehicles(rental, startDate, endDate);
+
+  const rentalDto = new rentalDTO(); 
+  rentalDto.id = rental.id;
+  rentalDto.location = rental.location;
+  rentalDto.workHours = rental.workHours;
+  rentalDto.status = rental.status;
+  rentalDto.nameRental = rental.name;
+  rentalDto.logoR = rental.imagePath;
+  rentalDto.rentalId = rental.id;
+  rentalDto.vehicles = vehicles;
+
+  if (vehicles.length === 0) {
+    return null; // Ako nema slobodnih vozila za dati rentalId i datume
+  }
+
+  return rentalDto;
+}
+
+
 
 function remove(id) {
   return rentalCarRepo.remove(id);
@@ -81,6 +131,19 @@ function updateNewCar(id, updatedVehicle, idCar) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 function getById(id) {
   return rentalCarRepo.getById(id);
 }
@@ -103,10 +166,10 @@ module.exports = {
   update,
   getSortedCarsByStatus,
   getAllVehicles,
-
+  getFreeRentals,
   addNewCar,
   updateNewCar,
   deleteNewCar,
-  IsManager
-
+  IsManager,
+  getFreeRentalById
 };

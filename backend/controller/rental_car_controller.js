@@ -8,12 +8,31 @@ router.get("/", (req, res) => {
   res.json(rentalCarService.getAll());
 });
 
-router.get("/:idRental/:idUser",(req,res)=>{
-  const idRental = parseInt(req.params.idRental, 10);
-  const idUser=parseInt(req.params.idUser, 10);
+router.get("/filtered/:id", (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const startDate = req.query.startDate;
+  const endDate = req.query.endDate;
 
-  res.json(rentalCarService.IsManager(idRental,idUser));
+  try {
+    var rental = rentalCarService.getFreeRentalById(id, startDate, endDate);
+    if (rental) {
+      res.status(200).json(rental);
+    } else {
+      res.status(404).json({ error: "Rental not found or no available vehicles" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
 })
+
+router.get("/:startDate/:endDate",(req,res)=>{
+  const startDate = new Date(req.params.startDate);
+  const endDate = new Date(req.params.endDate);
+  console.log("ovde sam")
+  res.json(rentalCarService.getFreeRentals(startDate,endDate));
+})
+
+
 
 router.get("/sortedCars", (req, res) => {
   res.json(rentalCarService.getSortedCarsByStatus());
@@ -73,5 +92,8 @@ router.get("/:id", (req, res) => {
     res.status(404).json({ error: "Car not found" });
   }
 });
+
+;
+
 
 module.exports = router;
