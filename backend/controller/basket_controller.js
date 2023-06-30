@@ -8,16 +8,18 @@ router.get("/", (req, res) => {
   res.json(basketService.getAll());
 });
 
-router.post("/", (req, res) => {
-  const basket = req.body;
-
+router.post("/:idUser", (req, res) => {
+  const cartData = req.body;
+  const userId = req.params.idUser;
   try {
-    basketService.create(basket);
-    res.status(200).json({ message: "basket created successfully" });
+    const updatedCart = basketService.addToCart(userId, cartData);
+    res.status(200).json(updatedCart);
   } catch (error) {
-    res.status(500).json({ error: "Failed to create  basket" });
+    res.status(500).json({ error: "Failed to create basket" });
   }
 });
+
+
 
 router.put("/:id", (req, res) => {
   const basketId = req.params.id;
