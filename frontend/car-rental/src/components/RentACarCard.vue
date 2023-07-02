@@ -7,7 +7,7 @@
       </div>
 
       <div>
-        <h4 class="location">Location:📍 {{ car.location.adress }}</h4>
+        <h4 class="location">Location:📍 {{ car.location }}</h4>
       </div>
     </div>
     <div class="bottom-div">
@@ -34,20 +34,15 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0px 2px 6px rgba(82, 42, 8, 0.3);
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease;
   cursor: pointer;
-  background-color: rgba(
-    242,
-    237,
-    230,
-    0.8
-  ); /* Use RGBA color with desired transparency */
+  background-color: rgba(106, 162, 186, 0.8);
 }
 
 .rent-a-car-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .row-div {
@@ -59,7 +54,7 @@ export default {
 .img-div {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 1rem;
 }
 
 .car-img {
@@ -73,7 +68,13 @@ export default {
 
 .bottom-div {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
+.rent-a-car-card span {
+  color: #ff0000; /* Primer boje (crvena) */
+}
+
 
 h3 {
   margin: 0;
@@ -82,28 +83,31 @@ h3 {
 
 .name {
   font-size: 1.8rem;
-  color: rgb(15, 132, 182);
-  font-family: "Arial", sans-serif; /* Custom font family for the name */
+  color: rgb(51, 95, 139);
+  font-family: "Arial", sans-serif;
 }
 
 .details {
   font-size: 1.2rem;
-  color: rgb(143, 140, 140);
+  color: #676363;
+  transition: color 0.3s ease;
+  margin-top: auto;
 }
 
 .location {
   font-size: 1.2rem;
-  color: #565656;
+  color: whitesmoke;
 }
 
 .grade {
-  margin-top: auto;
   font-size: 1.2rem;
-  color: #565656;
-  margin-left: 30%;
+  color:  whitesmoke;
 }
 
 .details:hover {
-  color: black;
-align-content: flex-end;}
+  color: #000;
+}
+
+
+
 </style>

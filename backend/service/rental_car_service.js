@@ -7,7 +7,10 @@ function create(car_rental) {
 }
 
 
-
+function IsManager(idRental,idUser)
+{
+  return rentalCarRepo.IsManager(idRental,idUser);
+}
 
 function getFreeRentals(startDate, endDate) {
   const rentals = rentalCarRepo.getAll();
@@ -86,10 +89,7 @@ function addNewCar(id,vehicle)
   
 }
 
-function IsManager(idRental,idUser)
-{
-  return rentalCarRepo.IsManager(idRental,idUser);
-}
+
 
 function deleteNewCar(id,idCar)
 {

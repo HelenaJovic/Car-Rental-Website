@@ -7,7 +7,6 @@ router.use(express.json());
 router.get("/", (req, res) => {
   res.json(rentalCarService.getAll());
 });
-
 router.get("/filtered/:id", (req, res) => {
   const id = parseInt(req.params.id, 10);
   const startDate = req.query.startDate;
@@ -25,13 +24,31 @@ router.get("/filtered/:id", (req, res) => {
   }
 })
 
+
+
+
+
 router.get("/:startDate/:endDate",(req,res)=>{
   const startDate = new Date(req.params.startDate);
   const endDate = new Date(req.params.endDate);
-  console.log("ovde sam")
   res.json(rentalCarService.getFreeRentals(startDate,endDate));
 })
 
+router.get("/manager/:idRental/:idUser", (req, res) => {
+  const idRental = req.params.idRental;
+  const idUser = req.params.idUser;
+
+  console.log(idRental)
+  console.log(idUser)
+
+  try {
+    const isManager = rentalCarService.IsManager(idRental, idUser);
+    console.log(isManager)
+    res.status(200).json({ isManager });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to check manager status" });
+  }
+});
 
 
 router.get("/sortedCars", (req, res) => {

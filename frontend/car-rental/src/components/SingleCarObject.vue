@@ -16,7 +16,7 @@
           <p :class="['status', carObject.status ? 'opened' : 'closed']">
             Status: {{ carObject.status ? "Opened" : "Closed" }}
           </p>
-          <button class="form-group" type="button" v-on:click="addVehicle(carObject.id)" v-if="IsManager">Add Vehicle</button>
+          <button class="form-group" type="button" v-on:click="addVehicle(carObject.id)" v-if="isManager">Add Vehicle</button>
         </div>
       </div>
 
@@ -29,7 +29,7 @@
           :rental-car-id="id"
           :update-car="updateCar"
           :delete-car="deleteCar"
-          :is-manager="IsManager"
+          :is-manager="isManager"
         ></vehicleCard>
 
     
@@ -51,12 +51,13 @@ import jwt_decode from "jwt-decode";
 export default {
   components: {
     navBar: Navbar,
-    vehicleCard: VehicleCard
+      vehicleCard: VehicleCard
 
   },
   data() {
     return {
       id: this.$route.params.id,
+      isManager:false,
       vehicleId: 0,
       carObject: {
         name: "",
@@ -69,8 +70,6 @@ export default {
         grade: "",
         vehicles: []
       },
-      IsManager:false,
-      IsManagerHelper:false
     };
   },
   methods: {
@@ -98,6 +97,17 @@ export default {
   mounted() {
     const token = localStorage.getItem("token");
       const decoded = jwt_decode(token);
+
+      axios
+      .get(`http://localhost:8081/cars/manager/${this.id}/${decoded.id}`)
+      .then(response => {
+        this.isManager = response.data.isManager;
+        console.log(this.isManager)
+      })
+      .catch(error => {
+        console.error(error);
+        window.alert("An error occurred while fetching user data");
+      });
           axios
       .get(`http://localhost:8081/cars/${this.id}`)
       .then(response => {
@@ -108,16 +118,7 @@ export default {
         window.alert("An error occurred while fetching user data");
       });
 
-      axios
-      .get(`http://localhost:8081/cars/${this.id}/${decoded.id}`)
-      .then(response => {
-        this.IsManager = response.data;
-        console.log(this.IsManager)
-      })
-      .catch(error => {
-        console.error(error);
-        window.alert("An error occurred while fetching user data");
-      });
+     
   }
 };
 </script>

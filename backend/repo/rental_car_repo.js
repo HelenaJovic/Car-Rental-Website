@@ -16,6 +16,7 @@ function IsManager(idRental,idUser)
 {
   const user=userRepo.getById(idUser);
 
+  console.log(user.rentalObject)
 
   if(user.rentalObject!=null && user.rentalObject==idRental)
   {
