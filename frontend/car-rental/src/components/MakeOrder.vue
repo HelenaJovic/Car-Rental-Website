@@ -33,7 +33,7 @@
         <h2 class="name">{{ order.nameRental }}</h2>
         <img :src="order.logoR" class="order-logo" alt="Logo" />
         <router-link :to="{ name: 'makeOrderSingle', params: { id: order.rentalId }, query: { startDate: searchStartDate, endDate: searchEndDate } }">
-  <h3 class="details">View details</h3>
+  <h3 class="details">Show more</h3>
 </router-link>
 
 

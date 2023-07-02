@@ -23,6 +23,7 @@
               v-for="vehicle in order.vehicles"
               :key="vehicle.id"
               :vehicle="vehicle"
+              @add-to-cart="addToCart"
             ></vehicleCardOrder>
           </div>
         </div>
@@ -35,7 +36,7 @@
   import Navbar from "./Navbar.vue";
   import VehicleCardOrder from "./VehicleCardOrder.vue";
   import jwt_decode from "jwt-decode";
-  
+
   export default {
     components: {
       navBar: Navbar,
@@ -49,11 +50,42 @@
     },
     data() {
   return {
+    vehicleId: 0,
     order: null,
-    rentalId: 0
+    rentalId: 0,
   };
 },
+methods: {
+  addToCart(vehicle) {
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const idUser = decoded.id;
+    
+    const cartData = {
+      vehicles: [],
+      user: idUser,
+     price:""
+    };
+
+    cartData.vehicles.push(vehicle);
+    console.log(cartData)
+    cartData.price+=vehicle.price;
+    
+    
    
+    axios
+      .post(`http://localhost:8081/baskets/${idUser}`, cartData)
+      .then(() => {
+        this.$toastr.s("Vehicle successfully added in basket!");
+      })
+      .catch(err => {
+        console.log(err);
+        this.$toastr.e("Error adding vehicle!");
+      });
+  }
+
+
+    },
     mounted() {
       this.rentalId = this.$route.params.id; // Ispravljena greška u pristupanju rentalId
       const startDate = this.$route.query.startDate;

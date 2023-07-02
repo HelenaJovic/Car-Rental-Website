@@ -34,10 +34,10 @@
       <div class="grid-item-2-5">
         <label class="labels2">Price:</label>
         <p class="paragraph2">{{ vehicle.price }}</p>
-        <button type="submit" v-on:click.prevent="updateCar(vehicle.id,rentalCarId)" v-if="IsManager">
+        <button type="submit" v-on:click.prevent="updateCar(vehicle.id,rentalCarId)" v-if="isManager">
           Update
         </button>
-        <button type="submit" v-on:click.prevent="deleteCar(vehicle.id,rentalCarId)" v-if="IsManager">
+        <button type="submit" v-on:click.prevent="deleteCar(vehicle.id,rentalCarId)" v-if="isManager">
           Delete
         </button>
  
@@ -49,7 +49,7 @@
 <script>
 export default {
   name: "VehicleCard",
-  props: ["vehicle", "deleteCar","rentalCarId","updateCar","IsManager"]
+  props: ["vehicle", "deleteCar","rentalCarId","updateCar","isManager"]
 };
 </script>
 <style scoped>

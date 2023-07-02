@@ -9,9 +9,10 @@
           <h2 class="naslov">{{ vehicle.brand }}</h2>
   
           <h2 class="naslov">{{ vehicle.model }}</h2>
-          <button type="submit"  class="button">
-            🛒
-          </button>
+          <button type="submit" class="button" @click.prevent="onAddToCart">
+  🛒
+</button>
+
         </div>
         <div class="grid-item-2-2">
           <img src="../assets/images/manual.png" class="icons" />
@@ -48,8 +49,12 @@
   <script>
   export default {
     name: "VehicleCard",
-    props: ["vehicle"]
-  };
+    props: ["vehicle","addToCart"],
+ 
+    methods: {
+        onAddToCart() {
+      this.$emit("add-to-cart", this.vehicle);
+    }}};
   </script>
   <style scoped>
   .vehicle-card {
