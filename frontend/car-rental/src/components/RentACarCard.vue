@@ -7,7 +7,7 @@
       </div>
 
       <div>
-        <h4 class="location">Location:📍 {{ car.location }}</h4>
+        <h4 class="location">Location:📍 {{ car.location.adress }}</h4>
       </div>
     </div>
     <div class="bottom-div">
@@ -75,7 +75,6 @@ export default {
   color: #ff0000; /* Primer boje (crvena) */
 }
 
-
 h3 {
   margin: 0;
   font-weight: bold;
@@ -101,13 +100,10 @@ h3 {
 
 .grade {
   font-size: 1.2rem;
-  color:  whitesmoke;
+  color: whitesmoke;
 }
 
 .details:hover {
   color: #000;
 }
-
-
-
 </style>

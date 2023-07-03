@@ -10,6 +10,7 @@ import VehicleForm from "../components/VehicleForm.vue";
 import AddCarObject from "../components/AddCarObject.vue";
 import RegisterManager from "../components/RegisterManager.vue";
 import MakeOrderSingleObject from "../components/MakeOrderSingleObject.vue";
+import CartPreview from "../components/CartPreview.vue";
 
 export default [
   { path: "/", component: Home },
@@ -23,16 +24,15 @@ export default [
   { path: "/addObject", component: AddCarObject },
   { path: "/registerManager", component: RegisterManager },
   { path: "/makeOrder", component: MakeOrder },
-  { 
-    path: "/makeOrderSingle/:id", 
-    name: "makeOrderSingle", 
-    component: MakeOrderSingleObject, 
-    props: (route) => ({ 
+  {
+    path: "/makeOrderSingle/:id",
+    name: "makeOrderSingle",
+    component: MakeOrderSingleObject,
+    props: route => ({
       id: route.params.id.toString(),
       startDate: route.query.startDate,
       endDate: route.query.endDate
-    }) 
-  }
-  
-  
+    })
+  },
+  { path: "/cartPreview", component: CartPreview }
 ];

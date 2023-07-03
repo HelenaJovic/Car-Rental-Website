@@ -3,11 +3,14 @@
     <ul class="navbar-nav">
       <li class="nav-item nav-item-logo">
         <router-link to="/" class="nav-link">
-
-          <img src="../assets/images/rental222.png" alt="Car Rental Logo" class="nav-logo" />
-
+          <img
+            src="../assets/images/rental222.png"
+            alt="Car Rental Logo"
+            class="nav-logo"
+          />
         </router-link>
       </li>
+
       <li class="nav-item nav-item-left">
         <router-link to="/login" v-if="!isLoggedIn" class="nav-link"
           >Login</router-link
@@ -18,26 +21,21 @@
           >Register</router-link
         >
       </li>
+
       <li class="nav-item">
         <router-link
           to="/registerManager"
           v-if="isAdministrator"
           class="nav-link"
-          >Register manager</router-link>
+          >Register manager</router-link
+        >
       </li>
       <li class="nav-item">
-        <router-link
-          to="/makeOrder"
-          v-if="isBuyer"
-          class="nav-link"
+        <router-link to="/makeOrder" v-if="isBuyer" class="nav-link"
           >Make order</router-link
         >
       </li>
-      <li class="nav-item">
-        <router-link to="/updateUser" v-if="isLoggedIn" class="nav-link"
-          >Your profile</router-link
-        >
-      </li>
+
       <li class="nav-item">
         <router-link
           to="/"
@@ -46,6 +44,26 @@
           class="nav-link"
           >Log Out</router-link
         >
+      </li>
+
+      <li class="nav-item">
+        <router-link to="/updateUser" v-if="isLoggedIn" class="nav-link"
+          ><img
+            src="../assets/images/your_profile.png"
+            alt="Your profile"
+            class="your_profile"
+          />
+        </router-link>
+      </li>
+
+      <li class="nav-item">
+        <router-link to="/cartPreview" v-if="isBuyer" class="nav-link"
+          ><img
+            src="../assets/images/cart.png"
+            alt="cart preview"
+            class="your_profile"
+          />
+        </router-link>
       </li>
     </ul>
   </nav>
@@ -91,10 +109,8 @@ export default {
 
       if (decoded.role == "Administrator") {
         this.isAdministrator = true;
-      }
-      else if(decoded.role=="Buyer")
-      {
-        this.isBuyer=true;
+      } else if (decoded.role == "Buyer") {
+        this.isBuyer = true;
       }
     }
   }
@@ -109,7 +125,7 @@ export default {
 }
 
 .nav-logo {
-  width: 100px;
+  width: 80px;
   height: 50px;
   position: absolute;
   top: 50%;
@@ -126,7 +142,16 @@ export default {
 }
 
 .nav-item {
-  margin-left: 16px; /* Adjust spacing between links */
+  padding: 0px 15px 0px 10px;
+}
+
+.your_profile {
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
 }
 
 .nav-link {
