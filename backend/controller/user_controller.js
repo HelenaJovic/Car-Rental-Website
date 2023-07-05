@@ -46,6 +46,22 @@ router.post("/", (req, res) => {
   }
 });
 
+router.post("/updatePoints/:userId", (req, res) => {
+  const userId = req.params.userId;
+  const newPoints = req.body.points;
+  try {
+    var user = userService.getById(userId);
+
+    if (user) {
+      user.points = newPoints / (1000 * 133);
+      userService.update(user.id, user);
+      res.status(200).json({ message: "Sucessfully updated points." });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update points" });
+  }
+});
+
 router.put("/:id", (req, res) => {
   const userId = req.params.id;
   const updatedData = req.body;

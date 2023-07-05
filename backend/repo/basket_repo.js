@@ -14,19 +14,15 @@ function create(basket) {
 }
 
 function getCartByUserId(userId) {
-  const carts=json_utils.jsonReader(path);
-  console.log(carts)
-  for(const cart of carts)
-  {
-    if(cart.user==userId)
-    {
+  const carts = json_utils.jsonReader(path);
+
+  for (const cart of carts) {
+    if (cart.user == userId) {
       return cart;
     }
   }
   return null;
 }
-
-
 
 function update(id, updatedBasket) {
   const baskets = json_utils.jsonReader(path);
@@ -72,5 +68,5 @@ module.exports = {
   remove,
   getAll,
   getById,
-  getCartByUserId
+  getCartByUserId,
 };
