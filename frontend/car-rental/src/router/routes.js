@@ -10,7 +10,7 @@ import VehicleForm from "../components/VehicleForm.vue";
 import AddCarObject from "../components/AddCarObject.vue";
 import RegisterManager from "../components/RegisterManager.vue";
 import MakeOrderSingleObject from "../components/MakeOrderSingleObject.vue";
-import CartPreview from "../components/CartPreview.vue";
+import CartOverview from "../components/CartOverview.vue";
 
 export default [
   { path: "/", component: Home },
@@ -34,5 +34,8 @@ export default [
       endDate: route.query.endDate
     })
   },
-  { path: "/cartPreview", component: CartPreview }
+  {
+    path: "/cartOverview",
+    component: CartOverview
+  }
 ];

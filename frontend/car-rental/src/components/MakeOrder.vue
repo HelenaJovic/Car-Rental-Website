@@ -72,28 +72,19 @@ export default {
     navBar: Navbar,
     OrderCard: OrderCard
   },
+
+  props: {
+    selectedDates: {
+      type: Object,
+      default: () => ({ startDate: null, endDate: null })
+    }
+  },
   data() {
     return {
       orders: [],
-      searchStartDate: "",
-      searchEndDate: ""
+      searchStartDate: null,
+      searchEndDate: null
     };
-  },
-
-  watch: {
-    searchStartDate: function(newDate) {
-      if (newDate) {
-        eventBus.$emit("startDate", newDate);
-      } else {
-      }
-    },
-
-    searchEndDate: function(newDate) {
-      if (newDate) {
-        eventBus.$emit("endDate", newDate);
-      } else {
-      }
-    }
   },
 
   mounted() {

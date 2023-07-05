@@ -57,7 +57,7 @@
       </li>
 
       <li class="nav-item">
-        <router-link to="/cartPreview" v-if="isBuyer" class="nav-link"
+        <router-link to="/cartOverview" v-if="isBuyer" class="nav-link"
           ><img
             src="../assets/images/cart.png"
             alt="cart preview"
@@ -90,6 +90,7 @@ export default {
     });
 
     this.isLoggedIn = isLoggedIn();
+
     this.checkIfAdministratororBuyer();
   },
 
@@ -99,18 +100,24 @@ export default {
 
   methods: {
     LogOut() {
-      localStorage.removeItem("token");
-      window.location.reload();
+      const token = localStorage.getItem("token");
+      if (token) {
+        localStorage.removeItem("token");
+        window.location.reload();
+      } else {
+      }
     },
 
     checkIfAdministratororBuyer() {
       const token = localStorage.getItem("token");
-      const decoded = jwt_decode(token);
 
-      if (decoded.role == "Administrator") {
-        this.isAdministrator = true;
-      } else if (decoded.role == "Buyer") {
-        this.isBuyer = true;
+      if (token) {
+        const decoded = jwt_decode(token);
+        if (decoded.role == "Administrator") {
+          this.isAdministrator = true;
+        } else if (decoded.role == "Buyer") {
+          this.isBuyer = true;
+        }
       }
     }
   }

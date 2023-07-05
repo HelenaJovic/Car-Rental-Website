@@ -43,7 +43,7 @@ export default {
           const data = response.data;
           const token = data.token;
           localStorage.setItem("token", token);
-          console.log(token);
+
           eventBus.$emit("rerenderNavbar");
           this.$router.push("/");
         })

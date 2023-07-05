@@ -52,7 +52,7 @@ export default {
     return {
       vehicleId: 0,
       order: null,
-      rentalId: 0
+      rentalId: this.$route.params.id
     };
   },
   methods: {
@@ -64,7 +64,10 @@ export default {
       const cartData = {
         vehicles: [],
         user: idUser,
-        price: ""
+        price: "",
+        startDate: this.$route.query.startDate,
+        endDate: this.$route.query.endDate,
+        rentalId: this.rentalId
       };
 
       cartData.vehicles.push(vehicle);

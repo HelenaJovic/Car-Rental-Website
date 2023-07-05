@@ -53,8 +53,8 @@ export default {
     navBar: Navbar
   },
   mounted() {
-    this.getData();
     this.checkIfAdministrator();
+    this.getData();
   },
   data() {
     return {
@@ -62,7 +62,7 @@ export default {
       search: "",
       selectedSortField: "",
       IsAdministrator: false,
-      name:""
+      name: ""
     };
   },
   methods: {
@@ -72,10 +72,7 @@ export default {
           "http://localhost:8081/cars/sortedCars"
         );
         this.cars = response.data;
-        console.log(this.cars);
-      } catch (error) {
-        console.error(error);
-      }
+      } catch (error) {}
     },
 
     sortByField(cars, field) {
@@ -95,10 +92,11 @@ export default {
 
     checkIfAdministrator() {
       const token = localStorage.getItem("token");
-      const decoded = jwt_decode(token);
-
-      if (decoded.role == "Administrator") {
-        this.IsAdministrator = true;
+      if (token) {
+        const decoded = jwt_decode(token);
+        if (decoded.role == "Administrator") {
+          this.IsAdministrator = true;
+        }
       }
     }
   },
@@ -301,7 +299,7 @@ export default {
       search: "",
       selectedSortField: "",
       IsAdministrator: false,
-      name:""
+      name: ""
     };
   },
   methods: {
@@ -503,7 +501,4 @@ export default {
     background-position: 0% 50%;
   }
 }
-
-
-
 </style>
