@@ -114,13 +114,24 @@
                   }}
                 </p>
               </div>
-              <div class="vehicle-container">
-                <div class="vehicle-scroll">
-                  <OrderCard
-                    v-for="vehicle in order.vehicles"
-                    :key="vehicle.id"
-                    :vehicle="vehicle"
-                  ></OrderCard>
+              <div class="vehicle-vehicle">
+                <div class="status-container">
+                  <button
+                    class="button-container"
+                    v-if="isInProcessing(order)"
+                    @click="cancelOrder(order)"
+                  >
+                    Cancel order
+                  </button>
+                </div>
+                <div class="vehicle-container">
+                  <div class="vehicle-scroll">
+                    <OrderCard
+                      v-for="vehicle in order.vehicles"
+                      :key="vehicle.id"
+                      :vehicle="vehicle"
+                    ></OrderCard>
+                  </div>
                 </div>
               </div>
             </div>
@@ -203,13 +214,39 @@
                   }}
                 </p>
               </div>
-              <div class="vehicle-container">
-                <div class="vehicle-scroll">
-                  <OrderCard
-                    v-for="vehicle in order.vehicles"
-                    :key="vehicle.id"
-                    :vehicle="vehicle"
-                  ></OrderCard>
+              <div class="vehicle-vehicle">
+                <div class="status-container">
+                  <button
+                    class="button-container"
+                    v-if="isInProcessing(order)"
+                    @click="approveOrder(order)"
+                  >
+                    Approve✅
+                  </button>
+                  <button
+                    class="button-container"
+                    v-if="isInProcessing(order)"
+                    @click="showRejectionPopup(order)"
+                  >
+                    Reject❎
+                  </button>
+
+                  <div v-if="showPopup">
+                    <h3>Enter reason for rejection:</h3>
+                    <textarea v-model="rejectionReason"></textarea>
+                    <button @click="rejectOrder(order)">
+                      Confirm
+                    </button>
+                  </div>
+                </div>
+                <div class="vehicle-container">
+                  <div class="vehicle-scroll">
+                    <OrderCard
+                      v-for="vehicle in order.vehicles"
+                      :key="vehicle.id"
+                      :vehicle="vehicle"
+                    ></OrderCard>
+                  </div>
                 </div>
               </div>
             </div>
@@ -290,13 +327,14 @@ export default {
       orders: [],
       profiles: [],
       search: "",
-
       selectedSortField: "",
       IsBuyer: false,
       IsManager: false,
       isAdministrator: false,
       name: "",
-      rentalId: 0
+      rentalId: 0,
+      showPopup: false,
+      rejectionReason: ""
     };
   },
 
@@ -333,6 +371,50 @@ export default {
       return searchRegex.test(date);
     },
 
+    showRejectionPopup(order) {
+      this.showPopup = true;
+    },
+
+    approveOrder(order) {
+      axios
+        .put(`http://localhost:8081/orders/approveOrder/${order.orderId}`)
+        .then(response => {
+          this.$toastr.s("Order approved!");
+          this.$forceUpdate();
+
+          this.orders = this.orders.map(item => {
+            if (item.orderId === order.orderId) {
+              item.orderStatus = "Approved";
+            }
+            return item;
+          });
+        })
+        .catch(error => {
+          this.$toastr.e("Error!");
+        });
+    },
+
+    rejectOrder(order) {
+      axios
+        .put(`http://localhost:8081/orders/rejectOrder/${order.orderId}`, {
+          reason: this.rejectionReason
+        })
+        .then(response => {
+          this.$toastr.s("Order rejected!");
+          this.orders = this.orders.map(item => {
+            if (item.orderId === order.orderId) {
+              item.orderStatus = "Rejected";
+            }
+            return item;
+          });
+        })
+        .catch(error => {
+          this.$toastr.e("Error!");
+        });
+
+      this.showPopup = false;
+      this.rejectionReason = "";
+    },
     submitForm() {
       const token = localStorage.getItem("token");
       const decoded = jwt_decode(token);
@@ -402,11 +484,51 @@ export default {
       } else if (decoded.role == "Administrator") {
         this.isAdministrator = true;
       }
+    },
+
+    isInProcessing(order) {
+      if (order.orderStatus === "InProgress") {
+        return true;
+      }
+    },
+
+    cancelOrder(order) {
+      const token = localStorage.getItem("token");
+      const decoded = jwt_decode(token);
+
+      axios
+        .put(`http://localhost:8081/orders/cancelOrder/${order.orderId}`)
+        .then(response => {
+          this.$toastr.s("Order canceled!");
+          this.$forceUpdate();
+
+          this.orders = this.orders.map(item => {
+            if (item.orderId === order.orderId) {
+              item.orderStatus = "Canceled";
+            }
+            return item;
+          });
+        })
+        .catch(error => {
+          this.$toastr.e("Error!");
+        });
+
+      axios
+        .post(`http://localhost:8081/users/lostPoints/${decoded.id}`, {
+          points: order.price
+        })
+        .then(response => {
+          this.$toastr.s("You have lost points!");
+        })
+        .catch(error => {
+          this.$toastr.e("Error!");
+        });
     }
   },
   mounted() {
     this.getUserData();
     this.checkIfBuyer();
+
     const token = localStorage.getItem("token");
     const decoded = jwt_decode(token);
     console.log(decoded);
@@ -503,7 +625,7 @@ export default {
   background-image: url(../assets/images/auto.jpg);
   background-size: cover;
   display: flex;
-  justify-content: space-between;
+
   gap: 1em;
   flex-direction: row;
   background-position: center;
@@ -597,14 +719,14 @@ export default {
 
 .register-form {
   height: min-content;
-  flex-grow: 0.5;
-  padding: 25px;
+  flex-grow: 1;
+  padding: 20px;
 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   background-color: rgba(122, 136, 220, 0.2);
   width: 25%;
-  margin: 0 auto;
+
   border: 1px solid #ccc;
   border-width: 2px;
   border-style: solid;
@@ -619,7 +741,7 @@ export default {
 
 .displayOrder {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  flex-grow: 3;
+
   gap: 5rem;
   padding: 10px;
 }
@@ -670,30 +792,31 @@ export default {
 .order-list {
   list-style: none;
   display: flex;
-  max-width: 102%;
-  padding: 10px;
+  max-width: 100%;
+  padding: 5px;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 }
 
 .order-orderd {
   gap: 20rem;
   flex-wrap: wrap;
   background-color: rgba(242, 242, 242, 0.7);
-  padding: 20px;
+  padding: 10px;
   border-radius: 5px;
+  height: 350px;
 }
 
 .order-orderd-container {
   display: flex;
   flex-direction: row;
-  gap: 1em;
+  gap: 10px;
   justify-content: center;
   align-items: center;
 }
 
 .order-container {
-  width: 30%;
+  width: 25%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -702,7 +825,7 @@ export default {
   border: 1px solid #ccc; /* Dodat border sa bojom #ccc */
   border-radius: 5px; /* Dodat border-radius za blago zaobljen izgled */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Dodat box-shadow efekat */
-  padding: 20px; /* Dodat padding za unutrašnji prostor */
+  padding: 10px; /* Dodat padding za unutrašnji prostor */
   background-color: rgba(
     26,
     101,
@@ -721,22 +844,43 @@ export default {
   ); /* Promenjen kod za postavljanje transparentnosti */
 }
 
+.vehicle-vehicle {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.status-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: flex-end;
+  padding: 5px 0px 10px 0px;
+}
+
+.button-container {
+  padding: 0.5rem 1rem;
+  background-color: lightslategray;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 18px;
+  height: 40px;
+  width: 150px;
+}
 .vehicle-container {
   flex-grow: 1;
   border-radius: 5px;
   padding: 1rem;
   display: flex;
   gap: 5rem;
-  box-shadow: none; /* Uklonite box-shadow */
+  box-shadow: none;
   transition: transform 0.3s ease;
   cursor: pointer;
   justify-items: center;
-  background-color: rgba(
-    144,
-    15,
-    15,
-    0
-  ); /* Promenjen kod za postavljanje transparentnosti */
+  background-color: rgba(144, 15, 15, 0);
+  /* Promenjen kod za postavljanje transparentnosti */
 }
 
 .vehicle-scroll {
@@ -747,7 +891,7 @@ export default {
   overflow-y: auto;
   max-height: 250px; /* Adjust the max height as desired */
   max-width: 1000px;
-  gap: 1rem;
+
   flex-direction: column;
   justify-content: center; /* Center items horizontally */
 }
