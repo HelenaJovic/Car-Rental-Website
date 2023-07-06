@@ -147,7 +147,8 @@ export default {
         duration: roundedDuration,
         price: this.cart.price,
         buyer: decoded.id,
-        orderStatus: "Obrada"
+        orderStatus: "Obrada",
+        rejectionReason: ""
       };
 
       axios

@@ -7,9 +7,10 @@ class Order {
     duration,
     price,
     buyer,
-    orderStatus
+    orderStatus,
+    rejectionReason
   ) {
-        this.id = id;
+    this.id = id;
     this.vehicles = vehicles;
     this.rentalObject = rentalObject;
     this.date = date;
@@ -17,6 +18,7 @@ class Order {
     this.price = price;
     this.buyer = buyer;
     this.orderStatus = orderStatus;
+    this.rejectionReason = rejectionReason;
   }
 }
 
