@@ -168,8 +168,6 @@ function getFreeVehicles(rental, startDate, endDate) {
           const formattedendDate = formatDate(endDate);
           const formattedstartDate = formatDate(startDate);
 
-            console.log(formattedstartDate)
-            console.log(formattedendDate)
           if (formattedstartDate <= formattedendODate && formattedendDate >= formattedstartODate) {
             console.log("ludilo")
             const matchingVehicles = order.vehicles.map(orderVehicle => orderVehicle.id);

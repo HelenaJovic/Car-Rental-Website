@@ -4,6 +4,23 @@ const rentalCarService = require("../service/rental_car_service");
 
 router.use(express.json());
 
+
+router.get('/Allcomments/:rentalId/:role', (req, res) => {
+  const rentalId = req.params.rentalId;
+  const role = req.params.role;
+
+  console.log(role)
+
+  try {
+    const comments = rentalCarService.getAllCommentsByRentalId(rentalId, role);
+    res.status(200).json(comments);
+  } catch (error) {
+    res.status(404).json({ error: "Comment not found" });
+  }
+});
+
+
+
 router.get("/", (req, res) => {
   res.json(rentalCarService.getAll());
 });
@@ -49,6 +66,7 @@ router.get("/manager/:idRental/:idUser", (req, res) => {
     res.status(500).json({ error: "Failed to check manager status" });
   }
 });
+
 
 
 router.get("/sortedCars", (req, res) => {

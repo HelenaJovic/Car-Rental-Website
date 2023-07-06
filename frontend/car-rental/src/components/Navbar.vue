@@ -103,7 +103,7 @@ export default {
 
 <style>
 .navbar {
-  background-color: lightslategray;
+  background-color: rgb(86, 105, 126);
   padding: 16px;
   position: relative;
 }

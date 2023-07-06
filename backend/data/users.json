@@ -85,7 +85,7 @@
         "id": 5
     },
     {
-        "username": "Aca manager",
+        "username": "aca",
         "password": "111",
         "new_password": "111",
         "name": "Aleksa",
@@ -93,7 +93,7 @@
         "gender": "male",
         "birthday": "1998-06-16",
         "basket": null,
-        "role": "Manager",
+        "role": "Buyer",
         "pastRentals": null,
         "rentalObject": 2,
         "points": null,
@@ -117,5 +117,39 @@
         "buyerType": null,
         "image": "/static/administrator.png",
         "id": 7
+    },
+    {
+        "username": "lenica",
+        "password": "123",
+        "new_password": "123",
+        "name": "Selena",
+        "surname": "Nikic",
+        "gender": "female",
+        "birthday": "1990-11-15",
+        "basket": null,
+        "role": "Manager",
+        "pastRentals": null,
+        "rentalObject": 9,
+        "points": null,
+        "buyerType": null,
+        "image": "/static/user6.png",
+        "id": 8
+    },
+    {
+        "username": "ninica",
+        "password": "123",
+        "new_password": "123",
+        "name": "Nina",
+        "surname": "Knezevic",
+        "gender": "female",
+        "birthday": "1992-06-16",
+        "basket": null,
+        "role": "Buyer",
+        "pastRentals": null,
+        "rentalObject": null,
+        "points": null,
+        "buyerType": null,
+        "image": "/static/user7.png",
+        "id": 9
     }
 ]

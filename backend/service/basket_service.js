@@ -1,5 +1,4 @@
 const basketRepo = require("../repo/basket_repo");
-const CartModel=require("../model/basket")
 
 function create(basket) {
   basketRepo.create(basket);

@@ -2,6 +2,9 @@
   <div class="vehicle-card">
     <div class="grid-item-1">
       <img :src="vehicle.image" class="vehicle-img" />
+      <div v-if="vehicle.description" class="info">
+      <p class="info-text" >{{vehicle.description}}</p>
+    </div>
     </div>
 
     <div class="grid-item-2">
@@ -70,6 +73,7 @@ export default {
 .grid-item-1 {
   display: flex;
   align-items: flex-start;
+  flex-direction: column;
 }
 
 .grid-item-2 {
@@ -94,7 +98,23 @@ export default {
   padding: 8px;
   font-size: 26px;
 }
+.info {
+  border: 2px solid lightslategray;
+  background-color: rgba(224, 246, 246, 0.4);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 35vh;
+  max-height: 15vh;
 
+}
+
+.info-text {
+  font-size: 20px;
+  text-align: center;
+  color: #6e6666; /* Change the text color to a darker shade */
+}
 .paragraph {
   padding: 4px;
   font-size: 21px;

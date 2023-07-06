@@ -5,25 +5,28 @@
         <div class="displayOrder ">
 
             <div class="order-header">
-                <div class="search-box">
-                    <label>Start Date 🗓️:</label>
-                    <input
-                        type="date"
-                        v-model="searchStartDate"
-                        class="search-input"
-                        placeholder="StartDate"
-                />
-                </div>
+              <div class="search-box">
+  <label>Start Date 🗓️:</label>
+  <input
+    type="date"
+    v-model="searchStartDate"
+    class="search-input"
+    :min="getCurrentDate()"
+    placeholder="StartDate"
+  />
+</div>
 
-                <div class="search-box">
-                    <label>End Date 🗓️:</label>
-                    <input
-                        type="date"
-                        v-model="searchEndDate"
-                        class="search-input"
-                        placeholder="StartDate"
-                />
-                </div>
+<div class="search-box">
+  <label>End Date 🗓️:</label>
+  <input
+    type="date"
+    v-model="searchEndDate"
+    class="search-input"
+    :min="searchStartDate" 
+    placeholder="StartDate"
+  />
+</div>
+
             </div>
 <ul class="order-list">
     <li v-for="order in orders" :key="order.id" class="order-orderd">
@@ -79,7 +82,16 @@ export default {
       searchEndDate: ""
            };
   },
-
+  methods: {
+  getCurrentDate() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+}
+,
   mounted() {
   // Prati promene searchStartDate i searchEndDate
   this.$watch(
@@ -139,8 +151,9 @@ padding: 20px;}
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  background-color: rgb(31, 31, 158,0.6);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  background-image: url(../assets/images/back4.jpg);
+  background-size: cover;
+  background-position: center;  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 .order-list {
   list-style: none;
@@ -157,14 +170,16 @@ padding: 20px;}
 .order-orderd {
   gap: 20rem;
   flex-wrap: wrap;
-  background-color: rgba(242, 242, 242, 0.7); /* Promenjen kod za postavljanje transparentnosti */
-  padding: 20px;
+  background-image: url(../assets/images/back2.jpg);
+  background-size: cover;
+  background-position: center; 
+   padding: 20px;
   border-radius: 5px;
 }
 
 .name {
   font-size: 25px;
-  color: rgb(15, 132, 182);
+  color: rgb(212, 233, 242);
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   letter-spacing: 1px;
   transition: color 0.3s ease;
@@ -206,7 +221,7 @@ padding: 20px;}
   border-radius: 5px; /* Dodat border-radius za blago zaobljen izgled */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Dodat box-shadow efekat */
   padding: 20px; /* Dodat padding za unutrašnji prostor */
-  background-color: rgba(26, 101, 141, 0.1)/* Promenjen kod za postavljanje transparentnosti */
+  background-color: rgba(26, 101, 141, 0.7)/* Promenjen kod za postavljanje transparentnosti */
 
 
 }
@@ -267,7 +282,7 @@ padding: 20px;}
 
 .details {
   font-size: 1.2rem;
-  color: rgb(143, 140, 140);
+  color: rgb(193, 228, 241);
 }
 
 .details:hover {

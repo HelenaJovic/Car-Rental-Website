@@ -1,12 +1,68 @@
 const rentalCarRepo = require("../repo/rental_car_repo");
 const orderService=require("../service/order_service");
 const rentalDTO=require("../dto/rentalDTO");
+const commentDTO=require("../dto/commentDTO");
+const commentService=require("../service/comment_service")
+const userService=require("../service/user_service")
 
 function create(car_rental) {
   return rentalCarRepo.create(car_rental);
 }
 
+function getAllCommentsByRentalId(idRental,role) {
+  const comments = commentService.getCommentsByRentalId(idRental);
+  const commentDTOs = [];
 
+if (role === 'Manager' || role === 'Administrator') {
+
+  for (const comment of comments) {
+    const user = userService.getById(comment.idUser);
+
+    const commentDto = new commentDTO();
+    commentDto.commentId = comment.id;
+    commentDto.logo = user.image;
+    commentDto.userName = user.name;
+    commentDto.idUser=user.id;
+    commentDto.surname = user.surname;
+    commentDto.text = comment.text;
+    commentDto.rentalId = idRental;
+    commentDto.isApproved = comment.isApproved; // Pretpostavka da komentar ima polje isApproved
+    commentDto.isSeen=comment.isSeen;
+    commentDto.grade=comment.grade;
+
+
+    commentDTOs.push(commentDto);
+  }
+
+} 
+else if (role === 'Buyer') {
+      const filteredComments = comments.filter(comment => comment.isApproved && comment.isSeen);
+
+      for (const comment of filteredComments) {
+        const user = userService.getById(comment.idUser);
+
+        const commentDto = new commentDTO();
+        commentDto.commentId = comment.id;
+        commentDto.logo = user.image;
+        commentDto.userName = user.name;
+        commentDto.idUser=user.id;
+        commentDto.surname = user.surname;
+        commentDto.text = comment.text;
+        commentDto.rentalId = idRental;
+        commentDto.isApproved = comment.isApproved; 
+        commentDto.isSeen=comment.isSeen;
+        commentDto.grade=comment.grade;
+
+
+        commentDTOs.push(commentDto);
+
+}
+
+ 
+ 
+}
+return commentDTOs;
+}
 function IsManager(idRental,idUser)
 {
   return rentalCarRepo.IsManager(idRental,idUser);
@@ -91,6 +147,7 @@ function addNewCar(id,vehicle)
 
 
 
+
 function deleteNewCar(id,idCar)
 {
   const rentalCar = rentalCarRepo.getById(idCar);
@@ -171,5 +228,6 @@ module.exports = {
   updateNewCar,
   deleteNewCar,
   IsManager,
-  getFreeRentalById
+  getFreeRentalById,
+  getAllCommentsByRentalId,
 };

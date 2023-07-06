@@ -38,7 +38,7 @@
         "duration": "5",
         "price": "13000",
         "buyer": 1,
-        "orderStatus": "approved",
+        "orderStatus": "returned",
         "id": 1
     },
     {
@@ -75,13 +75,55 @@
             "status": "Available",
             "id": 6
         }],
-        "rentalObject": 4,
+        "rentalObject": 2,
         "date": "2023-06-06",
         "duration": "5",
         "price": "1300",
         "buyer": 2,
-        "orderStatus": "approved",
+        "orderStatus": "returned",
         "id": 2
+    },
+    {
+
+        "vehicles": [{
+            "brand": "Toyota",
+            "model": "2755",
+            "price": "4500",
+            "vehicleType": "car",
+            "rentalObject": "4",
+            "transType": "Manual",
+            "fuelType": "gasoline",
+            "consumption": "",
+            "doorsNum": "4",
+            "peopleNum": "4",
+            "description": "",
+            "image": "/static/toyota.png",
+            "status": "Available",
+            "id": 5
+        },
+        {
+            "brand": "Suzuki",
+            "model": "53",
+            "price": "4700",
+            "vehicleType": "car",
+            "rentalObject": "4",
+            "transType": "Manual",
+            "fuelType": "diesel",
+            "consumption": "",
+            "doorsNum": "4",
+            "peopleNum": "5",
+            "description": "",
+            "image": "/static/suzuki.png",
+            "status": "Available",
+            "id": 6
+        }],
+        "rentalObject": 2,
+        "date": "2023-06-06",
+        "duration": "5",
+        "price": "1300",
+        "buyer": 6,
+        "orderStatus": "returned",
+        "id": 3
     }
     
 ]

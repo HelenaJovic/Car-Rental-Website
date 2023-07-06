@@ -9,7 +9,7 @@
           <h2 class="naslov">{{ vehicle.brand }}</h2>
   
           <h2 class="naslov">{{ vehicle.model }}</h2>
-          <button type="submit" class="button" @click.prevent="onAddToCart">
+          <button type="submit" class="button" @click.prevent="onAddToCart" >
   🛒
 </button>
 
@@ -68,8 +68,9 @@
     box-shadow: 0px 2px 6px rgba(82, 42, 8, 0.3);
     transition: transform 0.3s ease;
     cursor: pointer;
-    background-color: rgba(242, 237, 230, 0.8);
-  }
+    background-image: url(../assets/images/back2.jpg);
+  background-size: cover;
+  background-position: center;    }
   
   .grid-item-1 {
     display: flex;

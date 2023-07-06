@@ -27,7 +27,6 @@ function getAllOrders(userId) {
       const user=orderRepo.getUser(order.id);
       const rentalObject=orderRepo.getRental(order.id);
       orderDto.rentalId=rentalObject.id;
-      console.log(orderDto.rentalId)
 
       if(loggedUser.role==="Buyer")
       {
@@ -40,7 +39,6 @@ function getAllOrders(userId) {
         orderDto.surname=user.surname;
         orderDto.logo=user.image;
         orderDto.idUser=user.id;
-        console.log(user.image)
 
       }
       

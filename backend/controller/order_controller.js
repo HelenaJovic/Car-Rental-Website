@@ -6,7 +6,7 @@ router.use(express.json());
 
 router.get("/:idUser", (req, res) => {
     const id = parseInt(req.params.idUser, 10);
-
+  console.log("vvv")
   res.json(orderService.getAllOrders(id));
 });
 

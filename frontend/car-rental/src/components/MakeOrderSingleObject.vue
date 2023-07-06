@@ -7,13 +7,18 @@
           <div class="flex-item">
             <h2>{{ order.nameRental }}</h2>
             <img :src="order.logoR" class="car-logo" alt="Car Logo" />
-  
+            <div class="flex-item2">
             <p>Working hours: {{ order.workHours }}</p>
                
-            <p>Location: {{ order.location }}</p>
+            <p>Location: {{ order.location.adress }}</p>
+          </div>
             <p :class="['status', order.status ? 'opened' : 'closed']">
               Status: {{ order.status ? "Opened" : "Closed" }}
             </p>
+            <div class="info">
+              <p class="info-text">We're glad you chose our object, and we assure you that it's not a wrong choice.
+Enjoy your selection! 👉</p>  
+            </div>
           </div>
         </div>
   
@@ -123,6 +128,7 @@ methods: {
   
   .helping-container {
     padding: 20px;
+    
   }
   .grid-item-1 {
     grid-column: 1/2;
@@ -135,7 +141,7 @@ methods: {
     padding: 20px;
   
     border: 1px solid #e0e0e0;
-    height: 90%;
+    max-height: 99vh;
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
@@ -153,12 +159,15 @@ methods: {
     padding: 10px;
     border-radius: 6x;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-image: url(../assets/images/back10.jpg);
+  background-size: cover;
+  background-position: center;  
   }
   
   h2 {
     font-size: 30px;
     font-weight: bold;
-    color: rgb(27, 26, 26);
+    color: rgb(2, 9, 29);
     padding: 10px;
     text-transform: uppercase;
     font-family: "Arial", sans-serif;
@@ -166,7 +175,7 @@ methods: {
   
   p {
     font-size: 20px;
-    color: rgb(27, 26, 26);
+    color: rgb(44, 75, 142);
     padding: 10px;
     text-align: left;
   }
@@ -193,6 +202,13 @@ methods: {
   p.status.closed {
     background-color: #dc3545;
   }
+
+  .flex-item2 {
+  background-color: rgba(202, 226, 238, 0.6);
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+}
+
   
   p.grade {
     color: #ff9800;
@@ -210,11 +226,24 @@ methods: {
     padding: 10px;
     font-size: 16px;
     border-radius: 5px;
-    background-color: #4caf50;
-    color: #fff;
+     color: #fff;
     border: none;
     padding: 10px;
   
   }
+
+  .info {
+  border: 2px solid lightslategray;
+  background-color: rgba(224, 246, 246, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.info-text {
+  font-size: 25px;
+  color: #333; /* Change the text color to a darker shade */
+}
+
   </style>
   

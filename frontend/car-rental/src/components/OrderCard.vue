@@ -11,7 +11,7 @@
         </div>
   
         <div class="grid-item-2-5">
-          <label class="labels2">💰:</label>
+          <label class="labels2">💲:</label>
           <p class="paragraph2">{{ vehicle.price }}</p>
           
       </div>
@@ -39,7 +39,7 @@
     box-shadow: 0px 2px 6px rgba(82, 42, 8, 0.3);
     transition: transform 0.3s ease;
     cursor: pointer;
-    background-color: rgba(135, 206, 250, 0.2); /* Svetloplava boja sa 70% neprozirnosti */
+    background: linear-gradient(to right, #e6f0f5, #b5c9d7, #567f9e);
   }
   
   .grid-item-1 {

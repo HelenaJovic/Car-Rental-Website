@@ -83,6 +83,11 @@
 
   methods: {
     updateCar(id, rentalCarId) {
+      if (!this.form.brand || !this.form.model || this.form.price <= 0 || !this.form.vehicleType || !this.form.fuelType || !this.form.consumption) {
+    
+    this.$toastr.e("Please fill in all required fields and enter valid values.");
+    return; 
+}
       axios
         .put(`http://localhost:8081/vehicles/${this.form.id}/${rentalCarId}`, this.form)
         .then(() => {

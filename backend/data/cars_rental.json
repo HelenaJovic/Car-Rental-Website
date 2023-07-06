@@ -5,15 +5,15 @@
             {
                 "brand": "Tesla",
                 "model": "S Plaid",
-                "price": "5600",
+                "price": "5500",
                 "vehicleType": "car",
                 "rentalObject": "1",
                 "transType": "Manual",
                 "fuelType": "gasoline",
-                "consumption": "",
+                "consumption": "5,8‑3,6 l/100 km",
                 "doorsNum": "4",
                 "peopleNum": "3",
-                "description": "",
+                "description": "Very nice and beautiful car. Very good rated and often used!",
                 "image": "/static/tesla.png",
                 "status": "Available",
                 "id": 1
@@ -42,7 +42,7 @@
                 "rentalObject": "2",
                 "transType": "Manual",
                 "fuelType": "diesel",
-                "consumption": "",
+                "consumption": "7,2‑7,0 l/100 km",
                 "doorsNum": "4",
                 "peopleNum": "5",
                 "description": "",
@@ -214,5 +214,66 @@
         "grade": null,
         "imagePath": "/static/rental5.jpg",
         "id": 8
+    },
+    {
+        "name": "Delhi",
+        "workHours": "8-21",
+        "vehicles": [
+            {
+                "brand": "Tesla",
+                "model": "S Plaid",
+                "price": "2000",
+                "vehicleType": "car",
+                "rentalObject": "9",
+                "transType": "Manual",
+                "fuelType": "gasoline",
+                "consumption": "7,2‑7,0 l/100 km",
+                "doorsNum": "3",
+                "peopleNum": "5",
+                "description": "",
+                "image": "/static/tesla.png",
+                "status": "Available",
+                "id": 9
+            },
+            {
+                "brand": "Toyota",
+                "model": "Maruti Ertiga",
+                "price": "1560",
+                "vehicleType": "car",
+                "rentalObject": "9",
+                "transType": "Manual",
+                "fuelType": "gasoline",
+                "consumption": "5,8‑3,6 l/100 km",
+                "doorsNum": "4",
+                "peopleNum": "2",
+                "description": "",
+                "image": "/static/toyota.png",
+                "status": "Available",
+                "id": 12
+            },
+            {
+                "brand": "Suzuki",
+                "model": "Prius",
+                "price": "7",
+                "vehicleType": "car",
+                "rentalObject": "9",
+                "transType": "Manual",
+                "fuelType": "gasoline",
+                "consumption": "7,2‑7,0 l/100 km",
+                "doorsNum": "2",
+                "peopleNum": "4",
+                "description": "",
+                "image": "/static/suzuki.png",
+                "status": "Available",
+                "id": 13
+            }
+        ],
+        "location": {
+            "adress": "Odzaci"
+        },
+        "status": false,
+        "grade": null,
+        "imagePath": "/static/delhi.png",
+        "id": 9
     }
 ]
