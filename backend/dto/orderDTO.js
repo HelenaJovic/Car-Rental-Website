@@ -11,8 +11,7 @@ class OrderByerDTO {
     userName,
     surname,
     idUser,
-    rentalId,
-    rejectionReason
+    rentalId
   ) {
     this.orderId = orderId;
     this.date = date;
@@ -26,7 +25,6 @@ class OrderByerDTO {
     this.surname = surname;
     this.idUser = idUser;
     this.rentalId = rentalId;
-    this.rejectionReason = rejectionReason;
   }
 }
 

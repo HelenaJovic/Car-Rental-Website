@@ -97,7 +97,9 @@
                       ? 'returned'
                       : order.orderStatus.toLowerCase() === 'rejected'
                       ? 'rejected'
-                      : 'canceled'
+                      : order.orderStatus.toLowerCase() === 'canceled'
+                      ? 'canceled'
+                      : 'in-progress'
                   ]"
                 >
                   Status:
@@ -110,7 +112,9 @@
                       ? "Returned"
                       : order.orderStatus.toLowerCase() === "rejected"
                       ? "Rejected"
-                      : "Canceled"
+                      : order.orderStatus.toLowerCase() === "canceled"
+                      ? "Canceled"
+                      : "InProgress"
                   }}
                 </p>
               </div>
@@ -191,26 +195,30 @@
                     'orderStatus',
                     order.orderStatus.toLowerCase() === 'approved'
                       ? 'approved'
-                      : order.orderStatus.toLowerCase() === 'picked-up'
-                      ? 'picked-up'
+                      : order.orderStatus.toLowerCase() === 'received'
+                      ? 'received'
                       : order.orderStatus.toLowerCase() === 'returned'
                       ? 'returned'
                       : order.orderStatus.toLowerCase() === 'rejected'
                       ? 'rejected'
-                      : 'canceled'
+                      : order.orderStatus.toLowerCase() === 'canceled'
+                      ? 'canceled'
+                      : 'in-progress'
                   ]"
                 >
                   Status:
                   {{
                     order.orderStatus.toLowerCase() === "approved"
                       ? "Approved"
-                      : order.orderStatus.toLowerCase() === "picked-up"
-                      ? "Picked Up"
+                      : order.orderStatus.toLowerCase() === "received"
+                      ? "Received"
                       : order.orderStatus.toLowerCase() === "returned"
                       ? "Returned"
                       : order.orderStatus.toLowerCase() === "rejected"
                       ? "Rejected"
-                      : "Canceled"
+                      : order.orderStatus.toLowerCase() === "canceled"
+                      ? "Canceled"
+                      : "InProgress"
                   }}
                 </p>
               </div>
@@ -229,6 +237,21 @@
                     @click="showRejectionPopup(order)"
                   >
                     Reject❎
+                  </button>
+                  <button
+                    class="button-container"
+                    v-if="checkVisibility(order)"
+                    @click="takeOrder(order)"
+                  >
+                    Make order as taken
+                  </button>
+
+                  <button
+                    class="button-container"
+                    v-if="isReceived(order)"
+                    @click="returnOrder(order)"
+                  >
+                    Return order
                   </button>
 
                   <div v-if="showPopup">
@@ -308,6 +331,8 @@ import OrderCard from "./OrderCard.vue";
 import ProfileCard from "./ProfileCard.vue";
 
 export default {
+  props: ["order"],
+
   components: {
     navBar: Navbar,
     OrderCard: OrderCard,
@@ -492,6 +517,34 @@ export default {
       }
     },
 
+    isReceived(order) {
+      if (order.orderStatus === "Received") {
+        return true;
+      }
+    },
+
+    checkVisibility(order) {
+      const today = new Date();
+      const startDate = new Date(order.date);
+
+      const endDate = new Date(startDate);
+      endDate.setDate(startDate.getDate() + order.duration);
+
+      const formattedEndDate = endDate.toISOString().split("T")[0];
+      const formattedStartDate = startDate.toISOString().split("T")[0];
+      const formattedToday = today.toISOString().split("T")[0];
+
+      if (
+        order.orderStatus === "Approved" &&
+        formattedStartDate < formattedToday &&
+        formattedToday < formattedEndDate
+      ) {
+        return true;
+      }
+
+      return false;
+    },
+
     cancelOrder(order) {
       const token = localStorage.getItem("token");
       const decoded = jwt_decode(token);
@@ -523,6 +576,44 @@ export default {
         .catch(error => {
           this.$toastr.e("Error!");
         });
+    },
+
+    takeOrder(order) {
+      axios
+        .put(`http://localhost:8081/orders/takeOrder/${order.orderId}`)
+        .then(response => {
+          this.$toastr.s("Order taken!");
+          this.$forceUpdate();
+
+          this.orders = this.orders.map(item => {
+            if (item.orderId === order.orderId) {
+              item.orderStatus = "Received";
+            }
+            return item;
+          });
+        })
+        .catch(error => {
+          this.$toastr.e("Error");
+        });
+    },
+
+    returnOrder(order) {
+      axios
+        .put(`http://localhost:8081/orders/returnOrder/${order.orderId}`)
+        .then(response => {
+          this.$toastr.s("Order returned!");
+          this.$forceUpdate();
+
+          this.orders = this.orders.map(item => {
+            if (item.orderId === order.orderId) {
+              item.orderStatus = "Returned";
+            }
+            return item;
+          });
+        })
+        .catch(error => {
+          this.$toastr.e("Error");
+        });
     }
   },
   mounted() {
@@ -531,15 +622,17 @@ export default {
 
     const token = localStorage.getItem("token");
     const decoded = jwt_decode(token);
-    console.log(decoded);
+
     if (!this.isAdministrator) {
       axios
         .get(`http://localhost:8081/orders/${decoded.id}`)
         .then(response => {
-          this.orders = response.data;
-          this.name = this.orders[0].name;
-          this.rentalId = this.orders[0].rentalId;
-          console.log(this.rentalId);
+          if (response != null) {
+            console.log(response);
+            this.orders = response.data;
+            this.name = this.orders[0].name;
+            this.rentalId = this.orders[0].rentalId;
+          }
         })
         .catch(error => {
           console.error(error);
@@ -866,8 +959,6 @@ export default {
   border-radius: 3px;
   cursor: pointer;
   font-size: 18px;
-  height: 40px;
-  width: 150px;
 }
 .vehicle-container {
   flex-grow: 1;
@@ -989,11 +1080,12 @@ p.orderStatus.approved {
   background-color: #28a745;
 }
 
-p.orderStatus.rejected {
-  background-color: #dc3545;
-}
 p.orderStatus.canceled {
-  background-color: #dc3545;
+  background-color: rgb(232, 96, 96);
+}
+
+p.orderStatus {
+  background-color: rgb(15, 132, 182);
 }
 
 .name {
