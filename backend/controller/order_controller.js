@@ -42,7 +42,7 @@ router.put("/approveOrder/:orderId", (req, res) => {
     res.status(404).json({ error: "Order not found" });
   }
 
-  order.orderStatus = "Approve";
+  order.orderStatus = "Approved";
 
   const updatedOrder = orderService.update(orderId, order);
   res.json(updatedOrder);
@@ -107,6 +107,32 @@ router.get("/:id", (req, res) => {
   } catch (error) {
     res.status(404).json({ error: "Order not found" });
   }
+});
+
+router.put("/takeOrder/:orderId", (req, res) => {
+  const orderId = req.params.orderId;
+
+  var order = orderService.getById(orderId);
+
+  if (!order) {
+    res.status(404).json({ error: "Order not found" });
+  }
+
+  const takenOrder = orderService.takeOrder(order);
+  res.json(takenOrder);
+});
+
+router.put("/returnOrder/:orderId", (req, res) => {
+  const orderId = req.params.orderId;
+
+  var order = orderService.getById(orderId);
+
+  if (!order) {
+    res.status(404).json({ error: "Order not found" });
+  }
+
+  const returnedOrder = orderService.returnOrder(order);
+  res.json(returnedOrder);
 });
 
 module.exports = router;

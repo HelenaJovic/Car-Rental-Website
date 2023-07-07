@@ -18,6 +18,12 @@
       </div>
 
       <div class="helping-container">
+        <div class="information">
+          <p class="paragraph1">
+            ❗️It is possible to add a vehicle to the cart only once. View the
+            cart to add more.
+          </p>
+        </div>
         <div class="grid-item-2">
           <vehicleCardOrder
             v-for="vehicle in order.vehicles"
@@ -123,6 +129,8 @@ export default {
 
 .helping-container {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .grid-item-1 {
@@ -178,6 +186,11 @@ p {
   color: rgb(27, 26, 26);
   padding: 10px;
   text-align: left;
+}
+
+.paragraph1 {
+  color: rgb(82, 78, 78);
+  font-size: 18px;
 }
 
 .car-logo {

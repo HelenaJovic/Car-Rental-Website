@@ -1,6 +1,7 @@
 const orderRepo = require("../repo/order_repo");
 const orderDTO = require("../dto/orderDTO");
 const userService = require("../service/user_service");
+const vehicleService = require("../service/vehicle_service");
 
 function create(order) {
   return orderRepo.create(order);
@@ -62,6 +63,28 @@ function update(id, updatedOrder) {
   return orderRepo.update(id, updatedOrder);
 }
 
+function takeOrder(order) {
+  order.orderStatus = "Received";
+
+  order.vehicles.forEach((vehicle) => {
+    vehicle.status = "Rented";
+    vehicleService.updateVehicle(vehicle.id, vehicle);
+  });
+
+  return orderRepo.update(order.id, order);
+}
+
+function returnOrder(order) {
+  order.orderStatus = "Returned";
+
+  order.vehicles.forEach((vehicle) => {
+    vehicle.status = "Available";
+    vehicleService.updateVehicle(vehicle.id, vehicle);
+  });
+
+  return orderRepo.update(order.id, order);
+}
+
 module.exports = {
   create,
   remove,
@@ -70,4 +93,6 @@ module.exports = {
   update,
   getAllOrders,
   getFilteredVehicles,
+  takeOrder,
+  returnOrder,
 };
