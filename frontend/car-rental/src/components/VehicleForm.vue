@@ -5,16 +5,16 @@
       <form >
         <h2 id="header">Add New Vehicle</h2>
         <label for="brand">Brand:</label>
-        <input type="text" id="brand" v-model="form.brand" required>
+        <input type="text" id="brand" v-model="form.brand" >
   
         <label for="model">Model:</label>
-        <input type="text" id="model" v-model="form.model" required>
+        <input type="text" id="model" v-model="form.model" >
   
         <label for="price">Price:</label>
-        <input type="number" id="price" v-model="form.price" required>
+        <input type="number" id="price" v-model="form.price" >
   
         <label for="type">Type:</label>
-        <select id="fuel" v-model="form.vehicleType" required>
+        <select id="fuel" v-model="form.vehicleType" >
             <option value="">Select vehicle Type</option>
             <option value="car">Car</option>
             <option value="track">Track</option>
@@ -22,7 +22,7 @@
             </select>
   
         <label for="fuel">Fuel Type:</label>
-            <select id="fuel" v-model="form.fuelType" required>
+            <select id="fuel" v-model="form.fuelType" >
             <option value="">Select Fuel Type</option>
             <option value="diesel">Diesel</option>
             <option value="gasoline">Gasoline</option>
@@ -31,17 +31,17 @@
             </select>
 
         <label for="consumption">Consumption:</label>
-        <input type="text" id="cons" v-model="form.consumption" required>
+        <input type="text" id="cons" v-model="form.consumption" >
   
         <label for="doors">Number of Doors:</label>
-        <input type="number" id="doors" v-model="form.doorsNum" required>
+        <input type="number" id="doors" v-model="form.doorsNum" >
   
         <label for="capacity">Capacity:</label>
-        <input type="number" id="capacity" v-model="form.peopleNum" required>
+        <input type="number" id="capacity" v-model="form.peopleNum" >
   
         <label for="image">Image URL:</label>
         <div class="image-input-container">
-          <input type="text" id="txt" v-model="form.image" required>
+          <input type="text" id="txt" v-model="form.image" >
 
           <input type="file" id="image" @change="handleImageUpload" style="display: none" ref="fileInput">
           <button type="button" v-on:click.prevent="UploadImage()"  class="buttonForImg">...</button>
@@ -88,12 +88,17 @@ export default {
   methods: {
     addVehicleandUpdateRentalCar() {
       this.form.rentalObject = this.rentalCarId; 
+      if (!this.form.brand || !this.form.model || this.form.price <= 0 || !this.form.vehicleType || !this.form.fuelType || !this.form.consumption) {
+    
+            this.$toastr.e("Please fill in all  fields and enter valid values.");
+            return; 
+  }
 
       axios
         .post(`http://localhost:8081/vehicles/${this.rentalCarId}`, this.form)
         .then(()=>{
           this.$toastr.s("Vehicle successfully added!") 
-          this.$router.push({ path: '/singleObject/' + id })
+          this.$router.push({ path: '/singleObject/' + this.rentalCarId })
 
         }
         )
@@ -120,7 +125,7 @@ export default {
 };
 </script>
   
-  <style scoped>
+  <style scoped> 
 .main-container {
   background-image: url(../assets/images/auto.jpg);
   background-size: cover;

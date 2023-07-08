@@ -152,8 +152,9 @@ export default {
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  background-color: lightgray;
-}
+  background-image: url(../assets/images/back3.jpg);
+  background-size: cover;
+  background-position: center;  }
 
 .rent-a-car-container h1 {
   font-size: 2rem;

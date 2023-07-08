@@ -37,7 +37,7 @@ export default {
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease;
   cursor: pointer;
-  background-color: rgba(106, 162, 186, 0.8);
+  background-color: rgba(114, 180, 180, 0.5);
 }
 
 .rent-a-car-card:hover {
@@ -71,9 +71,7 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
-.rent-a-car-card span {
-  color: #ff0000; /* Primer boje (crvena) */
-}
+
 
 h3 {
   margin: 0;
@@ -82,7 +80,7 @@ h3 {
 
 .name {
   font-size: 1.8rem;
-  color: rgb(51, 95, 139);
+  color: rgb(38, 81, 125);
   font-family: "Arial", sans-serif;
 }
 
@@ -95,13 +93,25 @@ h3 {
 
 .location {
   font-size: 1.2rem;
-  color: whitesmoke;
+  color: #f6f7f9; /* Tamnosiva boja */
+  letter-spacing: 1px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .grade {
   font-size: 1.2rem;
+  font-style: italic;
+  text-decoration:wavy;
+  transition: color 0.3s ease;
   color: whitesmoke;
 }
+
+.grade:hover {
+  color: #1a237e; /* Tamnija nijansa plavkaste boje */
+}
+
+
 
 .details:hover {
   color: #000;

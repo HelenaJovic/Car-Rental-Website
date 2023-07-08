@@ -1,9 +1,9 @@
 class Comment {
-  constructor(id, buyer, rentalObject, body, grade) {
+  constructor(id, buyer, rentalObject, text, grade) {
     this.id = id;
     this.buyer = buyer;
     this.rentalObject = rentalObject;
-    this.body = body;
+    this.text = text;
     this.grade = grade;
   }
 }

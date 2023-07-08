@@ -14,6 +14,11 @@
           <p :class="['status', order.status ? 'opened' : 'closed']">
             Status: {{ order.status ? "Opened" : "Closed" }}
           </p>
+          <div class="info">
+              <p class="info-text">We're glad you chose our object, and we assure you that it's not a wrong choice.
+Enjoy your selection! 👉</p>  
+            </div>
+
         </div>
       </div>
 
@@ -134,35 +139,53 @@ export default {
 }
 
 .grid-item-1 {
-  grid-column: 1/2;
-  grid-row: span 2;
-  padding: 20px;
-}
+    grid-column: 1/2;
+    grid-row: span 2;
+    padding: 70px 0px 0px 20px ;
+  }
+  
+  .grid-item-2 {
+    grid-row: span 2;
+    padding: 20px;
+    
+    border: 1px solid #e0e0e0;
+    max-height: 99vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+    grid-gap: 20px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+  
+  .flex-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 6x;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-.grid-item-2 {
-  grid-row: span 2;
-  padding: 20px;
+  }
+  
+  h2 {
+    font-size: 30px;
+    font-weight: bold;
+    color: rgb(2, 9, 29);
+    padding: 10px;
+    text-transform: uppercase;
+    font-family: "Arial", sans-serif;
+  }
+  
+  p {
+    font-size: 20px;
+    color: rgb(44, 75, 142);
+    padding: 10px;
+    text-align: left;
+  }
 
-  border: 1px solid #e0e0e0;
-  height: 90%;
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
-  grid-gap: 20px;
-  overflow-y: auto;
-  scrollbar-width: thin;
-}
-
-.flex-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 6x;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
 .button-style {
   background-color: rgb(5, 4, 4);
@@ -172,14 +195,20 @@ export default {
   font-size: 16px;
 }
 
-h2 {
-  font-size: 30px;
-  font-weight: bold;
-  color: rgb(27, 26, 26);
+.info {
+  border: 2px solid lightslategray;
+  background-color: rgba(224, 246, 246, 0.8);
   padding: 10px;
-  text-transform: uppercase;
-  font-family: "Arial", sans-serif;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.info-text {
+  font-size: 25px;
+  color: #333; /* Change the text color to a darker shade */
+}
+
+
 
 p {
   font-size: 20px;

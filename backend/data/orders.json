@@ -294,5 +294,35 @@
         "buyer": 1,
         "orderStatus": "InProgress",
         "rejectionReason": ""
+    },
+    {
+        "id": 12,
+        "vehicles": [
+            {
+                "brand": "Audi",
+                "model": "A8",
+                "price": "16000",
+                "vehicleType": "car",
+                "rentalObject": "2",
+                "transType": "Manual",
+                "fuelType": "diesel",
+                "consumption": "",
+                "doorsNum": "4",
+                "peopleNum": "5",
+                "description": "",
+                "image": "/static/audi8.png",
+                "status": "Available",
+                "id": 3,
+                "counter": 2,
+                "ukupna": 32000
+            }
+        ],
+        "rentalObject": 2,
+        "date": "2023-07-21",
+        "duration": 5,
+        "price": 32000,
+        "buyer": 2,
+        "orderStatus": "Obrada",
+        "rejectionReason": ""
     }
 ]

@@ -41,15 +41,16 @@
             <button type="button" v-on:click="submitForm()">Update</button>
           </div>
         </form>
+        
       </div>
-      <div class="displayOrder " v-if="IsBuyer">
-        <div class="order-header">
+      <div class="displayOrder " v-if="IsBuyer && orders.length>0">
+        <div class="order-header" >
           <div class="search-box">
             <input
               type="text"
               v-model="search"
               class="search-input"
-              placeholder="Name,Price1 - Price2,Date"
+              placeholder="Name,Price1 - Price2,Date1 - Date2"
             /><label>🔍</label>
           </div>
           <div class="title-container">
@@ -117,7 +118,9 @@
                       : "InProgress"
                   }}
                 </p>
+               
               </div>
+
               <div class="vehicle-vehicle">
                 <div class="status-container">
                   <button
@@ -137,13 +140,41 @@
                     ></OrderCard>
                   </div>
                 </div>
+                <form v-if="order.orderStatus === 'returned' && isAlreadyCommented" class="comment-form">
+  <label for="comment">Leave a comment:</label>
+  <textarea id="comment" v-model="comment.text"></textarea>
+  
+  <label for="rating">Rating:</label>
+  <input type="number" id="rating" v-model="comment.grade" min="1" max="5" class="input">
+
+  <button v-on:click.prevent="submitComment(order.rentalId)">Submit</button>
+</form>
+
               </div>
             </div>
           </li>
+         
         </ul>
+        
       </div>
-      <div class="displayOrder " v-if="IsManager">
-        <div class="order-header">
+      <div class="reccommend" v-if="orders.length===0 && IsBuyer">
+            <p class="noCommentss"  readonly>
+"Thank you for becoming our customer. We see that you haven't made any orders yet. We still recommend that the best choice is with us. You can check all the options we have and the vehicle lists within each rental car object."
+            </p>
+            <router-link :to="'/'">
+<h2 class="nameS"> 👉 See all rentals</h2>
+
+</router-link>
+        <div class="forIMG">
+          <img src="../assets/images/lena.png" alt="Recommendation" class="imageRR">
+
+
+
+        </div>
+         
+        </div>
+      <div class="displayOrder " v-if="IsManager" >
+        <div class="order-header"  v-if="filterObjects.length>0">
           <div class="search-box">
             <input
               type="text"
@@ -177,6 +208,7 @@
             v-for="order in filterObjects"
             :key="order.orderId"
             class="order-orderd"
+           
           >
             <div class="order-orderd-container">
               <div class="order-container">
@@ -221,6 +253,9 @@
                       : "InProgress"
                   }}
                 </p>
+  
+
+
               </div>
               <div class="vehicle-vehicle">
                 <div class="status-container">
@@ -271,9 +306,49 @@
                     ></OrderCard>
                   </div>
                 </div>
+                
               </div>
+             
             </div>
+            
           </li>
+          <div class="displayOrder" v-if="comments.length>0">
+  <div class="comment-header">
+    <h2>Comments</h2>
+  </div>
+  <div class="comment-list-container">
+
+  <ul class="comment-list">
+    <li v-for="comment in comments" :key="comment.commentId" class="comment-container">
+      <div class="list-part">
+      <div class="user-info">
+        <img :src="comment.logo" alt="User Logo" class="user-logo">
+        <span>{{ comment.userName }} {{ comment.surname }}</span>
+       
+      </div>
+      <p class="comment-txt">{{ comment.text }}</p>
+      <p class="button1" v-if="parseInt(comment.grade) === 1">⭐</p>
+<p class="button1" v-if="parseInt(comment.grade) === 2">⭐⭐</p>
+<p class="button1" v-if="parseInt(comment.grade) === 3">⭐⭐⭐</p>
+<p class="button1" v-if="parseInt(comment.grade) === 4">⭐⭐⭐⭐</p>
+<p class="button1" v-if="parseInt(comment.grade) === 5">⭐⭐⭐⭐⭐</p>
+
+      <div class="buttons"  v-if="!comment.isSeen">
+      <button class="button1" v-on:click.prevent="approveComment(comment)">✔️</button>
+      <button class="button1" v-on:click.prevent="rejectComment(comment)">❌</button>
+    </div>
+      <p v-if="comment.isSeen" v-bind:class="{ 'approved': comment.isApproved, 'rejected': !comment.isApproved }">
+        {{ comment.isApproved ? 'Approved' : 'Rejected' }}
+      </p>
+    </div>
+    </li>
+  </ul>
+</div>
+
+</div>
+
+<p class="noComments" v-if="orders.length===0"> "There are still no orders for your rental."</p>
+
         </ul>
       </div>
 
@@ -352,14 +427,24 @@ export default {
       orders: [],
       profiles: [],
       search: "",
+      comments:[],
       selectedSortField: "",
       IsBuyer: false,
       IsManager: false,
       isAdministrator: false,
       name: "",
       rentalId: 0,
+      comment: {
+        idUser: "",
+        idRental:"",
+        text:"",
+        grade: 0,
+        isSeen:false,
+      isApproved:false      },
+      isAlreadyCommented:false,
       showPopup: false,
       rejectionReason: ""
+
     };
   },
 
@@ -379,6 +464,7 @@ export default {
 
       return price.match(searchRegex);
     },
+  
     matchDateRange: function(date, searchValue) {
       const dateRangeRegex = /\d{4}-\d{2}-\d{2}\s*-\s*\d{4}-\d{2}-\d{2}/; // Pattern for date range like "2023-07-05 - 2023-07-09"
       const searchRegex = new RegExp(searchValue, "i");
@@ -509,7 +595,64 @@ export default {
       } else if (decoded.role == "Administrator") {
         this.isAdministrator = true;
       }
+    },submitComment(rentalId){
+      const token = localStorage.getItem("token");
+      const decoded = jwt_decode(token);
+      this.comment.idUser=decoded.id;
+      this.comment.idRental=rentalId;
+      if (!this.comment.grade || !this.comment.text) {
+    
+        this.$toastr.e("Please fill in all required fields and enter valid values.");
+      return; 
+      }
+      axios
+        .post(`http://localhost:8081/comments`,this.comment)
+        .then(()=>{
+          this.$toastr.s("Comment successfully added!") 
+
+        }
+        )
+          .catch(err => {
+          console.log(err)
+          this.$toastr.e("Error adding vehicle!");
+        });
     },
+    approveComment(comment) {
+            comment.isApproved = true; 
+            comment.isSeen=true;
+            axios.put('http://localhost:8081/comments/update', {
+                commentId: comment.commentId,
+                isApproved: true,
+                isSeen:true
+
+})
+  .then(response => {
+    this.$toastr.s("Successfully updated!");
+          this.$forceUpdate();
+  })
+  .catch(error => {
+    this.$toastr.e("Eroor in updating!");
+  });
+
+  },
+  rejectComment(comment) {
+    comment.isApproved = false; 
+    comment.isSeen=true;
+    axios.put(`http://localhost:8081/comments/update`, {
+  commentId: comment.commentId,
+  isApproved: false,
+  isSeen:true
+})
+  .then(response => {
+    this.$toastr.s("Successfully updated!");
+          this.$forceUpdate();
+  })
+  .catch(error => {
+    this.$toastr.e("Eroor in updating!");
+  });
+
+  }
+    ,
 
     isInProcessing(order) {
       if (order.orderStatus === "InProgress") {
@@ -622,8 +765,48 @@ export default {
 
     const token = localStorage.getItem("token");
     const decoded = jwt_decode(token);
+  
 
     if (!this.isAdministrator) {
+  axios
+    .get(`http://localhost:8081/orders/${decoded.id}`)
+    .then(response => {
+      this.orders = response.data;
+      this.orders.forEach(order => {
+        const rentalId = order.rentalId;
+        this.name = order.name;
+        console.log(order.name)
+        this.rentalId=order.rentalId;
+        axios.get(`http://localhost:8081/comments/${this.rentalId}/${decoded.id}`)
+          .then(response => {
+            this.isAlreadyCommented = response.data.isCommented;
+            console.log(this.isAlreadyCommented );
+          })
+          .catch(error => {
+            console.error(error);
+            window.alert("An error occurred while fetching orders data");
+          });
+
+          axios.get(`http://localhost:8081/comments/Allcomments/${rentalId}`)
+          .then(response => {
+            this.comments = response.data;
+            console.log(this.comments)
+          })
+          .catch(error => {
+            console.error(error);
+            window.alert("An error occurred while fetching orders data");
+          });
+      });
+      
+    })
+    .catch(error => {
+      console.error(error);
+      window.alert("An error occurred while fetching orders data");
+    });
+}
+
+
+    if (!this.isAdministrator && this.orders>0) {
       axios
         .get(`http://localhost:8081/orders/${decoded.id}`)
         .then(response => {
@@ -649,6 +832,9 @@ export default {
           console.error(error);
         });
     }
+ 
+
+  
   },
   computed: {
     filterObjects: function() {
@@ -810,15 +996,28 @@ export default {
   font-size: 1.3rem;
 }
 
+.comment-container {
+  margin-bottom: 10px;
+  flex: 1; 
+}
+
+.comment-container button{
+  margin-top: 10px;
+
+}
+
+
+
 .register-form {
   height: min-content;
   flex-grow: 1;
-  padding: 20px;
-
+  padding: 25px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  background-color: rgba(122, 136, 220, 0.2);
-  width: 25%;
+  background-image: url(../assets/images/back3.jpg);
+  background-size: cover;
+  background-position: center;  width: 23%;
+  margin: 0 auto;
 
   border: 1px solid #ccc;
   border-width: 2px;
@@ -826,14 +1025,18 @@ export default {
   border-radius: 10px;
 }
 
+
+
 .register-form h2 {
   text-align: center;
   font-size: 35px;
-  color: rgb(183, 230, 230);
+  color: rgb(140, 168, 239);
 }
 
 .displayOrder {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-grow: 3;
+
 
   gap: 5rem;
   padding: 10px;
@@ -864,8 +1067,9 @@ export default {
   padding: 10px;
   font-size: 16px;
   border-radius: 5px;
-  background-color: lightslategray;
-  color: #fff;
+  background-image: url(../assets/images/back111.jpg);
+  background-size: cover;
+  background-position: center;  color: #fff;
   border: none;
 }
 
@@ -876,6 +1080,15 @@ export default {
 
 .name:hover {
   color: darkblue;
+}
+
+.nameS:hover {
+  color: darkblue;
+}
+.nameS{
+  font-size: 50px;
+  text-align: center;
+  color: lightslategray;
 }
 .changeName:hover {
   color: darkblue;
@@ -894,8 +1107,11 @@ export default {
 .order-orderd {
   gap: 20rem;
   flex-wrap: wrap;
-  background-color: rgba(242, 242, 242, 0.7);
-  padding: 10px;
+  background-image: url(../assets/images/back2.jpg);
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+
   border-radius: 5px;
   height: 350px;
 }
@@ -927,6 +1143,12 @@ export default {
   ); /* Promenjen kod za postavljanje transparentnosti */
 }
 
+.noCommentss{
+  font-size: 30px;
+  align-items: center;
+  text-align: center;
+  color: #ad3421;
+}
 .order-container:hover {
   transform: scale(1.1);
   background-color: rgba(
@@ -965,13 +1187,13 @@ export default {
   border-radius: 5px;
   padding: 1rem;
   display: flex;
+  flex-direction: column;
   gap: 5rem;
   box-shadow: none;
   transition: transform 0.3s ease;
   cursor: pointer;
   justify-items: center;
   background-color: rgba(144, 15, 15, 0);
-  /* Promenjen kod za postavljanje transparentnosti */
 }
 
 .vehicle-scroll {
@@ -992,8 +1214,17 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: rgb(31, 31, 158, 0.6);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  height: 8%;
+  background-image: url(../assets/images/back8.jpg);
+  background-size: cover;
+  background-position: center;  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.noComments{
+  font-size: 40px;
+  align-items: center;
+  text-align: center;
+  color: #ad3421;
 }
 
 .search-box {
@@ -1002,7 +1233,7 @@ export default {
 }
 
 .search-input {
-  width: 200px;
+  width: 230px;
   padding: 5px;
   border: none;
   border-radius: 3px;
@@ -1020,13 +1251,122 @@ export default {
   text-align: center;
   font-size: 25px;
   font-weight: bold;
+  padding: 25px;
   color: rgb(198, 226, 244); /* Crvena boja - možete promeniti u željenu boju */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Efekat senke na naslov */
 }
+.comment-list-container {
+  height: 300px; /* Postavite visinu prema potrebama */
+  overflow-y: auto;
+}
+.forIMG {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0rem;
+  width: 100%;
+  justify-items: flex-end;
+}
+
+
+.imageRR {
+  height: 530px;
+  width: 450px;
+  align-self: flex-start; /* Postavite sliku na kraj diva */
+  margin-top: auto; /* Dodajte razmak na vrhu da bi slika bila na dnu */
+}
+
+.comment-list {
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  margin-top: 20px; 
+  gap: 1rem;
+ background-color: transparent; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.reccommend{
+  display: flex;
+  padding: 20px;
+  width: 70%;
+  flex-direction: column;
+  justify-items: center;
+  gap: 1rem;
+}
+
+.comment-list::-webkit-scrollbar {
+  width: 10px; /* Širina scrollbar-a */
+}
+
+.comment-list::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Boja pozadine track-a */
+}
+
+.comment-list::-webkit-scrollbar-thumb {
+  background: #888; /* Boja thumb-a */
+}
+
+.comment-list::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Boja thumb-a prilikom hover-a */
+}
+
+
+
+.approved {
+  background-color: green;
+  color: white;
+  border-radius: 5px;
+  width: 10%;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.rejected {
+  background-color: red;
+  width: 10%;
+  text-align: center;
+  color: white;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.list-part{
+  background-image: url(../assets/images/back3.jpg);
+  background-size: cover;
+  background-position: center;
+  padding: 10px;
+  border-radius: 10px; /* Dodajte zaobljene ivice */
+
+}
+
+.comment-header {
+  display: flex;
+  background-image: url(../assets/images/back10.jpg);
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 10px; /* Dodajte zaobljene ivice */
+}
+.comment-header h2 {
+  margin: 0;
+  color: rgb(241, 245, 247);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+
 
 .filter-box {
   display: flex;
   align-items: center;
+  color: whitesmoke;
 }
 
 .filter-box label {
@@ -1036,6 +1376,42 @@ export default {
 .custom-select {
   padding: 5px;
   border-radius: 3px;
+}
+.comment-form {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: rgba(199, 224, 224, 0.5);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.comment-form textarea {
+  width: 100%;
+  height: 6rem;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.comment-form button {
+  padding: 0.5rem 1rem;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.comment-form button:hover {
+  background-color: #45a049;
+}
+
+.comment-form p {
+  margin-bottom: 0.5rem;
+}
+.input{
+  margin-right: 20px;
 }
 
 .labels2 {
@@ -1062,6 +1438,16 @@ export default {
   transform: scale(1.1);
 }
 
+.buttons{
+  display: flex;
+  gap:1rem;
+  height: 40px;
+}
+
+.button1{
+  font-size: 20px;
+}
+
 p.orderStatus {
   font-weight: bold;
   font-size: 15px;
@@ -1079,6 +1465,7 @@ p.orderStatus {
 p.orderStatus.approved {
   background-color: #28a745;
 }
+
 
 p.orderStatus.canceled {
   background-color: rgb(232, 96, 96);
@@ -1104,4 +1491,28 @@ p.orderStatus {
   justify-content: center;
   align-items: center;
 }
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.comment-txt{
+  font-size: 20px;
+}
+
+.user-logo {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-info span {
+  font-weight: bold;
+  font-size: 25px;
+}
+
+
+
 </style>
