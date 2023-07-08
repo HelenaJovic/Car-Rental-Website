@@ -67,13 +67,14 @@ export default {
   box-shadow: 0px 2px 6px rgba(82, 42, 8, 0.3);
   transition: transform 0.3s ease;
   cursor: pointer;
-  background-color: rgba(242, 237, 230, 0.8);
+  background-color: rgba(143, 191, 236, 0.5);
 }
 
 .grid-item-1 {
   display: flex;
   align-items: flex-start;
   flex-direction: column;
+  padding: 10px;
 }
 
 .grid-item-2 {
@@ -105,15 +106,16 @@ export default {
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
-  max-width: 35vh;
+  max-width: 40vh;
   max-height: 15vh;
-
+  overflow: auto; 
 }
 
 .info-text {
   font-size: 20px;
   text-align: center;
-  color: #6e6666; /* Change the text color to a darker shade */
+  color: #6e6666; 
+
 }
 .paragraph {
   padding: 4px;

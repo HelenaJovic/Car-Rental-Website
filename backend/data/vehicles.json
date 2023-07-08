@@ -174,5 +174,53 @@
         "image": "/static/suzuki.png",
         "status": "Available",
         "id": 13
+    },
+    {
+        "brand": "Toyota",
+        "model": "Maruti Ertiga",
+        "price": "5000",
+        "vehicleType": "car",
+        "rentalObject": "2",
+        "transType": "Manual",
+        "fuelType": "diesel",
+        "consumption": "7,2‑7,0 l/100 km",
+        "doorsNum": "4",
+        "peopleNum": "5",
+        "description": "Toyota has a strong reputation for safety and quality in its vehicles. The company has implemented advanced safety features and technologies across its models, such as Toyota Safety Sense, which includes features like pre-collision systems, lane departure alert, and adaptive cruise control.",
+        "image": "/static/toyota.png",
+        "status": "Available",
+        "id": 14
+    },
+    {
+        "brand": "Suzuki",
+        "model": "Prius",
+        "price": "2000",
+        "vehicleType": "car",
+        "rentalObject": "2",
+        "transType": "Manual",
+        "fuelType": "diesel",
+        "consumption": "5,8‑3,6 l/100 km",
+        "doorsNum": "4",
+        "peopleNum": "5",
+        "description": "Suzuki vehicles are known for their reliability, fuel efficiency, and affordability. They are often praised for their low ownership costs, making them popular choices for budget-conscious consumers.",
+        "image": "/static/suzuki.png",
+        "status": "Available",
+        "id": 15
+    },
+    {
+        "brand": "Mazda",
+        "model": "X1",
+        "price": "1000",
+        "vehicleType": "car",
+        "rentalObject": "2",
+        "transType": "Manual",
+        "fuelType": "hybrid",
+        "consumption": "7,2‑7,0 l/100 km",
+        "doorsNum": "3",
+        "peopleNum": "4",
+        "description": "",
+        "image": "/static/mazda2.png",
+        "status": "Available",
+        "id": 16
     }
 ]

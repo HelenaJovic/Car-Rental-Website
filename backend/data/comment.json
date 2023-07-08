@@ -22,8 +22,8 @@
         "idRental": 2,
         "text": "Korektno!",
         "grade": 3,
-        "isApproved": false,
-        "isSeen": false,
+        "isApproved": true,
+        "isSeen": true,
         "id": 3
     }
 ]
