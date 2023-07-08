@@ -73,7 +73,6 @@ export default {
 }
 
 
-
 h3 {
   margin: 0;
   font-weight: bold;
@@ -102,10 +101,10 @@ h3 {
 
 .grade {
   font-size: 1.2rem;
-  color: #f3f4f9; /* Plavkasta boja */
   font-style: italic;
   text-decoration:wavy;
   transition: color 0.3s ease;
+  color: whitesmoke;
 }
 
 .grade:hover {
@@ -117,7 +116,4 @@ h3 {
 .details:hover {
   color: #000;
 }
-
-
-
 </style>

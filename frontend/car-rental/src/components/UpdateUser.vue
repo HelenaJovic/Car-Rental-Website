@@ -98,7 +98,9 @@
                       ? 'returned'
                       : order.orderStatus.toLowerCase() === 'rejected'
                       ? 'rejected'
-                      : 'canceled'
+                      : order.orderStatus.toLowerCase() === 'canceled'
+                      ? 'canceled'
+                      : 'in-progress'
                   ]"
                 >
                   Status:
@@ -111,19 +113,32 @@
                       ? "Returned"
                       : order.orderStatus.toLowerCase() === "rejected"
                       ? "Rejected"
-                      : "Canceled"
+                      : order.orderStatus.toLowerCase() === "canceled"
+                      ? "Canceled"
+                      : "InProgress"
                   }}
                 </p>
                
               </div>
-              <div class="vehicle-container">
-                <div class="vehicle-scroll">
-                  <OrderCard
-                    v-for="vehicle in order.vehicles"
-                    :key="vehicle.id"
-                    :vehicle="vehicle"
-                  ></OrderCard>
-                  
+
+              <div class="vehicle-vehicle">
+                <div class="status-container">
+                  <button
+                    class="button-container"
+                    v-if="isInProcessing(order)"
+                    @click="cancelOrder(order)"
+                  >
+                    Cancel order
+                  </button>
+                </div>
+                <div class="vehicle-container">
+                  <div class="vehicle-scroll">
+                    <OrderCard
+                      v-for="vehicle in order.vehicles"
+                      :key="vehicle.id"
+                      :vehicle="vehicle"
+                    ></OrderCard>
+                  </div>
                 </div>
                 <form v-if="order.orderStatus === 'returned' && isAlreadyCommented" class="comment-form">
   <label for="comment">Leave a comment:</label>
@@ -212,39 +227,84 @@
                     'orderStatus',
                     order.orderStatus.toLowerCase() === 'approved'
                       ? 'approved'
-                      : order.orderStatus.toLowerCase() === 'picked-up'
-                      ? 'picked-up'
+                      : order.orderStatus.toLowerCase() === 'received'
+                      ? 'received'
                       : order.orderStatus.toLowerCase() === 'returned'
                       ? 'returned'
                       : order.orderStatus.toLowerCase() === 'rejected'
                       ? 'rejected'
-                      : 'canceled'
+                      : order.orderStatus.toLowerCase() === 'canceled'
+                      ? 'canceled'
+                      : 'in-progress'
                   ]"
                 >
                   Status:
                   {{
                     order.orderStatus.toLowerCase() === "approved"
                       ? "Approved"
-                      : order.orderStatus.toLowerCase() === "picked-up"
-                      ? "Picked Up"
+                      : order.orderStatus.toLowerCase() === "received"
+                      ? "Received"
                       : order.orderStatus.toLowerCase() === "returned"
                       ? "Returned"
                       : order.orderStatus.toLowerCase() === "rejected"
                       ? "Rejected"
-                      : "Canceled"
+                      : order.orderStatus.toLowerCase() === "canceled"
+                      ? "Canceled"
+                      : "InProgress"
                   }}
                 </p>
   
 
 
               </div>
-              <div class="vehicle-container">
-                <div class="vehicle-scroll">
-                  <OrderCard
-                    v-for="vehicle in order.vehicles"
-                    :key="vehicle.id"
-                    :vehicle="vehicle"
-                  ></OrderCard>
+              <div class="vehicle-vehicle">
+                <div class="status-container">
+                  <button
+                    class="button-container"
+                    v-if="isInProcessing(order)"
+                    @click="approveOrder(order)"
+                  >
+                    Approve✅
+                  </button>
+                  <button
+                    class="button-container"
+                    v-if="isInProcessing(order)"
+                    @click="showRejectionPopup(order)"
+                  >
+                    Reject❎
+                  </button>
+                  <button
+                    class="button-container"
+                    v-if="checkVisibility(order)"
+                    @click="takeOrder(order)"
+                  >
+                    Make order as taken
+                  </button>
+
+                  <button
+                    class="button-container"
+                    v-if="isReceived(order)"
+                    @click="returnOrder(order)"
+                  >
+                    Return order
+                  </button>
+
+                  <div v-if="showPopup">
+                    <h3>Enter reason for rejection:</h3>
+                    <textarea v-model="rejectionReason"></textarea>
+                    <button @click="rejectOrder(order)">
+                      Confirm
+                    </button>
+                  </div>
+                </div>
+                <div class="vehicle-container">
+                  <div class="vehicle-scroll">
+                    <OrderCard
+                      v-for="vehicle in order.vehicles"
+                      :key="vehicle.id"
+                      :vehicle="vehicle"
+                    ></OrderCard>
+                  </div>
                 </div>
                 
               </div>
@@ -346,6 +406,8 @@ import OrderCard from "./OrderCard.vue";
 import ProfileCard from "./ProfileCard.vue";
 
 export default {
+  props: ["order"],
+
   components: {
     navBar: Navbar,
     OrderCard: OrderCard,
@@ -380,7 +442,9 @@ export default {
         isSeen:false,
       isApproved:false      },
       isAlreadyCommented:false,
-      
+      showPopup: false,
+      rejectionReason: ""
+
     };
   },
 
@@ -418,6 +482,50 @@ export default {
       return searchRegex.test(date);
     },
 
+    showRejectionPopup(order) {
+      this.showPopup = true;
+    },
+
+    approveOrder(order) {
+      axios
+        .put(`http://localhost:8081/orders/approveOrder/${order.orderId}`)
+        .then(response => {
+          this.$toastr.s("Order approved!");
+          this.$forceUpdate();
+
+          this.orders = this.orders.map(item => {
+            if (item.orderId === order.orderId) {
+              item.orderStatus = "Approved";
+            }
+            return item;
+          });
+        })
+        .catch(error => {
+          this.$toastr.e("Error!");
+        });
+    },
+
+    rejectOrder(order) {
+      axios
+        .put(`http://localhost:8081/orders/rejectOrder/${order.orderId}`, {
+          reason: this.rejectionReason
+        })
+        .then(response => {
+          this.$toastr.s("Order rejected!");
+          this.orders = this.orders.map(item => {
+            if (item.orderId === order.orderId) {
+              item.orderStatus = "Rejected";
+            }
+            return item;
+          });
+        })
+        .catch(error => {
+          this.$toastr.e("Error!");
+        });
+
+      this.showPopup = false;
+      this.rejectionReason = "";
+    },
     submitForm() {
       const token = localStorage.getItem("token");
       const decoded = jwt_decode(token);
@@ -544,10 +652,117 @@ export default {
   });
 
   }
+    ,
+
+    isInProcessing(order) {
+      if (order.orderStatus === "InProgress") {
+        return true;
+      }
+    },
+
+    isReceived(order) {
+      if (order.orderStatus === "Received") {
+        return true;
+      }
+    },
+
+    checkVisibility(order) {
+      const today = new Date();
+      const startDate = new Date(order.date);
+
+      const endDate = new Date(startDate);
+      endDate.setDate(startDate.getDate() + order.duration);
+
+      const formattedEndDate = endDate.toISOString().split("T")[0];
+      const formattedStartDate = startDate.toISOString().split("T")[0];
+      const formattedToday = today.toISOString().split("T")[0];
+
+      if (
+        order.orderStatus === "Approved" &&
+        formattedStartDate < formattedToday &&
+        formattedToday < formattedEndDate
+      ) {
+        return true;
+      }
+
+      return false;
+    },
+
+    cancelOrder(order) {
+      const token = localStorage.getItem("token");
+      const decoded = jwt_decode(token);
+
+      axios
+        .put(`http://localhost:8081/orders/cancelOrder/${order.orderId}`)
+        .then(response => {
+          this.$toastr.s("Order canceled!");
+          this.$forceUpdate();
+
+          this.orders = this.orders.map(item => {
+            if (item.orderId === order.orderId) {
+              item.orderStatus = "Canceled";
+            }
+            return item;
+          });
+        })
+        .catch(error => {
+          this.$toastr.e("Error!");
+        });
+
+      axios
+        .post(`http://localhost:8081/users/lostPoints/${decoded.id}`, {
+          points: order.price
+        })
+        .then(response => {
+          this.$toastr.s("You have lost points!");
+        })
+        .catch(error => {
+          this.$toastr.e("Error!");
+        });
+    },
+
+    takeOrder(order) {
+      axios
+        .put(`http://localhost:8081/orders/takeOrder/${order.orderId}`)
+        .then(response => {
+          this.$toastr.s("Order taken!");
+          this.$forceUpdate();
+
+          this.orders = this.orders.map(item => {
+            if (item.orderId === order.orderId) {
+              item.orderStatus = "Received";
+            }
+            return item;
+          });
+        })
+        .catch(error => {
+          this.$toastr.e("Error");
+        });
+    },
+
+    returnOrder(order) {
+      axios
+        .put(`http://localhost:8081/orders/returnOrder/${order.orderId}`)
+        .then(response => {
+          this.$toastr.s("Order returned!");
+          this.$forceUpdate();
+
+          this.orders = this.orders.map(item => {
+            if (item.orderId === order.orderId) {
+              item.orderStatus = "Returned";
+            }
+            return item;
+          });
+        })
+        .catch(error => {
+          this.$toastr.e("Error");
+        });
+    }
   },
   mounted() {
     this.getUserData();
     this.checkIfBuyer();
+
     const token = localStorage.getItem("token");
     const decoded = jwt_decode(token);
   
@@ -590,6 +805,23 @@ export default {
     });
 }
 
+
+    if (!this.isAdministrator && this.orders>0) {
+      axios
+        .get(`http://localhost:8081/orders/${decoded.id}`)
+        .then(response => {
+          if (response != null) {
+            console.log(response);
+            this.orders = response.data;
+            this.name = this.orders[0].name;
+            this.rentalId = this.orders[0].rentalId;
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          window.alert("An error occurred while fetching orders data");
+        });
+    }
     if (this.isAdministrator) {
       axios
         .get(`http://localhost:8081/users/usersForAdmin/${decoded.id}`)
@@ -672,7 +904,7 @@ export default {
   background-image: url(../assets/images/auto.jpg);
   background-size: cover;
   display: flex;
-  justify-content: space-between;
+
   gap: 1em;
   flex-direction: row;
   background-position: center;
@@ -786,6 +1018,7 @@ export default {
   background-size: cover;
   background-position: center;  width: 23%;
   margin: 0 auto;
+
   border: 1px solid #ccc;
   border-width: 2px;
   border-style: solid;
@@ -803,8 +1036,10 @@ export default {
 .displayOrder {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   flex-grow: 3;
-  gap: 10rem;
-   
+
+
+  gap: 5rem;
+  padding: 10px;
 }
 
 .register-form .form-group {
@@ -863,10 +1098,10 @@ export default {
 .order-list {
   list-style: none;
   display: flex;
-  max-width: 102%;
-  padding: 10px;
+  max-width: 100%;
+  padding: 5px;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 }
 
 .order-orderd {
@@ -876,19 +1111,21 @@ export default {
   background-size: cover;
   background-position: center;
   padding: 20px;
+
   border-radius: 5px;
+  height: 350px;
 }
 
 .order-orderd-container {
   display: flex;
   flex-direction: row;
-  gap: 1em;
+  gap: 10px;
   justify-content: center;
   align-items: center;
 }
 
 .order-container {
-  width: 30%;
+  width: 25%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -897,7 +1134,7 @@ export default {
   border: 1px solid #ccc; /* Dodat border sa bojom #ccc */
   border-radius: 5px; /* Dodat border-radius za blago zaobljen izgled */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Dodat box-shadow efekat */
-  padding: 20px; /* Dodat padding za unutrašnji prostor */
+  padding: 10px; /* Dodat padding za unutrašnji prostor */
   background-color: rgba(
     26,
     101,
@@ -922,22 +1159,41 @@ export default {
   ); /* Promenjen kod za postavljanje transparentnosti */
 }
 
+.vehicle-vehicle {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.status-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: flex-end;
+  padding: 5px 0px 10px 0px;
+}
+
+.button-container {
+  padding: 0.5rem 1rem;
+  background-color: lightslategray;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 18px;
+}
 .vehicle-container {
   flex-grow: 1;
   border-radius: 5px;
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  box-shadow: none; /* Uklonite box-shadow */
+  gap: 5rem;
+  box-shadow: none;
   transition: transform 0.3s ease;
   cursor: pointer;
   justify-items: center;
-  background-color: rgba(
-    144,
-    15,
-    15,
-    0
-  ); /* Promenjen kod za postavljanje transparentnosti */
+  background-color: rgba(144, 15, 15, 0);
 }
 
 .vehicle-scroll {
@@ -948,7 +1204,7 @@ export default {
   overflow-y: auto;
   max-height: 250px; /* Adjust the max height as desired */
   max-width: 1000px;
-  gap: 1rem;
+
   flex-direction: column;
   justify-content: center; /* Center items horizontally */
 }
@@ -1210,11 +1466,13 @@ p.orderStatus.approved {
   background-color: #28a745;
 }
 
-p.orderStatus.rejected {
-  background-color: #dc3545;
+
+p.orderStatus.canceled {
+  background-color: rgb(232, 96, 96);
 }
-p.orderStatus.returned {
-  background-color: #dc3545;
+
+p.orderStatus {
+  background-color: rgb(15, 132, 182);
 }
 
 .name {

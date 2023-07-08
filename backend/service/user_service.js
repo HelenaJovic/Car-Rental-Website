@@ -12,6 +12,8 @@ function getAll() {
   return userRepo.getAll();
 }
 
+
+
 function getById(id) {
   return userRepo.getById(id);
 }

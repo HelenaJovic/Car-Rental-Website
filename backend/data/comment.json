@@ -18,12 +18,12 @@
         "id": 2
     },
     {
-        "idUser": 3,
+        "idUser": 4,
         "idRental": 2,
         "text": "Korektno!",
         "grade": 3,
-        "isApproved": true,
-        "isSeen": true,
+        "isApproved": false,
+        "isSeen": false,
         "id": 3
     }
 ]

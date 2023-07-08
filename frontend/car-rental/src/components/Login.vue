@@ -33,18 +33,17 @@ export default {
 
   methods: {
     LogIn() {
-      console.log(this.username, this.password)
+      console.log(this.username, this.password);
       axios
         .post("http://localhost:8081/users/login", {
           username: this.username,
-          password: this.password,
-          
-        } )
+          password: this.password
+        })
         .then(response => {
           const data = response.data;
           const token = data.token;
           localStorage.setItem("token", token);
-          console.log(token);
+
           eventBus.$emit("rerenderNavbar");
           this.$router.push("/");
         })

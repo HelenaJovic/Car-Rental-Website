@@ -1,6 +1,6 @@
 const OrderStatus = {
   InProgress: "InProgress",
-  Allowed: "Allowed",
+  Approved: "Approved",
   Received: "Received",
   Returned: "Returned",
   Rejected: "Rejected",
