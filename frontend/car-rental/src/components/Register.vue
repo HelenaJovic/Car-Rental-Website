@@ -113,7 +113,11 @@ export default {
         pastRentals: null,
         rentalObject: null,
         points: null,
-        buyerType: null
+        buyerType: {
+          name: "Bronze",
+          discount: 10,
+          points: 0
+        }
       }
     };
   },

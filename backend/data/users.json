@@ -11,8 +11,12 @@
         "role": "Buyer",
         "pastRentals": null,
         "rentalObject": null,
-        "points": 1799999.77781203,
-        "buyerType": null,
+        "points": 4.5,
+        "buyerType": {
+            "name": "Gold",
+            "discount": 15,
+            "points": 10
+        },
         "image": "/static/user2.png",
         "id": 1
     },
@@ -28,8 +32,12 @@
         "role": "Buyer",
         "pastRentals": null,
         "rentalObject": null,
-        "points": 200000.23815789472,
-        "buyerType": null,
+        "points": 5.761654135338346,
+        "buyerType": {
+            "name": "Silver",
+            "discount": 10,
+            "points": 5
+        },
         "image": "/static/user4.png",
         "id": 2
     },
@@ -62,7 +70,7 @@
         "role": "Manager",
         "pastRentals": null,
         "rentalObject": 2,
-        "points": -0.07067669172932331,
+        "points": 10,
         "buyerType": null,
         "image": "/static/user5.png",
         "id": 4
@@ -119,20 +127,24 @@
         "id": 7
     },
     {
-      "username": "ninica",
-      "password": "123",
-      "new_password": "123",
-      "name": "Nina",
-      "surname": "Knezevic",
-      "gender": "female",
-      "birthday": "1992-06-16",
-      "basket": null,
-      "role": "Buyer",
-      "pastRentals": null,
-      "rentalObject": null,
-      "points": null,
-      "buyerType": null,
-      "image": "/static/user7.png",
-      "id": 8
-  }
+        "username": "ninica",
+        "password": "123",
+        "new_password": "123",
+        "name": "Nina",
+        "surname": "Knezevic",
+        "gender": "female",
+        "birthday": "1992-06-16",
+        "basket": null,
+        "role": "Buyer",
+        "pastRentals": null,
+        "rentalObject": null,
+        "points": null,
+        "buyerType": {
+            "name": "Bronze",
+            "discount": 5,
+            "points": 0
+        },
+        "image": "/static/user7.png",
+        "id": 8
+    }
 ]

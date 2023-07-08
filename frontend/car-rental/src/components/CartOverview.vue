@@ -3,8 +3,14 @@
     <navbar></navbar>
     <div class="header-container">
       <div class="price-container">
-        <h2>Total:</h2>
-        <h2>{{ cart.price }}</h2>
+        <div class="price">
+          <h2>Total:</h2>
+          <h2 class="line">{{ cart.price }}</h2>
+        </div>
+        <div class="discountPrice">
+          <h2>{{ cart.discountPrice }}</h2>
+          <p>(price with discount)</p>
+        </div>
       </div>
       <div class="rent-container">
         <button class="button1" v-on:click="confirm()">Confirm rent</button>
@@ -42,7 +48,16 @@ export default {
         price: null,
         startDate: null,
         endDate: null,
-        rentalId: null
+        rentalId: null,
+        discountPrice: null
+      },
+
+      loggedUser: {
+        buyerType: {
+          name: null,
+          discount: null,
+          points: null
+        }
       }
     };
   },
@@ -103,14 +118,23 @@ export default {
     updateTotalPrice() {
       const token = localStorage.getItem("token");
       const decoded = jwt_decode(token);
+
+      axios.get(`http://localhost:8081/users/${decoded.id}`).then(response => {
+        this.loggedUser = response.data;
+        console.log(this.loggedUser);
+      });
+
       let totalPrice = 0;
       this.cart.vehicles.forEach(vehicle => {
         totalPrice += vehicle.price * vehicle.counter;
       });
       this.cart.price = totalPrice;
 
+      this.cart.discountPrice =
+        totalPrice - totalPrice * (this.loggedUser.buyerType.discount / 100);
+
       const requestData = {
-        price: totalPrice
+        price: this.cart.discountPrice
       };
 
       axios
@@ -145,9 +169,9 @@ export default {
         rentalObject: this.cart.rentalId,
         date: this.cart.startDate,
         duration: roundedDuration,
-        price: this.cart.price,
+        price: this.cart.discountPrice,
         buyer: decoded.id,
-        orderStatus: "Obrada",
+        orderStatus: "InProgress",
         rejectionReason: ""
       };
 
@@ -195,6 +219,10 @@ export default {
   flex-grow: 2;
 }
 
+.p {
+  font-size: 16px;
+  margin-top: 50px;
+}
 .header-container {
   display: flex;
 
@@ -212,10 +240,26 @@ export default {
   gap: 20px;
 }
 
+.discountPrice {
+  color: #862722;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.price {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
 .rent-container {
   align-self: flex-end;
 }
 
+.line {
+  text-decoration: line-through;
+}
 .button1 {
   padding: 0.5rem 1rem;
   background-color: #266fc2;
