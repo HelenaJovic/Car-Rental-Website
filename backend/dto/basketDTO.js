@@ -1,5 +1,14 @@
 class BasketDTO {
-  constructor(id, vehicles, user, startDate, endDate, price, rentalId) {
+  constructor(
+    id,
+    vehicles,
+    user,
+    startDate,
+    endDate,
+    price,
+    rentalId,
+    discountPrice
+  ) {
     this.id = id;
     this.vehicles = vehicles.map((vehicle) => ({
       ...vehicle,
@@ -11,6 +20,7 @@ class BasketDTO {
     this.endDate = endDate;
     this.price = price;
     this.rentalId = rentalId;
+    this.discountPrice = discountPrice;
   }
 }
 

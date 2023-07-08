@@ -1,7 +1,7 @@
 const basketRepo = require("../repo/basket_repo");
 const CartModel = require("../model/basket");
 const basketDTO = require("../dto/basketDTO");
-
+const userService = require("../service/user_service");
 
 function create(basket) {
   basketRepo.create(basket);
@@ -23,6 +23,12 @@ function countVehicles(vehicles, vehicleId) {
   return vehicles.filter((vehicle) => vehicle.id === vehicleId).length;
 }
 
+function countDiscountPrice(oldPrice, userId) {
+  var user = userService.getById(userId);
+  var newPrice = oldPrice - oldPrice * (user.buyerType.discount / 100);
+  return newPrice;
+}
+
 function getByUserId(userId) {
   var basket = basketRepo.getCartByUserId(userId);
 
@@ -34,6 +40,11 @@ function getByUserId(userId) {
     basket.endDate,
     basket.price,
     basket.rentalId
+  );
+
+  basketDTOInstance.discountPrice = countDiscountPrice(
+    basket.price,
+    basket.user
   );
 
   basketDTOInstance.vehicles.forEach((vehicle) => {
@@ -87,4 +98,5 @@ module.exports = {
   getByUserId,
   countVehicles,
   deleteVehicleFromBasket,
+  countDiscountPrice,
 };

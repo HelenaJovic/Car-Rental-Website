@@ -53,8 +53,7 @@ router.post("/updatePoints/:userId", (req, res) => {
     var user = userService.getById(userId);
 
     if (user) {
-      user.points = user.points + newPoints / (1000 * 133);
-      userService.update(user.id, user);
+      userService.updatePoints(user, newPoints);
       res.status(200).json({ message: "Sucessfully updated points." });
     }
   } catch (error) {
@@ -70,7 +69,25 @@ router.post("/lostPoints/:userId", (req, res) => {
     var user = userService.getById(userId);
 
     if (user) {
-      user.points = user.points - newPoints / (1000 * 133 * 4);
+      user.points = user.points - newPoints / (100 * 133 * 4);
+      if (user.points > 5 && user.points < 10) {
+        (user.buyerType.name = "Silver"),
+          (user.buyerType.discount = 10),
+          (user.buyerType.points = 5);
+      }
+
+      if (user.points > 10) {
+        (user.buyerType.name = "Gold"),
+          (user.buyerType.discount = 15),
+          (user.buyerType.points = 10);
+      }
+
+      if (user.points < 5) {
+        (user.buyerType.name = "Bronze"),
+          (user.buyerType.discount = 5),
+          (user.buyerType.points = 0);
+      }
+
       userService.update(user.id, user);
       res.status(200).json({ message: "Sucessfully updated points." });
     }
