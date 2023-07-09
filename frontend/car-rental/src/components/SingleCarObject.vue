@@ -10,14 +10,15 @@
           <h2>{{ carObject.name }}</h2>
           <img :src="carObject.imagePath" class="car-logo" alt="Car Logo" />
 
-          <p>Working hours: {{ carObject.workHours }}</p>
+          <p>Working hours: {{ carObject.workHoursStart }}-{{carObject.workHoursEnd }}</p>
 
           <p>Location: {{ carObject.location.adress }}</p>
 
           <p v-if="carObject.grade">Average grade: {{ carObject.grade }}</p>
           <p :class="['status', carObject.status ? 'opened' : 'closed']">
-            Status: {{ carObject.status ? "Opened" : "Closed" }}
-          </p>
+  Status: {{ carObject.status ? 'Opened' : 'Closed' }}
+</p>
+
           <button class="form-group" type="button" v-on:click="addVehicle(carObject.id)" v-if="isManager">Add Vehicle</button>
         </div>
       </div>

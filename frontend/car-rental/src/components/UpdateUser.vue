@@ -366,6 +366,28 @@
             />
             <p>🔍</p>
           </div>
+          <div class="filter-container">
+  <button v-if="!showFilter" type="submit" v-on:click.prevent="toggleFilter()">Filter</button>
+  <transition name="slide">
+    <div class="filter-slide" v-if="showFilter">
+      <div>
+        <label for="role-type-filter">Role:</label>
+        <select v-model="roleTypeFilter" id="role-type-filter">
+          <option value="">All</option>
+          <option v-for="type in roleTypes" :value="type">{{ type }}</option>
+        </select>
+      </div>
+      <div>
+        <label for="user-type-filter">User Type:</label>
+        <select v-model="userTypeFilter" id="user-type-filter">
+          <option value="">All</option>
+          <option v-for="type in userTypes" :value="type">{{ type }}</option>
+        </select>
+      </div>
+    </div>
+  </transition>
+</div>
+
           <div class="combobox-container">
             <label for="sort-by">Sort By:</label>
             <select
@@ -424,6 +446,11 @@ export default {
         birthday: "",
         image: ""
       },
+      showFilter: false,
+      roleTypeFilter: "",
+      userTypeFilter: "",
+      roleTypes: ["Buyer", "Manager", "Administrator"],
+      userTypes: ["Gold", "Silver", "Bronze"],
       orders: [],
       profiles: [],
       search: "",
@@ -449,6 +476,21 @@ export default {
   },
 
   methods: {
+    toggleFilter() {
+      this.showFilter = !this.showFilter;
+    },
+    filterByRoleAndType(profiles) {
+  const filteredByRole = this.roleTypeFilter
+    ? profiles.filter(profile => profile.role === this.roleTypeFilter)
+    : profiles;
+
+  const filteredByType = this.userTypeFilter
+    ? filteredByRole.filter(profile => profile.userType === this.userTypeFilter)
+    : filteredByRole;
+
+  return filteredByType;
+}
+,
     matchPriceRange: function(price, searchValue) {
       const priceRangeRegex = /\d+\s*-\s*\d+/; // Pattern for price range like "10 - 20"
       const searchRegex = new RegExp(searchValue, "i");
@@ -867,34 +909,37 @@ export default {
     },
 
     filteredProfiles() {
-      const searchValues = this.search.split(",").map(value => value.trim());
+  const searchValues = this.search.split(",").map(value => value.trim());
 
-      let filteredProfiles = this.profiles.filter(profile => {
-        let matchesSearch = true;
+  let filteredProfiles = this.profiles.filter(profile => {
+    let matchesSearch = true;
 
-        for (const searchValue of searchValues) {
-          if (searchValue) {
-            const searchRegex = new RegExp(searchValue, "i");
+    for (const searchValue of searchValues) {
+      if (searchValue) {
+        const searchRegex = new RegExp(searchValue, "i");
 
-            const matchesName = profile.name.match(searchRegex);
-            const matchesSurname = profile.surname.match(searchRegex);
-            const matchesUsername = profile.username.match(searchRegex);
+        const matchesName = profile.name.match(searchRegex);
+        const matchesSurname = profile.surname.match(searchRegex);
+        const matchesUsername = profile.username.match(searchRegex);
 
-            matchesSearch =
-              matchesSearch &&
-              (matchesName || matchesSurname || matchesUsername);
-          }
-        }
-
-        return matchesSearch;
-      });
-
-      if (this.selectedSortField) {
-        this.sortProfile(filteredProfiles, this.selectedSortField);
+        matchesSearch =
+          matchesSearch &&
+          (matchesName || matchesSurname || matchesUsername);
       }
-
-      return filteredProfiles;
     }
+
+    return matchesSearch;
+  });
+
+  filteredProfiles = this.filterByRoleAndType(filteredProfiles);
+
+  if (this.selectedSortField) {
+    this.sortProfile(filteredProfiles, this.selectedSortField);
+  }
+
+  return filteredProfiles;
+}
+
   }
 };
 </script>
@@ -1081,9 +1126,25 @@ export default {
 .name:hover {
   color: darkblue;
 }
+.filter-container button{
+    background-color: rgb(192, 171, 171);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 16px;
+
+  height: 40px;
+  width: 100px;
+  }
 
 .nameS:hover {
   color: darkblue;
+}
+.filter-slide{
+  display: flex;
+  gap:1rem;
 }
 .nameS{
   font-size: 50px;

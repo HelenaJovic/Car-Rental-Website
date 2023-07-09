@@ -125,6 +125,18 @@ function getAll() {
 function getSortedCarsByStatus() {
   const allCars = rentalCarRepo.getAll();
 
+  allCars.forEach(car => {
+    if (!isWithinWorkingHours(car)) {
+      car.status = false;
+      console.log(car.id,car)
+      rentalCarRepo.update(car.id,car); 
+    }
+    else{
+      car.status = true;
+      rentalCarRepo.update(car.id,car); 
+    }
+  });
+
   allCars.sort((car1, car2) => {
     if (car1.status === true && car2.status !== true) {
       return -1;
@@ -136,6 +148,28 @@ function getSortedCarsByStatus() {
 
   return allCars;
 }
+
+function isWithinWorkingHours(car) {
+  const now = new Date();
+  const workHoursStart = getTimeFromString(car.workHoursStart);
+  const workHoursEnd = getTimeFromString(car.workHoursEnd);
+
+  if (workHoursStart <= workHoursEnd) {
+    return now >= workHoursStart && now <= workHoursEnd;
+  } else {
+    return now >= workHoursStart || now <= workHoursEnd;
+  }
+}
+
+function getTimeFromString(timeString) {
+  const [hours, minutes] = timeString.split(":");
+  const now = new Date();
+  const time = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
+  return time;
+}
+
+
+
 
 function addNewCar(id,vehicle)
 {
@@ -185,21 +219,6 @@ function updateNewCar(id, updatedVehicle, idCar) {
     //update(id, rentalCar, idCar);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function getById(id) {
   return rentalCarRepo.getById(id);
