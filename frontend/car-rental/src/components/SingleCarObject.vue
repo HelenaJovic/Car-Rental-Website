@@ -5,78 +5,98 @@
     <div class="main-container">
       <!-- Prva vrsta -->
       <div class="rent-a-car-container">
-      <div class="grid-item-1">
-        <div class="flex-item">
-          <h2>{{ carObject.name }}</h2>
-          <img :src="carObject.imagePath" class="car-logo" alt="Car Logo" />
+        <div class="grid-item-1">
+          <div class="flex-item">
+            <h2>{{ carObject.name }}</h2>
+            <img :src="carObject.imagePath" class="car-logo" alt="Car Logo" />
 
-          <p>Working hours: {{ carObject.workHoursStart }}-{{carObject.workHoursEnd }}</p>
+            <p>
+              Working hours: {{ carObject.workHoursStart }}-{{
+                carObject.workHoursEnd
+              }}
+            </p>
 
-          <p>Location: {{ carObject.location.adress }}</p>
+            <p>{{ carObject.location.adress }}</p>
+            <google-map
+              :center="{
+                lat: carObject.location.latitude,
+                lng: carObject.location.longitude
+              }"
+              :zoom="16"
+              style="width: 350px; height: 160px"
+              ref="mapRef"
+            ></google-map>
+            <p></p>
 
-          <p v-if="carObject.grade">Average grade: {{ carObject.grade }}</p>
-          <p :class="['status', carObject.status ? 'opened' : 'closed']">
-  Status: {{ carObject.status ? 'Opened' : 'Closed' }}
-</p>
-
-          <button class="form-group" type="button" v-on:click="addVehicle(carObject.id)" v-if="isManager">Add Vehicle</button>
+            <p v-if="carObject.grade">Average grade: {{ carObject.grade }}</p>
+            <p :class="['status', carObject.status ? 'opened' : 'closed']">
+              Status: {{ carObject.status ? "Opened" : "Closed" }}
+            </p>
+            <button
+              class="form-group"
+              type="button"
+              v-on:click="addVehicle(carObject.id)"
+              v-if="isManager"
+            >
+              Add Vehicle
+            </button>
+          </div>
+        </div>
+        <div class="grid-item-2" v-if="carObject.vehicles.length === 0">
+          <p>In preparation...</p>
+        </div>
+        <div class="grid-item-2" v-if="carObject.vehicles.length > 0">
+          <vehicleCard
+            v-for="vehicle in carObject.vehicles"
+            :key="vehicle.id"
+            :vehicle="vehicle"
+            :rental-car-id="id"
+            :update-car="updateCar"
+            :delete-car="deleteCar"
+            :is-manager="isManager"
+          ></vehicleCard>
         </div>
       </div>
-      <div class="grid-item-2" v-if="carObject.vehicles.length===0">
-        <p>In preparation...</p>
+
+      <div class="second-row">
+        <div class="comment-header">
+          <h2>Comments</h2>
+        </div>
+        <div class="comment-list-container">
+          <ul class="comment-list" v-if="comments.length > 0">
+            <li
+              v-for="comment in comments"
+              :key="comment.commentId"
+              class="comment-container"
+            >
+              <div class="list-part">
+                <div class="user-info">
+                  <img :src="comment.logo" alt="User Logo" class="user-logo" />
+                  <span>{{ comment.userName }} {{ comment.surname }}</span>
+                </div>
+                <p>{{ comment.text }}</p>
+                <p class="button1" v-if="parseInt(comment.grade) === 1">⭐</p>
+                <p class="button1" v-if="parseInt(comment.grade) === 2">⭐⭐</p>
+                <p class="button1" v-if="parseInt(comment.grade) === 3">
+                  ⭐⭐⭐
+                </p>
+                <p class="button1" v-if="parseInt(comment.grade) === 4">
+                  ⭐⭐⭐⭐
+                </p>
+                <p class="button1" v-if="parseInt(comment.grade) === 5">
+                  ⭐⭐⭐⭐⭐
+                </p>
+              </div>
+            </li>
+          </ul>
+          <p class="noComments" v-if="comments.length === 0">
+            There are no comments yet for this rental object!
+          </p>
+        </div>
       </div>
-      <div class="grid-item-2" v-if="carObject.vehicles.length>0">
-        <vehicleCard
-          v-for="vehicle in carObject.vehicles"
-          :key="vehicle.id"
-          :vehicle="vehicle"
-          :rental-car-id="id"
-          :update-car="updateCar"
-          :delete-car="deleteCar"
-          :is-manager="isManager"
-        ></vehicleCard>
-      </div>
-      
     </div>
-  
-  <div class="second-row">
-  <div class="comment-header">
-    <h2>Comments</h2>
-  </div>
-  <div class="comment-list-container">
-
-  <ul class="comment-list" v-if="comments.length>0">
-    <li v-for="comment in comments" :key="comment.commentId" class="comment-container">
-      <div class="list-part">
-      <div class="user-info">
-        <img :src="comment.logo" alt="User Logo" class="user-logo">
-        <span>{{ comment.userName }} {{ comment.surname }}</span>
-      </div>
-      <p>{{ comment.text }}</p>
-      <p class="button1" v-if="parseInt(comment.grade) === 1">⭐</p>
-<p class="button1" v-if="parseInt(comment.grade) === 2">⭐⭐</p>
-<p class="button1" v-if="parseInt(comment.grade) === 3">⭐⭐⭐</p>
-<p class="button1" v-if="parseInt(comment.grade) === 4">⭐⭐⭐⭐</p>
-<p class="button1" v-if="parseInt(comment.grade) === 5">⭐⭐⭐⭐⭐</p>
-
-</div>
-    </li>
-  </ul>
-  <p class="noComments" v-if="comments.length===0">There are no comments yet for this rental object!
-
-
-
-
-</p>
-</div>
-
-</div>
-
-</div>
-
   </div>
 </template>
-
 
 <script>
 import axios from "axios";
@@ -84,40 +104,38 @@ import Navbar from "./Navbar.vue";
 import VehicleCard from "./VehicleCard.vue";
 import jwt_decode from "jwt-decode";
 
-
 export default {
   components: {
     navBar: Navbar,
-      vehicleCard: VehicleCard
-
+    vehicleCard: VehicleCard
   },
   data() {
     return {
       id: this.$route.params.id,
-      isManager:false,
+      isManager: false,
       vehicleId: 0,
       carObject: {
         name: "",
         workHours: "",
         status: "",
         location: {
-          adress: ""
+          adress: "",
+          longitude: 0,
+          latitude: 0
         },
         imagePath: "",
         grade: "",
-        vehicles: [],
-       
+        vehicles: []
       },
-      comments:[]
+      comments: []
     };
   },
   methods: {
     addVehicle(id) {
       this.$router.push({ path: "/vehicle/" + id });
     },
-    
-    deleteCar(vehicleId,id) {
-      
+
+    deleteCar(vehicleId, id) {
       axios
         .delete(`http://localhost:8081/vehicles/${vehicleId}/${id}`)
         .then(() => {
@@ -135,56 +153,56 @@ export default {
     }
   },
   mounted() {
-  const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-  if (token) {
-    const decoded = jwt_decode(token);
-    axios.get(`http://localhost:8081/cars/Allcomments/${this.id}/${decoded.role}`)
-          .then(response => {
-            this.comments = response.data;
-            console.log(this.comments)
-          })
-          .catch(error => {
-            console.error(error);
-            window.alert("An error occurred while fetching orders data");
-          });
+    // Provera da li postoji token
+    if (token) {
+      const decoded = jwt_decode(token);
+      axios
+        .get(
+          `http://localhost:8081/cars/Allcomments/${this.id}/${decoded.role}`
+        )
+        .then(response => {
+          this.comments = response.data;
+          console.log(this.comments);
+        })
+        .catch(error => {
+          console.error(error);
+          window.alert("An error occurred while fetching orders data");
+        });
 
-    axios
-      .get(`http://localhost:8081/cars/manager/${this.id}/${decoded.id}`)
-      .then(response => {
-        this.isManager = response.data.isManager;
-        console.log(this.isManager);
-      })
-      .catch(error => {
-        console.error(error);
-        window.alert("An error occurred while fetching user data");
-      });
+      axios
+        .get(`http://localhost:8081/cars/manager/${this.id}/${decoded.id}`)
+        .then(response => {
+          this.isManager = response.data.isManager;
+          console.log(this.isManager);
+        })
+        .catch(error => {
+          console.error(error);
+          window.alert("An error occurred while fetching user data");
+        });
 
-    axios
-      .get(`http://localhost:8081/cars/${this.id}`)
-      .then(response => {
-        this.carObject = response.data;
-      })
-      .catch(error => {
-        console.error(error);
-        window.alert("An error occurred while fetching user data");
-      });
+      axios
+        .get(`http://localhost:8081/cars/${this.id}`)
+        .then(response => {
+          this.carObject = response.data;
+        })
+        .catch(error => {
+          console.error(error);
+          window.alert("An error occurred while fetching user data");
+        });
+    } else {
+      axios
+        .get(`http://localhost:8081/cars/${this.id}`)
+        .then(response => {
+          this.carObject = response.data;
+        })
+        .catch(error => {
+          console.error(error);
+          window.alert("An error occurred while fetching user data");
+        });
+    }
   }
-  else{
-    axios
-      .get(`http://localhost:8081/cars/${this.id}`)
-      .then(response => {
-        this.carObject = response.data;
-      })
-      .catch(error => {
-        console.error(error);
-        window.alert("An error occurred while fetching user data");
-      });
-
-     
-  }
-}
-
 };
 </script>
 
@@ -204,7 +222,7 @@ export default {
   background-image: url("../assets/images/auto.jpg");
   background-size: cover;
   background-position: center;
-  gap:0.5rem;
+  gap: 0.5rem;
   flex-direction: column;
   justify-content: space-between; /* Koristimo space-between kako bismo razdvojili prvu i drugu vrstu */
   height: 100%; /* Dodajemo visinu 100% kako bi popunili preostali prostor */
@@ -220,7 +238,7 @@ export default {
   grid-row: 1/3;
   padding: 20px;
   border: 1px solid #e0e0e0;
-  max-height: 89vh; /* Dodali smo ograničenje visine */
+  max-height: 140vh;
   width: 100%;
   display: grid;
   margin-top: 20px;
@@ -238,8 +256,6 @@ export default {
   height: auto;
   margin-top: 20px;
   padding: 10px;
-
-
 }
 .comment-list-container {
   height: 300px; /* Postavite visinu prema potrebama */
@@ -266,9 +282,9 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 25px;
-  margin-top: 20px; 
+  margin-top: 20px;
   gap: 1rem;
-  background-color: transparent; 
+  background-color: transparent;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 .flex-item {
@@ -363,15 +379,13 @@ p.grade {
   text-align: center;
 }
 
-.list-part{
+.list-part {
   background-image: url(../assets/images/back3.jpg);
   background-size: cover;
   background-position: center;
   padding: 10px;
   border-radius: 10px; /* Dodajte zaobljene ivice */
-
 }
-
 
 .user-info {
   display: flex;
@@ -389,23 +403,20 @@ p.grade {
 .user-info span {
   font-weight: bold;
   font-size: 20px;
-
 }
 
-.button1{
+.button1 {
   font-size: 20px;
 }
 
-.noComments{
+.noComments {
   font-size: 40px;
   align-items: center;
   text-align: center;
   color: #ad3421;
 }
 
-
-
-.grid-item-2 p{
+.grid-item-2 p {
   font-size: 30px;
   color: #7a3227;
   text-align: center;
