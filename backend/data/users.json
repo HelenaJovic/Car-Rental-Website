@@ -14,7 +14,7 @@
         "rentalObject": null,
         "points": 3.4095488721804506,
         "counter": 5,
-        "isBlocked": true,
+        "isBlocked": false,
         "buyerType": {
             "name": "Bronze",
             "discount": 5,
@@ -38,7 +38,7 @@
         "rentalObject": null,
         "points": 5.761654135338346,
         "counter": 0,
-        "isBlocked": false,
+        "isBlocked": true,
         "buyerType": {
             "name": "Silver",
             "discount": 10,
@@ -122,7 +122,7 @@
         "rentalObject": 3,
         "points": null,
         "counter": 0,
-        "isBlocked": true,
+        "isBlocked": false,
         "buyerType": null,
         "image": "/static/aca.jpg",
         "id": 6

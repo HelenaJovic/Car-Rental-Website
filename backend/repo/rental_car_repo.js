@@ -55,6 +55,22 @@ function update(id, updatedCar) {
 
   return cars[index];
 }
+function updateNewCar(updatedVehicle, idCar) {
+  const rentalCar = getById(idCar);
+  let index = -1;
+
+  for (let i = 0; i < rentalCar.vehicles.length; i++) {
+    if (rentalCar.vehicles[i].id === updatedVehicle.id) {
+      index = i;
+      break;
+    }
+  }
+
+  if (index !== -1) {
+    rentalCar.vehicles[index] = updatedVehicle;
+    update(idCar, rentalCar);
+  }
+}
 
 function remove(id) {
   const cars_rental = json_utils.jsonReader(path);
@@ -87,7 +103,30 @@ function getAllVehicles(id) {
   return car_object.vehicles;
 }
 
+function deleteNewCar(id,idCar)
+{
+  const rentalCar = getById(idCar);
+  let index = -1;
 
+  for (let i = 0; i < rentalCar.vehicles.length; i++) {
+    if (rentalCar.vehicles[i].id === id) {
+      index = i;
+      break;
+    }
+  }
 
+  if (index !== -1) {
+    rentalCar.vehicles.splice(index, 1);
+    update(idCar, rentalCar);
+  }
+  
+}
+function addNewCar(id,vehicle)
+{
+  const rentalCar=getById(id);
+  rentalCar.vehicles.push(vehicle);
+  update(id,rentalCar);
+  
+}
 
-module.exports = { create, update, remove, getAll, getById,getAllVehicles,IsManager};
+module.exports = { create, update,addNewCar, updateNewCar,remove,deleteNewCar, getAll, getById,getAllVehicles,IsManager};

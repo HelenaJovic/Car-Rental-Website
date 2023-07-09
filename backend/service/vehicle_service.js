@@ -1,14 +1,16 @@
 const vehicleRepo = require("../repo/vehicle_repo");
 const rental_car_service = require("../service/rental_car_service");
+const rental_car_repo = require("../repo/rental_car_repo");
+
 
 function create(vehicle, id) {
   const savedVehicle = vehicleRepo.create(vehicle);
-  rental_car_service.addNewCar(id, savedVehicle);
+  rental_car_repo.addNewCar(id, savedVehicle);
   return savedVehicle;
 }
 
 function remove(id, idCar) {
-  rental_car_service.deleteNewCar(id, idCar);
+  rental_car_repo.deleteNewCar(id, idCar);
   return vehicleRepo.remove(id);
 }
 
@@ -21,8 +23,9 @@ function getById(id) {
 }
 
 function update(id, updatedVehicle, idCar) {
+
   const savedVehicle = vehicleRepo.update(id, updatedVehicle);
-  rental_car_service.updateNewCar(id, savedVehicle, idCar);
+  rental_car_repo.updateNewCar(savedVehicle, idCar);
   return savedVehicle;
 }
 

@@ -4,7 +4,11 @@
       <img :src="profile.image" class="profil-image" />
       <div class="name-box">
         <p>{{ profile.name }}</p>
-        <p>{{ profile.surname }}</p>
+        <div class="flex-item"><p>{{ profile.surname }}</p>
+          <div v-if="isBuyer">
+          <p v-if="profile.buyerType.name==='Gold'">🥇</p>
+        <p v-if="profile.buyerType.name==='Silver'">🥈</p>
+        <p v-if="profile.buyerType.name==='Bronze'">🥉</p></div></div>
         <button v-if="!profile.isBlocked" class="blocked-button"  v-on:click.prevent="BlockedClick(profile.id)">
         <img src="../assets/images/blocked.png" alt="Add logo" class="image" />
       </button>
@@ -115,6 +119,10 @@ export default {
   color: rgb(58, 56, 56);
 }
 
+.flex-item{
+  display: flex;
+  padding-left: 5px;
+}
 .data-box {
   height: 50%;
   display: flex;

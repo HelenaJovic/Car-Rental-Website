@@ -19,7 +19,7 @@
           >Login</router-link
         >
       </li>
-      <li class="nav-item" v-if="!isLoggedIn">
+      <li class="nav-item" v-if="!isLoggedIn || isBlocked">
         <router-link
           to="/register"
           class="nav-link"

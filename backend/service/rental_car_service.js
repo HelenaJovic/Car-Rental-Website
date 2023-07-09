@@ -124,16 +124,15 @@ function getAll() {
 
 function getSortedCarsByStatus() {
   const allCars = rentalCarRepo.getAll();
+  const comments = commentService.getAll();
 
   allCars.forEach(car => {
     if (!isWithinWorkingHours(car)) {
       car.status = false;
-      console.log(car.id,car)
-      rentalCarRepo.update(car.id,car); 
-    }
-    else{
+      rentalCarRepo.update(car.id, car);
+    } else {
       car.status = true;
-      rentalCarRepo.update(car.id,car); 
+      rentalCarRepo.update(car.id, car);
     }
   });
 
@@ -146,8 +145,18 @@ function getSortedCarsByStatus() {
     return 0;
   });
 
+  allCars.forEach(car => {
+    const rentalComments = comments.filter(comment => comment.idRental === car.id);
+    const totalRating = rentalComments.reduce((sum, comment) => sum + parseInt(comment.grade), 0);
+    const commentCount = rentalComments.length;
+    const averageRating = commentCount > 0 ? parseFloat((totalRating / commentCount).toFixed(2)) : 0;
+    car.grade = averageRating;
+    rentalCarRepo.update(car);
+  });
+
   return allCars;
 }
+
 
 function isWithinWorkingHours(car) {
   const now = new Date();
@@ -173,9 +182,7 @@ function getTimeFromString(timeString) {
 
 function addNewCar(id,vehicle)
 {
-  const rentalCar=rentalCarRepo.getById(id);
-  rentalCar.vehicles.push(vehicle);
-  update(id,rentalCar);
+  return rentalCarRepo.addNewCar(id,vehicle);
   
 }
 
@@ -184,40 +191,13 @@ function addNewCar(id,vehicle)
 
 function deleteNewCar(id,idCar)
 {
-  const rentalCar = rentalCarRepo.getById(idCar);
-  let index = -1;
-
-  for (let i = 0; i < rentalCar.vehicles.length; i++) {
-    if (rentalCar.vehicles[i].id === id) {
-      index = i;
-      break;
-    }
-  }
-
-  if (index !== -1) {
-    rentalCar.vehicles.splice(index, 1);
-    rentalCarRepo.update(idCar, rentalCar);
-  }
+  return rentalCarRepo.deleteNewCar(id,idCar);
   
 }
 
 
-function updateNewCar(id, updatedVehicle, idCar) {
-  const rentalCar = rentalCarRepo.getById(idCar);
-  let index = -1;
-
-  for (let i = 0; i < rentalCar.vehicles.length; i++) {
-    if (rentalCar.vehicles[i].id === updatedVehicle.id) {
-      index = i;
-      break;
-    }
-  }
-
-  if (index !== -1) {
-    rentalCar.vehicles[index] = updatedVehicle;
-    rentalCarRepo.update(idCar, rentalCar);
-    //update(id, rentalCar, idCar);
-  }
+function updateNewCar(updatedVehicle, idCar) {
+ return rentalCarRepo.updateNewCar(updatedVehicle,idCar);
 }
 
 function getById(id) {
