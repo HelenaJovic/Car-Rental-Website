@@ -37,13 +37,7 @@
 
         <label for="image" class="labels">Logo URL:</label>
         <div class="image-input-container">
-          <input
-            type="text"
-            id="image"
-            v-model="form.imagePath"
-            :class="['custom-input', { error: !form.imagePath }]"
-            required
-          />
+          <input type="text" id="image" v-model="form.imagePath" />
 
           <input
             type="file"
@@ -266,12 +260,7 @@ export default {
     },
 
     isFormValid() {
-      return (
-        this.form.name &&
-        this.form.workHours &&
-        this.form.location.adress &&
-        this.form.imagePath
-      );
+      return this.form.name && this.form.location.adress && this.form.imagePath;
     },
 
     isFormValid1() {
@@ -363,7 +352,7 @@ export default {
   background-image: url("../assets/images/auto.jpg");
   background-size: cover;
   background-position: center;
-  min-height: 100vh;
+  min-height: 130vh;
 }
 
 .first-item {
@@ -445,7 +434,7 @@ p {
   height: 35px;
   position: absolute;
   left: 10%;
-  top: 110%;
+  top: 125%;
   border-radius: 5px;
 }
 

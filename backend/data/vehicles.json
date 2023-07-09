@@ -14,42 +14,26 @@
         "image": "/static/tesla.png",
         "status": "Available",
         "id": 1,
-        "counter": 1,
-        "ukupna": "5600"
+        "counter": 4,
+        "ukupna": 22400
     },
     {
         "brand": "BMW",
         "model": "X1",
-        "price": "20009",
+        "price": "20000",
         "vehicleType": "car",
         "rentalObject": "1",
         "transType": "Manual",
         "fuelType": "gasoline",
-        "consumption": "7,2‑7,0 l/100 km",
+        "consumption": "",
         "doorsNum": "3",
         "peopleNum": "3",
         "description": "",
         "image": "/static/bmw.png",
         "status": "Available",
-        "id": 2
-    },
-    {
-        "brand": "Audi",
-        "model": "A8",
-        "price": "16000",
-        "vehicleType": "car",
-        "rentalObject": "2",
-        "transType": "Manual",
-        "fuelType": "diesel",
-        "consumption": "",
-        "doorsNum": "4",
-        "peopleNum": "5",
-        "description": "",
-        "image": "/static/audi8.png",
-        "status": "Available",
-        "id": 3,
-        "counter": 2,
-        "ukupna": 32000
+        "id": 2,
+        "counter": 3,
+        "ukupna": 60000
     },
     {
         "brand": "Audi",
@@ -123,7 +107,7 @@
         "brand": "Mazda",
         "model": "CX-30",
         "price": "8000",
-        "vehicleType": "track",
+        "vehicleType": "truck",
         "rentalObject": "5",
         "transType": "Manual",
         "fuelType": "hybrid",
@@ -134,5 +118,21 @@
         "image": "/static/mazda.png",
         "status": "Available",
         "id": 8
+    },
+    {
+        "brand": "Tesla",
+        "model": "S Plaid",
+        "price": "1000",
+        "vehicleType": "car",
+        "rentalObject": "2",
+        "transType": "Manual",
+        "fuelType": "gasoline",
+        "consumption": "7,2‑7,0 l/100 km",
+        "doorsNum": "4",
+        "peopleNum": "5",
+        "description": "",
+        "image": "/static/tesla.png",
+        "status": "Available",
+        "id": 9
     }
 ]

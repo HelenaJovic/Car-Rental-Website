@@ -1,29 +1,29 @@
 [
-    {
-        "idUser": 1,
-        "idRental": 2,
-        "text": "Zadovoljna sam uslugom!",
-        "grade": 3,
-        "isApproved": true,
-        "isSeen": true,
-        "id": 1
-    },
-    {
-        "idUser": 2,
-        "idRental": 2,
-        "text": "Mnogo sam vise ocekivala od vas..",
-        "grade": 2,
-        "isApproved": false,
-        "isSeen": true,
-        "id": 2
-    },
-    {
-        "idUser": 4,
-        "idRental": 2,
-        "text": "Korektno!",
-        "grade": 3,
-        "isApproved": false,
-        "isSeen": false,
-        "id": 3
-    }
+  {
+    "idUser": 1,
+    "idRental": 2,
+    "text": "Zadovoljna sam uslugom!",
+    "grade": 3,
+    "isApproved": true,
+    "isSeen": true,
+    "id": 1
+  },
+  {
+    "idUser": 2,
+    "idRental": 2,
+    "text": "Mnogo sam vise ocekivala od vas..",
+    "grade": 2,
+    "isApproved": false,
+    "isSeen": true,
+    "id": 2
+  },
+  {
+    "idUser": 4,
+    "idRental": 2,
+    "text": "Korektno!",
+    "grade": 3,
+    "isApproved": false,
+    "isSeen": false,
+    "id": 3
+  }
 ]
