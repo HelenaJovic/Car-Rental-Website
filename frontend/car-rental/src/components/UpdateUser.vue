@@ -3,7 +3,13 @@
     <navBar></navBar>
     <div class="main-container">
       <div class="register-form">
+        <div class="flex-item">
         <h2>Your profile</h2>
+        <div v-if="IsBuyer">
+          <p  v-if="form.buyerType.name==='Gold'">🥇</p>
+        <p v-if="form.buyerType.name==='Silver'">🥈</p>
+        <p v-if="form.buyerType.name==='Bronze'">🥉</p></div>
+      </div>
         <form>
           <div class="form-group">
             <div class="image-manager">
@@ -183,7 +189,7 @@
         </div>
       </div>
       <div class="displayOrder " v-if="IsManager">
-        <div class="order-header" v-if="filterObjects.length > 0">
+        <div class="order-header" v-if="orders.length > 0">
           <div class="search-box">
             <input
               type="text"
@@ -542,9 +548,10 @@ export default {
     ? profiles.filter(profile => profile.role === this.roleTypeFilter)
     : profiles;
 
-  const filteredByType = this.userTypeFilter
-    ? filteredByRole.filter(profile => profile.userType === this.userTypeFilter)
-    : filteredByRole;
+    const filteredByType = this.userTypeFilter
+  ? filteredByRole.filter(profile => profile.buyerType && profile.buyerType.name === this.userTypeFilter)
+  : filteredByRole;
+
 
   return filteredByType;
 }
@@ -562,7 +569,7 @@ export default {
         );
       }
 
-      return price.match(searchRegex);
+      return price.toString().match(searchRegex);
     },
 
     matchDateRange: function(date, searchValue) {
@@ -1295,6 +1302,13 @@ export default {
   ); /* Promenjen kod za postavljanje transparentnosti */
 }
 
+.flex-item{
+  display: flex;
+  justify-content: center;
+}
+.flex-item p{
+  font-size: 30px;
+}
 .vehicle-vehicle {
   display: flex;
   flex-direction: column;

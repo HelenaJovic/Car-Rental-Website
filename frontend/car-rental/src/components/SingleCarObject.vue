@@ -139,8 +139,9 @@ export default {
       axios
         .delete(`http://localhost:8081/vehicles/${vehicleId}/${id}`)
         .then(() => {
-          this.$router.push({ path: "/singleObject/" + id });
           this.$toastr.s("Succesufully deleted!");
+          this.$router.push({ path: "/singleObject/" + id });
+
         })
         .catch(error => {
           console.log(error);

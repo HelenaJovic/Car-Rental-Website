@@ -10,45 +10,31 @@
                 "rentalObject": "1",
                 "transType": "Manual",
                 "fuelType": "gasoline",
-                "consumption": "",
+                "consumption": "5,8‑3,6 l/100 km",
                 "doorsNum": "4",
                 "peopleNum": "3",
                 "description": "",
                 "image": "/static/tesla.png",
                 "status": "Available",
-                "id": 1
+                "id": 1,
+                "counter": 1,
+                "ukupna": "5600"
             },
             {
                 "brand": "BMW",
                 "model": "X1",
-                "price": "20000",
+                "price": "20009",
                 "vehicleType": "car",
                 "rentalObject": "1",
                 "transType": "Manual",
                 "fuelType": "gasoline",
-                "consumption": "",
+                "consumption": "7,2‑7,0 l/100 km",
                 "doorsNum": "3",
                 "peopleNum": "3",
                 "description": "",
                 "image": "/static/bmw.png",
                 "status": "Available",
                 "id": 2
-            },
-            {
-                "brand": "Audi",
-                "model": "A8",
-                "price": "16000",
-                "vehicleType": "car",
-                "rentalObject": "2",
-                "transType": "Manual",
-                "fuelType": "diesel",
-                "consumption": "",
-                "doorsNum": "4",
-                "peopleNum": "5",
-                "description": "",
-                "image": "/static/audi8.png",
-                "status": "Available",
-                "id": 3
             }
         ],
         "workHoursStart": "08:00",
@@ -83,8 +69,8 @@
                 "id": 4
             }
         ],
-        "workHoursStart": "08:00",
-        "workHoursEnd": "18:00",
+        "workHoursStart": "10:00",
+        "workHoursEnd": "22:00",
         "status": false,
         "location": {
             "adress": "Stevana Sremca 18, Novi Sad",

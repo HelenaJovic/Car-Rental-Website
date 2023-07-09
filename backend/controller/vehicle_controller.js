@@ -26,7 +26,6 @@ router.put("/:idV/:idC", (req, res) => {
   const carId=req.params.idC;
   const updatedData = req.body; 
   const updatedVehicle = vehicleService.update(vehicleId, updatedData,carId);
-
   if (!updatedVehicle) {
     return res.status(404).json({ error: "vehicle not found" });
   }
