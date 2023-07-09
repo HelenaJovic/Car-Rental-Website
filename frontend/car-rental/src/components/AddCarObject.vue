@@ -4,17 +4,50 @@
     <div class="main-container">
       <div class="first-item">
         <label class="labels">Name:</label>
-        <input type="text" v-model="form.name" class="input" />
+        <input
+          type="text"
+          id="name"
+          v-model="form.name"
+          :class="['custom-input', { error: !form.name }]"
+          required
+        />
 
         <label class="labels">Location:</label>
-        <input type="text" v-model="form.location.adress" class="input" />
+        <input
+          type="text"
+          id="location"
+          v-model="form.location.adress"
+          :class="['custom-input', { error: !form.location.adress }]"
+          required
+        />
+        <google-map
+          :center="myCoordinates"
+          :zoom="16"
+          style="width: 350px; height: 150px"
+          ref="mapRef"
+        ></google-map>
+        <p>
+          {{ mapCoordinates.lat }} Latitude, {{ mapCoordinates.lng }} Longitude
+        </p>
 
         <label class="labels">Working time:</label>
-        <input type="text" v-model="form.workHours" class="input" />
+        <input
+          type="text"
+          id="workHours"
+          v-model="form.workHours"
+          :class="['custom-input', { error: !form.workHours }]"
+          required
+        />
 
         <label for="image" class="labels">Logo URL:</label>
         <div class="image-input-container">
-          <input type="text" id="txt" v-model="form.imagePath" required />
+          <input
+            type="text"
+            id="image"
+            v-model="form.imagePath"
+            :class="['custom-input', { error: !form.imagePath }]"
+            required
+          />
 
           <input
             type="file"
@@ -69,7 +102,8 @@
           type="text"
           id="username"
           v-model="form1.username"
-          class="neki"
+          :class="['custom-input', { error: !form1.username }]"
+          required
         />
 
         <label for="password" class="labels">Password:</label>
@@ -77,7 +111,8 @@
           type="password"
           id="password"
           v-model="form1.password"
-          class="neki"
+          :class="['custom-input', { error: !form1.password }]"
+          required
         />
 
         <label for="new_password" class="labels">Confirm password:</label>
@@ -85,17 +120,35 @@
           type="password"
           id="new_password"
           v-model="form1.new_password"
-          class="neki"
+          :class="['custom-input', { error: !form1.new_password }]"
+          required
         />
 
         <label class="labels">Name:</label>
-        <input type="text" v-model="form1.name" class="neki" />
+        <input
+          type="text"
+          id="name"
+          v-model="form1.name"
+          :class="['custom-input', { error: !form1.name }]"
+          required
+        />
 
         <label for="surname" class="labels">Surname:</label>
-        <input type="text" id="surname" v-model="form1.surname" class="neki" />
+        <input
+          type="text"
+          id="surname"
+          v-model="form1.surname"
+          :class="['custom-input', { error: !form1.surname }]"
+          required
+        />
 
         <label for="gender" class="labels">Gender:</label>
-        <select id="gender" v-model="form1.gender" class="neki">
+        <select
+          id="gender"
+          v-model="form1.gender"
+          :class="['custom-input', { error: !form1.gender }]"
+          required
+        >
           <option value="">Select Gender</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
@@ -107,7 +160,8 @@
           type="date"
           id="birthday"
           v-model="form1.birthday"
-          class="neki"
+          :class="['custom-input', { error: !form1.birthday }]"
+          required
         />
 
         <button
@@ -137,7 +191,9 @@ export default {
         workHours: "",
         vehicles: [],
         location: {
-          adress: ""
+          adress: "",
+          latitude: 0,
+          longitude: 0
         },
         status: false,
         grade: null,
@@ -163,7 +219,14 @@ export default {
         rentalObject: null,
         points: null,
         buyerType: null
-      }
+      },
+
+      myCoordinates: {
+        lng: 0,
+        lat: 0
+      },
+
+      map: null
     };
   },
   methods: {
@@ -178,6 +241,14 @@ export default {
     },
 
     AddObject() {
+      (this.form.location.latitude = this.map.getCenter().lat()),
+        (this.form.location.longitude = this.map.getCenter().lng());
+
+      if (!this.isFormValid()) {
+        this.$toastr.e("Please fill in all fields");
+        return;
+      }
+
       axios.post("http://localhost:8081/cars", this.form).then(response => {
         this.$toastr.s("Successfully added car object!");
 
@@ -197,6 +268,27 @@ export default {
       });
     },
 
+    isFormValid() {
+      return (
+        this.form.name &&
+        this.form.workHours &&
+        this.form.location.adress &&
+        this.form.imagePath
+      );
+    },
+
+    isFormValid1() {
+      return (
+        this.form1.username &&
+        this.form1.password &&
+        this.form1.new_password &&
+        this.form1.name &&
+        this.form1.surname &&
+        this.form1.gender &&
+        this.form1.birthday
+      );
+    },
+
     handleOptionChange() {
       axios
         .put(
@@ -214,6 +306,12 @@ export default {
         this.$toastr.e("Passwords do not match!");
         return;
       }
+
+      if (!this.isFormValid1()) {
+        this.$toastr.e("Please fill in all fields");
+        return;
+      }
+
       axios
         .post("http://localhost:8081/users", this.form1)
         .then(response => {
@@ -226,8 +324,36 @@ export default {
     }
   },
 
+  created() {
+    this.$getLocation()
+      .then(coordinates => {
+        this.myCoordinates = coordinates;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  },
+
   mounted() {
     this.GetAvailableManagers();
+
+    this.$refs.mapRef.$mapPromise.then(map => (this.map = map));
+  },
+  computed: {
+    mapCoordinates() {
+      if (!this.map) {
+        return {
+          lat: 0,
+          lng: 0
+        };
+      }
+
+      return {
+        lat: this.map.getCenter().lat(),
+
+        lng: this.map.getCenter().lng()
+      };
+    }
   }
 };
 </script>
@@ -248,7 +374,8 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 74px 0px 40px 40px;
+  padding: 15px 0px 40px 40px;
+  height: 100%;
 }
 
 .input {
@@ -268,6 +395,19 @@ p {
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 20px;
+}
+
+.custom-input {
+  width: 70%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  height: 40px;
+}
+
+.error {
+  border-color: red;
 }
 
 .neki {
@@ -308,7 +448,7 @@ p {
   height: 35px;
   position: absolute;
   left: 10%;
-  top: 87%;
+  top: 110%;
   border-radius: 5px;
 }
 
@@ -323,7 +463,7 @@ p {
   flex-direction: column;
 
   gap: 10px;
-  padding: 70px 40px 40px 0px;
+  padding: 40px 40px 40px 0px;
 }
 .second-item-2 {
   grid-column: 2/3;
