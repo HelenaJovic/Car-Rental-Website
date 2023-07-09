@@ -31,7 +31,7 @@ export default {
 </script>
 <style scoped>
 .vehicle-card {
-  width: 35%;
+  width: 40%;
   height: 18rem;
   border-radius: 5px;
   padding: 1rem;

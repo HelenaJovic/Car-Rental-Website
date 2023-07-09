@@ -38,7 +38,7 @@
         "date": "2023-06-06",
         "duration": "5",
         "price": "1300",
-        "buyer": 2,
+        "buyer": 1,
         "orderStatus": "Canceled",
         "id": 2,
         "rejectionReason": ""
@@ -166,7 +166,7 @@
         "duration": 11,
         "price": 14004,
         "buyer": 1,
-        "orderStatus": "InProgress",
+        "orderStatus": "Canceled",
         "rejectionReason": ""
     },
     {
@@ -322,7 +322,55 @@
         "duration": 5,
         "price": 32000,
         "buyer": 2,
-        "orderStatus": "Obrada",
+        "orderStatus": "InProgress",
+        "rejectionReason": ""
+    },
+    {
+        "id": 13,
+        "vehicles": [
+            {
+                "brand": "Tesla",
+                "model": "S Plaid",
+                "price": "5600",
+                "vehicleType": "car",
+                "rentalObject": "1",
+                "transType": "Manual",
+                "fuelType": "gasoline",
+                "consumption": "",
+                "doorsNum": "4",
+                "peopleNum": "3",
+                "description": "",
+                "image": "/static/tesla.png",
+                "status": "Available",
+                "id": 1,
+                "counter": 4,
+                "ukupna": 22400
+            },
+            {
+                "brand": "BMW",
+                "model": "X1",
+                "price": "20000",
+                "vehicleType": "car",
+                "rentalObject": "1",
+                "transType": "Manual",
+                "fuelType": "gasoline",
+                "consumption": "",
+                "doorsNum": "3",
+                "peopleNum": "3",
+                "description": "",
+                "image": "/static/bmw.png",
+                "status": "Available",
+                "id": 2,
+                "counter": 3,
+                "ukupna": 60000
+            }
+        ],
+        "rentalObject": 2,
+        "date": "2023-07-13",
+        "duration": 21,
+        "price": 78280,
+        "buyer": 2,
+        "orderStatus": "Canceled",
         "rejectionReason": ""
     }
 ]

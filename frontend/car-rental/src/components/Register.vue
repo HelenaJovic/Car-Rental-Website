@@ -108,12 +108,19 @@ export default {
         surname: "",
         gender: "",
         birthday: "",
+        lastCancellationDate :"",
         basket: null,
         role: "Buyer",
         pastRentals: null,
         rentalObject: null,
         points: null,
-        buyerType: null
+        counter:null,
+        isBlocked:false,
+        buyerType: {
+          name: "Bronze",
+          discount: 10,
+          points: 0
+        }
       }
     };
   },

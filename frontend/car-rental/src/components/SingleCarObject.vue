@@ -22,7 +22,10 @@
           <button class="form-group" type="button" v-on:click="addVehicle(carObject.id)" v-if="isManager">Add Vehicle</button>
         </div>
       </div>
-      <div class="grid-item-2">
+      <div class="grid-item-2" v-if="carObject.vehicles.length===0">
+        <p>In preparation...</p>
+      </div>
+      <div class="grid-item-2" v-if="carObject.vehicles.length>0">
         <vehicleCard
           v-for="vehicle in carObject.vehicles"
           :key="vehicle.id"
@@ -33,6 +36,7 @@
           :is-manager="isManager"
         ></vehicleCard>
       </div>
+      
     </div>
   
   <div class="second-row">
@@ -132,7 +136,6 @@ export default {
   mounted() {
   const token = localStorage.getItem("token");
 
-  // Provera da li postoji token
   if (token) {
     const decoded = jwt_decode(token);
     axios.get(`http://localhost:8081/cars/Allcomments/${this.id}/${decoded.role}`)
@@ -397,5 +400,13 @@ p.grade {
   align-items: center;
   text-align: center;
   color: #ad3421;
+}
+
+
+
+.grid-item-2 p{
+  font-size: 30px;
+  color: #7a3227;
+  text-align: center;
 }
 </style>

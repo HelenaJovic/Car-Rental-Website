@@ -53,7 +53,7 @@
         ],
         "workHoursStart": "08:00",
         "workHoursEnd": "19:00",
-        "status": true,
+        "status": false,
         "location": {
             "adress": "Gunduliceva 67, Novi Sad"
         },
@@ -129,7 +129,7 @@
         ],
         "workHoursStart": "08:00",
         "workHoursEnd": "18:00",
-        "status": true,
+        "status": false,
         "location": {
             "adress": "Pasiceva 1, Nis"
         },
@@ -175,7 +175,7 @@
         ],
         "workHoursStart": "08:00",
         "workHoursEnd": "20:00",
-        "status": true,
+        "status": false,
         "location": {
             "adress": "Gajeva 26, Nis"
         },

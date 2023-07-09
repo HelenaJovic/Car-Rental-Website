@@ -8,10 +8,14 @@ const secretKey = process.env.SECRET_KEY;
 
 router.use(express.json());
 
+
+
 router.get("/usersForAdmin/:id", (req, res) => {
   const userId = parseInt(req.params.id, 10);
   res.json(userService.getUsersForAdmin(userId));
 });
+
+
 
 router.get("/managers", (req, res) => {
   res.json(userService.getAvailableManagers());
@@ -19,6 +23,20 @@ router.get("/managers", (req, res) => {
 
 router.get("/", (req, res) => {
   res.json(userService.getAll());
+});
+
+
+
+router.put('/increaseCounter/:userId', (req, res) => {
+  const userId = req.params.userId;
+  console.log("user id  je"+userId)
+  try {
+    userService.increaseCounter(userId);
+
+    res.status(200).json({ message: 'Counter increased successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while increasing the counter' });
+  }
 });
 
 router.put("/:id/:rentalObjectId", (req, res) => {
@@ -29,6 +47,20 @@ router.put("/:id/:rentalObjectId", (req, res) => {
 
   res.json(updateManager);
 });
+
+router.put('/isBlockedUser/user/:userId', (req, res) => {
+  console.log("aaaaaaa")
+  const userId = req.params.userId;
+  console.log(userId)
+  try {
+    userService.changeIfBlocked(userId);
+    res.status(200).json({ message: 'Blocked successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while blocking user' });
+  }
+});
+
+
 
 router.post("/", (req, res) => {
   const user = req.body;
@@ -53,8 +85,7 @@ router.post("/updatePoints/:userId", (req, res) => {
     var user = userService.getById(userId);
 
     if (user) {
-      user.points = user.points + newPoints / (1000 * 133);
-      userService.update(user.id, user);
+      userService.updatePoints(user, newPoints);
       res.status(200).json({ message: "Sucessfully updated points." });
     }
   } catch (error) {
@@ -70,7 +101,25 @@ router.post("/lostPoints/:userId", (req, res) => {
     var user = userService.getById(userId);
 
     if (user) {
-      user.points = user.points - newPoints / (1000 * 133 * 4);
+      user.points = user.points - newPoints / (100 * 133 * 4);
+      if (user.points > 5 && user.points < 10) {
+        (user.buyerType.name = "Silver"),
+          (user.buyerType.discount = 10),
+          (user.buyerType.points = 5);
+      }
+
+      if (user.points > 10) {
+        (user.buyerType.name = "Gold"),
+          (user.buyerType.discount = 15),
+          (user.buyerType.points = 10);
+      }
+
+      if (user.points < 5) {
+        (user.buyerType.name = "Bronze"),
+          (user.buyerType.discount = 5),
+          (user.buyerType.points = 0);
+      }
+
       userService.update(user.id, user);
       res.status(200).json({ message: "Sucessfully updated points." });
     }
@@ -113,6 +162,8 @@ router.delete("/:id", (req, res) => {
   }
 });
 
+
+
 router.get("/:id", (req, res) => {
   const id = parseInt(req.params.id, 10);
 
@@ -124,6 +175,8 @@ router.get("/:id", (req, res) => {
     res.status(404).json({ error: "User not found" });
   }
 });
+
+
 
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;

@@ -41,10 +41,9 @@
             <button type="button" v-on:click="submitForm()">Update</button>
           </div>
         </form>
-        
       </div>
-      <div class="displayOrder " v-if="IsBuyer && orders.length>0">
-        <div class="order-header" >
+      <div class="displayOrder " v-if="IsBuyer && orders.length > 0">
+        <div class="order-header">
           <div class="search-box">
             <input
               type="text"
@@ -118,7 +117,6 @@
                       : "InProgress"
                   }}
                 </p>
-               
               </div>
 
               <div class="vehicle-vehicle">
@@ -140,41 +138,52 @@
                     ></OrderCard>
                   </div>
                 </div>
-                <form v-if="order.orderStatus === 'returned' && isAlreadyCommented" class="comment-form">
-  <label for="comment">Leave a comment:</label>
-  <textarea id="comment" v-model="comment.text"></textarea>
-  
-  <label for="rating">Rating:</label>
-  <input type="number" id="rating" v-model="comment.grade" min="1" max="5" class="input">
+                <form
+                  v-if="order.orderStatus === 'returned' && isAlreadyCommented"
+                  class="comment-form"
+                >
+                  <label for="comment">Leave a comment:</label>
+                  <textarea id="comment" v-model="comment.text"></textarea>
 
-  <button v-on:click.prevent="submitComment(order.rentalId)">Submit</button>
-</form>
+                  <label for="rating">Rating:</label>
+                  <input
+                    type="number"
+                    id="rating"
+                    v-model="comment.grade"
+                    min="1"
+                    max="5"
+                    class="input"
+                  />
 
+                  <button v-on:click.prevent="submitComment(order.rentalId)">
+                    Submit
+                  </button>
+                </form>
               </div>
             </div>
           </li>
-         
         </ul>
-        
       </div>
-      <div class="reccommend" v-if="orders.length===0 && IsBuyer">
-            <p class="noCommentss"  readonly>
-"Thank you for becoming our customer. We see that you haven't made any orders yet. We still recommend that the best choice is with us. You can check all the options we have and the vehicle lists within each rental car object."
-            </p>
-            <router-link :to="'/'">
-<h2 class="nameS"> 👉 See all rentals</h2>
-
-</router-link>
+      <div class="reccommend" v-if="orders.length === 0 && IsBuyer">
+        <p class="noCommentss" readonly>
+          "Thank you for becoming our customer. We see that you haven't made any
+          orders yet. We still recommend that the best choice is with us. You
+          can check all the options we have and the vehicle lists within each
+          rental car object."
+        </p>
+        <router-link :to="'/'">
+          <h2 class="nameS">👉 See all rentals</h2>
+        </router-link>
         <div class="forIMG">
-          <img src="../assets/images/lena.png" alt="Recommendation" class="imageRR">
-
-
-
+          <img
+            src="../assets/images/lena.png"
+            alt="Recommendation"
+            class="imageRR"
+          />
         </div>
-         
-        </div>
-      <div class="displayOrder " v-if="IsManager" >
-        <div class="order-header"  v-if="filterObjects.length>0">
+      </div>
+      <div class="displayOrder " v-if="IsManager">
+        <div class="order-header" v-if="filterObjects.length > 0">
           <div class="search-box">
             <input
               type="text"
@@ -208,7 +217,6 @@
             v-for="order in filterObjects"
             :key="order.orderId"
             class="order-orderd"
-           
           >
             <div class="order-orderd-container">
               <div class="order-container">
@@ -253,9 +261,6 @@
                       : "InProgress"
                   }}
                 </p>
-  
-
-
               </div>
               <div class="vehicle-vehicle">
                 <div class="status-container">
@@ -306,55 +311,91 @@
                     ></OrderCard>
                   </div>
                 </div>
-                
               </div>
-             
             </div>
-            
           </li>
-          <div class="displayOrder" v-if="comments.length>0">
-  <div class="comment-header">
-    <h2>Comments</h2>
-  </div>
-  <div class="comment-list-container">
+          <div class="displayOrder1" v-if="comments.length > 0">
+            <div class="comment-header">
+              <h2>Comments</h2>
+            </div>
+            <div class="comment-list-container">
+              <ul class="comment-list">
+                <li
+                  v-for="comment in comments"
+                  :key="comment.commentId"
+                  class="comment-container"
+                >
+                  <div class="list-part">
+                    <div class="user-info">
+                      <img
+                        :src="comment.logo"
+                        alt="User Logo"
+                        class="user-logo"
+                      />
+                      <span>{{ comment.userName }} {{ comment.surname }}</span>
+                    </div>
+                    <p class="comment-txt">{{ comment.text }}</p>
+                    <p class="button1" v-if="parseInt(comment.grade) === 1">
+                      ⭐
+                    </p>
+                    <p class="button1" v-if="parseInt(comment.grade) === 2">
+                      ⭐⭐
+                    </p>
+                    <p class="button1" v-if="parseInt(comment.grade) === 3">
+                      ⭐⭐⭐
+                    </p>
+                    <p class="button1" v-if="parseInt(comment.grade) === 4">
+                      ⭐⭐⭐⭐
+                    </p>
+                    <p class="button1" v-if="parseInt(comment.grade) === 5">
+                      ⭐⭐⭐⭐⭐
+                    </p>
 
-  <ul class="comment-list">
-    <li v-for="comment in comments" :key="comment.commentId" class="comment-container">
-      <div class="list-part">
-      <div class="user-info">
-        <img :src="comment.logo" alt="User Logo" class="user-logo">
-        <span>{{ comment.userName }} {{ comment.surname }}</span>
-       
-      </div>
-      <p class="comment-txt">{{ comment.text }}</p>
-      <p class="button1" v-if="parseInt(comment.grade) === 1">⭐</p>
-<p class="button1" v-if="parseInt(comment.grade) === 2">⭐⭐</p>
-<p class="button1" v-if="parseInt(comment.grade) === 3">⭐⭐⭐</p>
-<p class="button1" v-if="parseInt(comment.grade) === 4">⭐⭐⭐⭐</p>
-<p class="button1" v-if="parseInt(comment.grade) === 5">⭐⭐⭐⭐⭐</p>
+                    <div class="buttons" v-if="!comment.isSeen">
+                      <button
+                        class="button1"
+                        v-on:click.prevent="approveComment(comment)"
+                      >
+                        ✔️
+                      </button>
+                      <button
+                        class="button1"
+                        v-on:click.prevent="rejectComment(comment)"
+                      >
+                        ❌
+                      </button>
+                    </div>
+                    <p
+                      v-if="comment.isSeen"
+                      v-bind:class="{
+                        approved: comment.isApproved,
+                        rejected: !comment.isApproved
+                      }"
+                    >
+                      {{ comment.isApproved ? "Approved" : "Rejected" }}
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
 
-      <div class="buttons"  v-if="!comment.isSeen">
-      <button class="button1" v-on:click.prevent="approveComment(comment)">✔️</button>
-      <button class="button1" v-on:click.prevent="rejectComment(comment)">❌</button>
-    </div>
-      <p v-if="comment.isSeen" v-bind:class="{ 'approved': comment.isApproved, 'rejected': !comment.isApproved }">
-        {{ comment.isApproved ? 'Approved' : 'Rejected' }}
-      </p>
-    </div>
-    </li>
-  </ul>
-</div>
-
-</div>
-
-<p class="noComments" v-if="orders.length===0"> "There are still no orders for your rental."</p>
-
+          <p class="noComments" v-if="orders.length === 0">
+            "There are still no orders for your rental."
+          </p>
         </ul>
       </div>
 
       <div class="admin-box" v-if="isAdministrator">
         <div class="header-box">
+          <div class="h2-container">
           <h2>All registered users</h2>
+        </div>
+              <button class="suspicious-container" v-on:click.prevent="handleSuspiciousClick">
+                <p>Suspicious</p>
+        <img src="../assets/images/suspicious.png" alt="Add logo" class="image" />
+      </button>
+
         </div>
         <div class="second-container">
           <div class="search-container">
@@ -413,6 +454,7 @@
             v-for="profile in filteredProfiles"
             :key="profile.id"
             :profile="profile"
+            :blocked-click="BlockedClick"
           ></ProfileCard>
         </div>
       </div>
@@ -446,6 +488,7 @@ export default {
         birthday: "",
         image: ""
       },
+      UserId:0,
       showFilter: false,
       roleTypeFilter: "",
       userTypeFilter: "",
@@ -454,7 +497,7 @@ export default {
       orders: [],
       profiles: [],
       search: "",
-      comments:[],
+      comments: [],
       selectedSortField: "",
       IsBuyer: false,
       IsManager: false,
@@ -463,19 +506,34 @@ export default {
       rentalId: 0,
       comment: {
         idUser: "",
-        idRental:"",
-        text:"",
+        idRental: "",
+        text: "",
         grade: 0,
-        isSeen:false,
-      isApproved:false      },
-      isAlreadyCommented:false,
+        isSeen: false,
+        isApproved: false
+      },
+      isAlreadyCommented: false,
       showPopup: false,
       rejectionReason: ""
-
     };
   },
 
-  methods: {
+  methods: { BlockedClick(UserId){
+      axios
+        .put(`http://localhost:8081/users/isBlockedUser/user/${UserId}`)
+        .then(response => {
+          this.$toastr.s("Bravo!");
+          this.$forceUpdate();
+
+
+        })
+        .catch(error => {
+          console.error(error);
+          console.log(error)
+          this.$toastr.e("Error heere!");
+        });
+
+    },
     toggleFilter() {
       this.showFilter = !this.showFilter;
     },
@@ -492,7 +550,7 @@ export default {
 }
 ,
     matchPriceRange: function(price, searchValue) {
-      const priceRangeRegex = /\d+\s*-\s*\d+/; // Pattern for price range like "10 - 20"
+      const priceRangeRegex = /\d+\s*-\s*\d+/; 
       const searchRegex = new RegExp(searchValue, "i");
 
       if (priceRangeRegex.test(searchValue)) {
@@ -506,9 +564,9 @@ export default {
 
       return price.match(searchRegex);
     },
-  
+
     matchDateRange: function(date, searchValue) {
-      const dateRangeRegex = /\d{4}-\d{2}-\d{2}\s*-\s*\d{4}-\d{2}-\d{2}/; // Pattern for date range like "2023-07-05 - 2023-07-09"
+      const dateRangeRegex = /\d{4}-\d{2}-\d{2}\s*-\s*\d{4}-\d{2}-\d{2}/; 
       const searchRegex = new RegExp(searchValue, "i");
 
       if (dateRangeRegex.test(searchValue)) {
@@ -546,6 +604,8 @@ export default {
           this.$toastr.e("Error!");
         });
     },
+
+   
 
     rejectOrder(order) {
       axios
@@ -637,65 +697,62 @@ export default {
       } else if (decoded.role == "Administrator") {
         this.isAdministrator = true;
       }
-    },submitComment(rentalId){
+    },
+    submitComment(rentalId) {
       const token = localStorage.getItem("token");
       const decoded = jwt_decode(token);
-      this.comment.idUser=decoded.id;
-      this.comment.idRental=rentalId;
+      this.comment.idUser = decoded.id;
+      this.comment.idRental = rentalId;
       if (!this.comment.grade || !this.comment.text) {
-    
-        this.$toastr.e("Please fill in all required fields and enter valid values.");
-      return; 
+        this.$toastr.e(
+          "Please fill in all required fields and enter valid values."
+        );
+        return;
       }
       axios
-        .post(`http://localhost:8081/comments`,this.comment)
-        .then(()=>{
-          this.$toastr.s("Comment successfully added!") 
-
-        }
-        )
-          .catch(err => {
-          console.log(err)
+        .post(`http://localhost:8081/comments`, this.comment)
+        .then(() => {
+          this.$toastr.s("Comment successfully added!");
+        })
+        .catch(err => {
+          console.log(err);
           this.$toastr.e("Error adding vehicle!");
         });
     },
     approveComment(comment) {
-            comment.isApproved = true; 
-            comment.isSeen=true;
-            axios.put('http://localhost:8081/comments/update', {
-                commentId: comment.commentId,
-                isApproved: true,
-                isSeen:true
-
-})
-  .then(response => {
-    this.$toastr.s("Successfully updated!");
+      comment.isApproved = true;
+      comment.isSeen = true;
+      axios
+        .put("http://localhost:8081/comments/update", {
+          commentId: comment.commentId,
+          isApproved: true,
+          isSeen: true
+        })
+        .then(response => {
+          this.$toastr.s("Successfully updated!");
           this.$forceUpdate();
-  })
-  .catch(error => {
-    this.$toastr.e("Eroor in updating!");
-  });
-
-  },
-  rejectComment(comment) {
-    comment.isApproved = false; 
-    comment.isSeen=true;
-    axios.put(`http://localhost:8081/comments/update`, {
-  commentId: comment.commentId,
-  isApproved: false,
-  isSeen:true
-})
-  .then(response => {
-    this.$toastr.s("Successfully updated!");
+        })
+        .catch(error => {
+          this.$toastr.e("Eroor in updating!");
+        });
+    },
+    rejectComment(comment) {
+      comment.isApproved = false;
+      comment.isSeen = true;
+      axios
+        .put(`http://localhost:8081/comments/update`, {
+          commentId: comment.commentId,
+          isApproved: false,
+          isSeen: true
+        })
+        .then(response => {
+          this.$toastr.s("Successfully updated!");
           this.$forceUpdate();
-  })
-  .catch(error => {
-    this.$toastr.e("Eroor in updating!");
-  });
-
-  }
-    ,
-
+        })
+        .catch(error => {
+          this.$toastr.e("Eroor in updating!");
+        });
+    },
     isInProcessing(order) {
       if (order.orderStatus === "InProgress") {
         return true;
@@ -731,25 +788,41 @@ export default {
     },
 
     cancelOrder(order) {
-      const token = localStorage.getItem("token");
-      const decoded = jwt_decode(token);
+  const token = localStorage.getItem("token");
+  const decoded = jwt_decode(token);
 
+  axios
+    .put(`http://localhost:8081/orders/cancelOrder/${order.orderId}`)
+    .then(response => {
+      this.$toastr.s("Order canceled!");
+      this.$forceUpdate();
+
+   
       axios
-        .put(`http://localhost:8081/orders/cancelOrder/${order.orderId}`)
+        .put(`http://localhost:8081/users/increaseCounter/${decoded.id}`)
         .then(response => {
-          this.$toastr.s("Order canceled!");
+          this.$toastr.s("Bravo!");
           this.$forceUpdate();
 
-          this.orders = this.orders.map(item => {
-            if (item.orderId === order.orderId) {
-              item.orderStatus = "Canceled";
-            }
-            return item;
-          });
+
         })
         .catch(error => {
+          console.error(error);
           this.$toastr.e("Error!");
         });
+
+      this.orders = this.orders.map(item => {
+        if (item.orderId === order.orderId) {
+          item.orderStatus = "Canceled";
+        }
+        return item;
+      });
+    })
+    .catch(error => {
+      this.$toastr.e("Error!");
+    });
+
+
 
       axios
         .post(`http://localhost:8081/users/lostPoints/${decoded.id}`, {
@@ -807,48 +880,49 @@ export default {
 
     const token = localStorage.getItem("token");
     const decoded = jwt_decode(token);
-  
 
     if (!this.isAdministrator) {
-  axios
-    .get(`http://localhost:8081/orders/${decoded.id}`)
-    .then(response => {
-      this.orders = response.data;
-      this.orders.forEach(order => {
-        const rentalId = order.rentalId;
-        this.name = order.name;
-        console.log(order.name)
-        this.rentalId=order.rentalId;
-        axios.get(`http://localhost:8081/comments/${this.rentalId}/${decoded.id}`)
-          .then(response => {
-            this.isAlreadyCommented = response.data.isCommented;
-            console.log(this.isAlreadyCommented );
-          })
-          .catch(error => {
-            console.error(error);
-            window.alert("An error occurred while fetching orders data");
+      axios
+        .get(`http://localhost:8081/orders/${decoded.id}`)
+        .then(response => {
+          this.orders = response.data;
+          this.orders.forEach(order => {
+            const rentalId = order.rentalId;
+            this.name = order.name;
+            console.log(order.name);
+            this.rentalId = order.rentalId;
+            axios
+              .get(
+                `http://localhost:8081/comments/${this.rentalId}/${decoded.id}`
+              )
+              .then(response => {
+                this.isAlreadyCommented = response.data.isCommented;
+                console.log(this.isAlreadyCommented);
+              })
+              .catch(error => {
+                console.error(error);
+                window.alert("An error occurred while fetching orders data");
+              });
+
+            axios
+              .get(`http://localhost:8081/comments/Allcomments/${rentalId}`)
+              .then(response => {
+                this.comments = response.data;
+                console.log(this.comments);
+              })
+              .catch(error => {
+                console.error(error);
+                window.alert("An error occurred while fetching orders data");
+              });
           });
+        })
+        .catch(error => {
+          console.error(error);
+          window.alert("An error occurred while fetching orders data");
+        });
+    }
 
-          axios.get(`http://localhost:8081/comments/Allcomments/${rentalId}`)
-          .then(response => {
-            this.comments = response.data;
-            console.log(this.comments)
-          })
-          .catch(error => {
-            console.error(error);
-            window.alert("An error occurred while fetching orders data");
-          });
-      });
-      
-    })
-    .catch(error => {
-      console.error(error);
-      window.alert("An error occurred while fetching orders data");
-    });
-}
-
-
-    if (!this.isAdministrator && this.orders>0) {
+    if (!this.isAdministrator && this.orders > 0) {
       axios
         .get(`http://localhost:8081/orders/${decoded.id}`)
         .then(response => {
@@ -874,9 +948,6 @@ export default {
           console.error(error);
         });
     }
- 
-
-  
   },
   computed: {
     filterObjects: function() {
@@ -938,7 +1009,12 @@ export default {
   }
 
   return filteredProfiles;
+},handleSuspiciousClick() {
+  this.profiles = this.profiles.filter(profile => parseInt(profile.counter) > 4);
+  console.log(this);
 }
+
+
 
   }
 };
@@ -964,15 +1040,6 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.header-box {
-  display: flex;
-  justify-content: center;
-  border-radius: 3px;
-  background-color: rgba(82, 82, 221, 0.3);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  font-size: 22px;
-  color: rgb(183, 230, 230);
-}
 
 .search-box {
   height: 8%;
@@ -1043,15 +1110,12 @@ export default {
 
 .comment-container {
   margin-bottom: 10px;
-  flex: 1; 
+  flex: 1;
 }
 
-.comment-container button{
+.comment-container button {
   margin-top: 10px;
-
 }
-
-
 
 .register-form {
   height: min-content;
@@ -1061,7 +1125,8 @@ export default {
   border-radius: 5px;
   background-image: url(../assets/images/back3.jpg);
   background-size: cover;
-  background-position: center;  width: 23%;
+  background-position: center;
+  width: 25%;
   margin: 0 auto;
 
   border: 1px solid #ccc;
@@ -1069,8 +1134,6 @@ export default {
   border-style: solid;
   border-radius: 10px;
 }
-
-
 
 .register-form h2 {
   text-align: center;
@@ -1082,7 +1145,16 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   flex-grow: 3;
 
+  width: 75%;
+  gap: 5rem;
+  padding: 10px;
+}
 
+.displayOrder1 {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-grow: 3;
+
+  width: 100%;
   gap: 5rem;
   padding: 10px;
 }
@@ -1114,7 +1186,8 @@ export default {
   border-radius: 5px;
   background-image: url(../assets/images/back111.jpg);
   background-size: cover;
-  background-position: center;  color: #fff;
+  background-position: center;
+  color: #fff;
   border: none;
 }
 
@@ -1142,11 +1215,13 @@ export default {
 .nameS:hover {
   color: darkblue;
 }
+
 .filter-slide{
   display: flex;
   gap:1rem;
 }
 .nameS{
+
   font-size: 50px;
   text-align: center;
   color: lightslategray;
@@ -1204,7 +1279,7 @@ export default {
   ); /* Promenjen kod za postavljanje transparentnosti */
 }
 
-.noCommentss{
+.noCommentss {
   font-size: 30px;
   align-items: center;
   text-align: center;
@@ -1278,10 +1353,11 @@ export default {
   height: 8%;
   background-image: url(../assets/images/back8.jpg);
   background-size: cover;
-  background-position: center;  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  background-position: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.noComments{
+.noComments {
   font-size: 40px;
   align-items: center;
   text-align: center;
@@ -1329,7 +1405,6 @@ export default {
   justify-items: flex-end;
 }
 
-
 .imageRR {
   height: 530px;
   width: 450px;
@@ -1341,13 +1416,13 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 25px;
-  margin-top: 20px; 
+  margin-top: 20px;
   gap: 1rem;
- background-color: transparent; 
+  background-color: transparent;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.reccommend{
+.reccommend {
   display: flex;
   padding: 20px;
   width: 70%;
@@ -1372,8 +1447,6 @@ export default {
   background: #555; /* Boja thumb-a prilikom hover-a */
 }
 
-
-
 .approved {
   background-color: green;
   color: white;
@@ -1392,13 +1465,12 @@ export default {
   border-radius: 5px;
 }
 
-.list-part{
+.list-part {
   background-image: url(../assets/images/back3.jpg);
   background-size: cover;
   background-position: center;
   padding: 10px;
   border-radius: 10px; /* Dodajte zaobljene ivice */
-
 }
 
 .comment-header {
@@ -1421,8 +1493,6 @@ export default {
   font-weight: bold;
   text-align: center;
 }
-
-
 
 .filter-box {
   display: flex;
@@ -1471,7 +1541,7 @@ export default {
 .comment-form p {
   margin-bottom: 0.5rem;
 }
-.input{
+.input {
   margin-right: 20px;
 }
 
@@ -1499,13 +1569,13 @@ export default {
   transform: scale(1.1);
 }
 
-.buttons{
+.buttons {
   display: flex;
-  gap:1rem;
+  gap: 1rem;
   height: 40px;
 }
 
-.button1{
+.button1 {
   font-size: 20px;
 }
 
@@ -1527,10 +1597,46 @@ p.orderStatus.approved {
   background-color: #28a745;
 }
 
-
 p.orderStatus.canceled {
   background-color: rgb(232, 96, 96);
 }
+.header-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  background-color: rgba(82, 82, 221, 0.3);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  font-size: 22px;
+  color: rgb(183, 230, 230);
+}
+
+.h2-container{
+ width: 80%;
+padding: 0px 0px 0px 80px;
+ justify-content: center;
+ text-align: center;
+}
+
+.suspicious-container {
+  width: 20%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.suspicious-container p{
+  font-size: 15px;
+  color: #ad3421;
+}
+
+.suspicious-container img {
+  width: 20%;
+}
+
+
+
 
 p.orderStatus {
   background-color: rgb(15, 132, 182);
@@ -1558,7 +1664,7 @@ p.orderStatus {
   align-items: center;
   margin-bottom: 10px;
 }
-.comment-txt{
+.comment-txt {
   font-size: 20px;
 }
 
@@ -1573,7 +1679,4 @@ p.orderStatus {
   font-weight: bold;
   font-size: 25px;
 }
-
-
-
 </style>
