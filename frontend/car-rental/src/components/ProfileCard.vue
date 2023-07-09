@@ -4,15 +4,26 @@
       <img :src="profile.image" class="profil-image" />
       <div class="name-box">
         <p>{{ profile.name }}</p>
-        <div class="flex-item"><p>{{ profile.surname }}</p>
+        <div class="flex-item">
+          <p>{{ profile.surname }}</p>
           <div v-if="isBuyer">
-          <p v-if="profile.buyerType.name==='Gold'">🥇</p>
-        <p v-if="profile.buyerType.name==='Silver'">🥈</p>
-        <p v-if="profile.buyerType.name==='Bronze'">🥉</p></div></div>
-        <button v-if="!profile.isBlocked" class="blocked-button"  v-on:click.prevent="BlockedClick(profile.id)">
-        <img src="../assets/images/blocked.png" alt="Add logo" class="image" />
-      </button>
-      <p v-if="profile.isBlocked" class="isBlocked">User is blocked</p>
+            <p v-if="profile.buyerType.name === 'Gold'">🥇</p>
+            <p v-if="profile.buyerType.name === 'Silver'">🥈</p>
+            <p v-if="profile.buyerType.name === 'Bronze'">🥉</p>
+          </div>
+        </div>
+        <button
+          v-if="!profile.isBlocked"
+          class="blocked-button"
+          v-on:click.prevent="BlockedClick(profile.id)"
+        >
+          <img
+            src="../assets/images/blocked.png"
+            alt="Add logo"
+            class="image"
+          />
+        </button>
+        <p v-if="profile.isBlocked" class="isBlocked">User is blocked</p>
       </div>
     </div>
     <div class="data-box">
@@ -119,7 +130,7 @@ export default {
   color: rgb(58, 56, 56);
 }
 
-.flex-item{
+.flex-item {
   display: flex;
   padding-left: 5px;
 }
@@ -146,7 +157,7 @@ export default {
   width: 55px;
   text-align: center;
 }
-.blocked-button img{
+.blocked-button img {
   width: 55px;
   height: 35px;
 }
@@ -156,7 +167,7 @@ export default {
   gap: 5px;
 }
 
-.isBlocked{
+.isBlocked {
   color: rgb(95, 108, 120);
   font-size: 15px;
 }

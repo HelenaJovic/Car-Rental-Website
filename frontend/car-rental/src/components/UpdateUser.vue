@@ -4,12 +4,13 @@
     <div class="main-container">
       <div class="register-form">
         <div class="flex-item">
-        <h2>Your profile</h2>
-        <div v-if="IsBuyer">
-          <p  v-if="form.buyerType.name==='Gold'">🥇</p>
-        <p v-if="form.buyerType.name==='Silver'">🥈</p>
-        <p v-if="form.buyerType.name==='Bronze'">🥉</p></div>
-      </div>
+          <h2>Your profile</h2>
+          <div v-if="IsBuyer">
+            <p v-if="form.buyerType.name === 'Gold'">🥇</p>
+            <p v-if="form.buyerType.name === 'Silver'">🥈</p>
+            <p v-if="form.buyerType.name === 'Bronze'">🥉</p>
+          </div>
+        </div>
         <form>
           <div class="form-group">
             <div class="image-manager">
@@ -145,7 +146,7 @@
                   </div>
                 </div>
                 <form
-                  v-if="order.orderStatus === 'returned' && isAlreadyCommented"
+                  v-if="order.orderStatus === 'Returned' && isAlreadyCommented"
                   class="comment-form"
                 >
                   <label for="comment">Leave a comment:</label>
@@ -300,7 +301,7 @@
                     Return order
                   </button>
 
-                  <div v-if="showPopup">
+                  <div v-if="showPopup === true">
                     <h3>Enter reason for rejection:</h3>
                     <textarea v-model="rejectionReason"></textarea>
                     <button @click="rejectOrder(order)">
@@ -395,13 +396,19 @@
       <div class="admin-box" v-if="isAdministrator">
         <div class="header-box">
           <div class="h2-container">
-          <h2>All registered users</h2>
-        </div>
-              <button class="suspicious-container" v-on:click.prevent="handleSuspiciousClick">
-                <p>Suspicious</p>
-        <img src="../assets/images/suspicious.png" alt="Add logo" class="image" />
-      </button>
-
+            <h2>All registered users</h2>
+          </div>
+          <button
+            class="suspicious-container"
+            v-on:click.prevent="handleSuspiciousClick"
+          >
+            <p>Suspicious</p>
+            <img
+              src="../assets/images/suspicious.png"
+              alt="Add logo"
+              class="image"
+            />
+          </button>
         </div>
         <div class="second-container">
           <div class="search-container">
@@ -414,26 +421,36 @@
             <p>🔍</p>
           </div>
           <div class="filter-container">
-  <button v-if="!showFilter" type="submit" v-on:click.prevent="toggleFilter()">Filter</button>
-  <transition name="slide">
-    <div class="filter-slide" v-if="showFilter">
-      <div>
-        <label for="role-type-filter">Role:</label>
-        <select v-model="roleTypeFilter" id="role-type-filter">
-          <option value="">All</option>
-          <option v-for="type in roleTypes" :value="type">{{ type }}</option>
-        </select>
-      </div>
-      <div>
-        <label for="user-type-filter">User Type:</label>
-        <select v-model="userTypeFilter" id="user-type-filter">
-          <option value="">All</option>
-          <option v-for="type in userTypes" :value="type">{{ type }}</option>
-        </select>
-      </div>
-    </div>
-  </transition>
-</div>
+            <button
+              v-if="!showFilter"
+              type="submit"
+              v-on:click.prevent="toggleFilter()"
+            >
+              Filter
+            </button>
+            <transition name="slide">
+              <div class="filter-slide" v-if="showFilter">
+                <div>
+                  <label for="role-type-filter">Role:</label>
+                  <select v-model="roleTypeFilter" id="role-type-filter">
+                    <option value="">All</option>
+                    <option v-for="type in roleTypes" :value="type">{{
+                      type
+                    }}</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="user-type-filter">User Type:</label>
+                  <select v-model="userTypeFilter" id="user-type-filter">
+                    <option value="">All</option>
+                    <option v-for="type in userTypes" :value="type">{{
+                      type
+                    }}</option>
+                  </select>
+                </div>
+              </div>
+            </transition>
+          </div>
 
           <div class="combobox-container">
             <label for="sort-by">Sort By:</label>
@@ -494,7 +511,7 @@ export default {
         birthday: "",
         image: ""
       },
-      UserId:0,
+      UserId: 0,
       showFilter: false,
       roleTypeFilter: "",
       userTypeFilter: "",
@@ -524,40 +541,40 @@ export default {
     };
   },
 
-  methods: { BlockedClick(UserId){
+  methods: {
+    BlockedClick(UserId) {
       axios
         .put(`http://localhost:8081/users/isBlockedUser/user/${UserId}`)
         .then(response => {
           this.$toastr.s("Bravo!");
           this.$forceUpdate();
-
-
         })
         .catch(error => {
           console.error(error);
-          console.log(error)
+          console.log(error);
           this.$toastr.e("Error heere!");
         });
-
     },
     toggleFilter() {
       this.showFilter = !this.showFilter;
     },
     filterByRoleAndType(profiles) {
-  const filteredByRole = this.roleTypeFilter
-    ? profiles.filter(profile => profile.role === this.roleTypeFilter)
-    : profiles;
+      const filteredByRole = this.roleTypeFilter
+        ? profiles.filter(profile => profile.role === this.roleTypeFilter)
+        : profiles;
 
-    const filteredByType = this.userTypeFilter
-  ? filteredByRole.filter(profile => profile.buyerType && profile.buyerType.name === this.userTypeFilter)
-  : filteredByRole;
+      const filteredByType = this.userTypeFilter
+        ? filteredByRole.filter(
+            profile =>
+              profile.buyerType &&
+              profile.buyerType.name === this.userTypeFilter
+          )
+        : filteredByRole;
 
-
-  return filteredByType;
-}
-,
+      return filteredByType;
+    },
     matchPriceRange: function(price, searchValue) {
-      const priceRangeRegex = /\d+\s*-\s*\d+/; 
+      const priceRangeRegex = /\d+\s*-\s*\d+/;
       const searchRegex = new RegExp(searchValue, "i");
 
       if (priceRangeRegex.test(searchValue)) {
@@ -573,7 +590,7 @@ export default {
     },
 
     matchDateRange: function(date, searchValue) {
-      const dateRangeRegex = /\d{4}-\d{2}-\d{2}\s*-\s*\d{4}-\d{2}-\d{2}/; 
+      const dateRangeRegex = /\d{4}-\d{2}-\d{2}\s*-\s*\d{4}-\d{2}-\d{2}/;
       const searchRegex = new RegExp(searchValue, "i");
 
       if (dateRangeRegex.test(searchValue)) {
@@ -611,8 +628,6 @@ export default {
           this.$toastr.e("Error!");
         });
     },
-
-   
 
     rejectOrder(order) {
       axios
@@ -795,41 +810,36 @@ export default {
     },
 
     cancelOrder(order) {
-  const token = localStorage.getItem("token");
-  const decoded = jwt_decode(token);
+      const token = localStorage.getItem("token");
+      const decoded = jwt_decode(token);
 
-  axios
-    .put(`http://localhost:8081/orders/cancelOrder/${order.orderId}`)
-    .then(response => {
-      this.$toastr.s("Order canceled!");
-      this.$forceUpdate();
-
-   
       axios
-        .put(`http://localhost:8081/users/increaseCounter/${decoded.id}`)
+        .put(`http://localhost:8081/orders/cancelOrder/${order.orderId}`)
         .then(response => {
-          this.$toastr.s("Bravo!");
+          this.$toastr.s("Order canceled!");
           this.$forceUpdate();
 
+          axios
+            .put(`http://localhost:8081/users/increaseCounter/${decoded.id}`)
+            .then(response => {
+              this.$toastr.s("Bravo!");
+              this.$forceUpdate();
+            })
+            .catch(error => {
+              console.error(error);
+              this.$toastr.e("Error!");
+            });
 
+          this.orders = this.orders.map(item => {
+            if (item.orderId === order.orderId) {
+              item.orderStatus = "Canceled";
+            }
+            return item;
+          });
         })
         .catch(error => {
-          console.error(error);
           this.$toastr.e("Error!");
         });
-
-      this.orders = this.orders.map(item => {
-        if (item.orderId === order.orderId) {
-          item.orderStatus = "Canceled";
-        }
-        return item;
-      });
-    })
-    .catch(error => {
-      this.$toastr.e("Error!");
-    });
-
-
 
       axios
         .post(`http://localhost:8081/users/lostPoints/${decoded.id}`, {
@@ -987,42 +997,42 @@ export default {
     },
 
     filteredProfiles() {
-  const searchValues = this.search.split(",").map(value => value.trim());
+      const searchValues = this.search.split(",").map(value => value.trim());
 
-  let filteredProfiles = this.profiles.filter(profile => {
-    let matchesSearch = true;
+      let filteredProfiles = this.profiles.filter(profile => {
+        let matchesSearch = true;
 
-    for (const searchValue of searchValues) {
-      if (searchValue) {
-        const searchRegex = new RegExp(searchValue, "i");
+        for (const searchValue of searchValues) {
+          if (searchValue) {
+            const searchRegex = new RegExp(searchValue, "i");
 
-        const matchesName = profile.name.match(searchRegex);
-        const matchesSurname = profile.surname.match(searchRegex);
-        const matchesUsername = profile.username.match(searchRegex);
+            const matchesName = profile.name.match(searchRegex);
+            const matchesSurname = profile.surname.match(searchRegex);
+            const matchesUsername = profile.username.match(searchRegex);
 
-        matchesSearch =
-          matchesSearch &&
-          (matchesName || matchesSurname || matchesUsername);
+            matchesSearch =
+              matchesSearch &&
+              (matchesName || matchesSurname || matchesUsername);
+          }
+        }
+
+        return matchesSearch;
+      });
+
+      filteredProfiles = this.filterByRoleAndType(filteredProfiles);
+
+      if (this.selectedSortField) {
+        this.sortProfile(filteredProfiles, this.selectedSortField);
       }
+
+      return filteredProfiles;
+    },
+    handleSuspiciousClick() {
+      this.profiles = this.profiles.filter(
+        profile => parseInt(profile.counter) > 4
+      );
+      console.log(this);
     }
-
-    return matchesSearch;
-  });
-
-  filteredProfiles = this.filterByRoleAndType(filteredProfiles);
-
-  if (this.selectedSortField) {
-    this.sortProfile(filteredProfiles, this.selectedSortField);
-  }
-
-  return filteredProfiles;
-},handleSuspiciousClick() {
-  this.profiles = this.profiles.filter(profile => parseInt(profile.counter) > 4);
-  console.log(this);
-}
-
-
-
   }
 };
 </script>
@@ -1046,7 +1056,6 @@ export default {
   padding: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 
 .search-box {
   height: 8%;
@@ -1206,8 +1215,8 @@ export default {
 .name:hover {
   color: darkblue;
 }
-.filter-container button{
-    background-color: rgb(192, 171, 171);
+.filter-container button {
+  background-color: rgb(192, 171, 171);
   color: white;
   border: none;
   border-radius: 4px;
@@ -1217,18 +1226,17 @@ export default {
 
   height: 40px;
   width: 100px;
-  }
+}
 
 .nameS:hover {
   color: darkblue;
 }
 
-.filter-slide{
+.filter-slide {
   display: flex;
-  gap:1rem;
+  gap: 1rem;
 }
-.nameS{
-
+.nameS {
   font-size: 50px;
   text-align: center;
   color: lightslategray;
@@ -1256,7 +1264,7 @@ export default {
   padding: 20px;
 
   border-radius: 5px;
-  height: 350px;
+  max-height: 550px;
 }
 
 .order-orderd-container {
@@ -1302,11 +1310,11 @@ export default {
   ); /* Promenjen kod za postavljanje transparentnosti */
 }
 
-.flex-item{
+.flex-item {
   display: flex;
   justify-content: center;
 }
-.flex-item p{
+.flex-item p {
   font-size: 30px;
 }
 .vehicle-vehicle {
@@ -1625,11 +1633,11 @@ p.orderStatus.canceled {
   color: rgb(183, 230, 230);
 }
 
-.h2-container{
- width: 80%;
-padding: 0px 0px 0px 80px;
- justify-content: center;
- text-align: center;
+.h2-container {
+  width: 80%;
+  padding: 0px 0px 0px 80px;
+  justify-content: center;
+  text-align: center;
 }
 
 .suspicious-container {
@@ -1640,7 +1648,7 @@ padding: 0px 0px 0px 80px;
   gap: 0.2rem;
 }
 
-.suspicious-container p{
+.suspicious-container p {
   font-size: 15px;
   color: #ad3421;
 }
@@ -1648,9 +1656,6 @@ padding: 0px 0px 0px 80px;
 .suspicious-container img {
   width: 20%;
 }
-
-
-
 
 p.orderStatus {
   background-color: rgb(15, 132, 182);

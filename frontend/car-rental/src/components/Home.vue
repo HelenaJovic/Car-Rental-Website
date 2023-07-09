@@ -169,7 +169,7 @@ export default {
 
             const matchesLocation = car.location.adress.match(searchRegex);
 
-            const matchesGrade = car.grade.match(searchRegex);
+            const matchesGrade = car.grade.toString().match(searchRegex);
             const matchesVehicleType = car.vehicles.some(vehicle =>
               vehicle.vehicleType.match(searchRegex)
             );

@@ -12,13 +12,13 @@
         "role": "Buyer",
         "pastRentals": null,
         "rentalObject": null,
-        "points": 3.4095488721804506,
+        "points": 5.665187969924812,
         "counter": 5,
         "isBlocked": false,
         "buyerType": {
-            "name": "Bronze",
-            "discount": 5,
-            "points": 0
+            "name": "Silver",
+            "discount": 10,
+            "points": 5
         },
         "image": "/static/user2.png",
         "id": 1
@@ -108,7 +108,7 @@
         "id": 5
     },
     {
-        "username": "Aca manager",
+        "username": "Aca",
         "password": "111",
         "new_password": "111",
         "name": "Aleksa",
@@ -162,7 +162,7 @@
         "rentalObject": null,
         "points": null,
         "counter": 5,
-        "isBlocked": false,
+        "isBlocked": true,
         "buyerType": {
             "name": "Bronze",
             "discount": 5,

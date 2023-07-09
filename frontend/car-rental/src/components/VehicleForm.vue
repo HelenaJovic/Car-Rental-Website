@@ -87,13 +87,7 @@
 
         <label for="image">Image URL:</label>
         <div class="image-input-container">
-          <input
-            type="text"
-            id="txt"
-            v-model="form.image"
-            :class="['custom-input', { error: !form.image }]"
-            required
-          />
+          <input type="text" id="txt" v-model="form.image" required />
 
           <input
             type="file"
@@ -178,7 +172,7 @@ export default {
         this.form.brand &&
         this.form.model &&
         this.form.price &&
-        this.form.vehcleType &&
+        this.form.vehicleType &&
         this.form.fuelType &&
         this.form.consumption &&
         this.form.doorsNum &&

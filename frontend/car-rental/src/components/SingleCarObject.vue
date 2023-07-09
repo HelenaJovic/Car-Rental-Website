@@ -140,8 +140,9 @@ export default {
         .delete(`http://localhost:8081/vehicles/${vehicleId}/${id}`)
         .then(() => {
           this.$toastr.s("Succesufully deleted!");
-          this.$router.push({ path: "/singleObject/" + id });
-
+          this.form.vehicles = this.form.vehicles.filter(
+            vehicle => vehicle.id !== vehicleId
+          );
         })
         .catch(error => {
           console.log(error);
