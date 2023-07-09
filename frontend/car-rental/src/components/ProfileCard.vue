@@ -5,6 +5,10 @@
       <div class="name-box">
         <p>{{ profile.name }}</p>
         <p>{{ profile.surname }}</p>
+        <button v-if="!profile.isBlocked" class="blocked-button"  v-on:click.prevent="BlockedClick(profile.id)">
+        <img src="../assets/images/blocked.png" alt="Add logo" class="image" />
+      </button>
+      <p v-if="profile.isBlocked" class="isBlocked">User is blocked</p>
       </div>
     </div>
     <div class="data-box">
@@ -36,7 +40,7 @@
 <script>
 export default {
   name: "ProfileCard",
-  props: ["profile"],
+  props: ["profile", "BlockedClick"],
   data() {
     return {
       isBuyer: false
@@ -56,7 +60,7 @@ export default {
   flex-direction: column;
   gap: 20px;
   width: 30%;
-  height: 17rem;
+  height: 20rem;
 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
@@ -96,7 +100,9 @@ export default {
   font-weight: bold;
   color: #fff;
   display: inline-block;
-  background-color: rgb(88, 81, 81);
+  border-color: blue;
+  border-style: double;
+  background-color: lightblue;
   padding: 6px 12px;
   border-radius: 4px;
 }
@@ -115,16 +121,35 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   gap: 15px;
-  padding: 0px 15px 0px 15px;
+  padding: 15px 15px 0px 15px;
   margin-top: -35px;
 }
 
 .helping {
   align-self: center;
 }
-
+.blocked-button {
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  height: 35px;
+  display: flex;
+  width: 55px;
+  text-align: center;
+}
+.blocked-button img{
+  width: 55px;
+  height: 35px;
+}
 .surround {
   align-items: baseline;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  gap: 5px;
+}
+
+.isBlocked{
+  color: rgb(95, 108, 120);
+  font-size: 15px;
 }
 </style>

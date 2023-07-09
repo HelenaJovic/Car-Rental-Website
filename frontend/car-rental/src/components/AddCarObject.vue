@@ -31,13 +31,9 @@
         </p>
 
         <label class="labels">Working time:</label>
-        <input
-          type="text"
-          id="workHours"
-          v-model="form.workHours"
-          :class="['custom-input', { error: !form.workHours }]"
-          required
-        />
+        <input type="time" v-model="form.workHoursStart" class="input" />
+        -
+        <input type="time" v-model="form.workHoursEnd" class="input" />
 
         <label for="image" class="labels">Logo URL:</label>
         <div class="image-input-container">
@@ -188,7 +184,8 @@ export default {
     return {
       form: {
         name: "",
-        workHours: "",
+        workHoursStart: "",
+        workHoursEnd: "",
         vehicles: [],
         location: {
           adress: "",

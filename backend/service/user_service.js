@@ -8,6 +8,31 @@ function remove(id) {
   return userRepo.remove(id);
 }
 
+function increaseCounter(idUser) {
+  const user = getById(idUser);
+  user.counter = parseInt(user.counter) + 1;
+  
+  const currentDate = new Date();
+  if (!user.lastCancellationDate || isMonthPassed(user.lastCancellationDate, currentDate)) {
+    user.counter = 1;
+  }
+  
+  user.lastCancellationDate = currentDate;
+  userRepo.update(user.id, user);
+}
+
+function isMonthPassed(lastDate, currentDate) {
+  const oneMonth = 30 * 24 * 60 * 60 * 1000; 
+  return (currentDate - lastDate) >= oneMonth;
+}
+
+function changeIfBlocked(idUser){
+  const user=getById(idUser);
+  user.isBlocked=true;
+  userRepo.update(user.id,user);
+}
+
+
 function getAll() {
   return userRepo.getAll();
 }
@@ -64,4 +89,6 @@ module.exports = {
   updateManager,
   getUsersForAdmin,
   updatePoints,
+  increaseCounter,
+  changeIfBlocked
 };

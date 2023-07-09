@@ -19,6 +19,7 @@
 import axios from "axios";
 import { eventBus } from "../main.js";
 import Navbar from "./Navbar.vue";
+import jwt_decode from "jwt-decode";
 
 export default {
   components: {
@@ -27,33 +28,50 @@ export default {
   data() {
     return {
       username: "",
-      password: ""
+      password: "",
+      user:null
     };
   },
 
   methods: {
-    LogIn() {
-      console.log(this.username, this.password);
-      axios
-        .post("http://localhost:8081/users/login", {
-          username: this.username,
-          password: this.password
-        })
-        .then(response => {
+  LogIn() {
+    console.log(this.username, this.password);
+    axios
+      .post("http://localhost:8081/users/login", {
+        username: this.username,
+        password: this.password
+      })
+      .then(response => {
           const data = response.data;
           const token = data.token;
           localStorage.setItem("token", token);
+          const decoded = jwt_decode(token);
 
-          eventBus.$emit("rerenderNavbar");
-          this.$router.push("/");
-        })
-        .catch(err => {
-          // console.log(err)
-          console.log(username);
-          this.$toastr.e("Wrong username or password!");
-        });
-    }
+        axios
+          .get(`http://localhost:8081/users/${decoded.id}`)
+          .then(response => {
+            const user = response.data;
+            console.log(user)
+            if (user.isBlocked) {
+              this.$toastr.e("This user is blocked. Please contact the administrator.");
+              return;
+            }
+
+            eventBus.$emit("rerenderNavbar");
+            this.$router.push("/");
+          })
+          .catch(error => {
+            console.error(error);
+            window.alert("An error occurred while fetching user data");
+          });
+      })
+      .catch(err => {
+        console.log(err);
+        this.$toastr.e("Wrong username or password!");
+      });
   }
+}
+
 };
 </script>
 

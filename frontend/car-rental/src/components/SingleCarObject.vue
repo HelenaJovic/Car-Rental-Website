@@ -10,9 +10,13 @@
             <h2>{{ carObject.name }}</h2>
             <img :src="carObject.imagePath" class="car-logo" alt="Car Logo" />
 
-            <p>Working hours: {{ carObject.workHours }}</p>
-            <p>{{ carObject.location.adress }}</p>
+            <p>
+              Working hours: {{ carObject.workHoursStart }}-{{
+                carObject.workHoursEnd
+              }}
+            </p>
 
+            <p>{{ carObject.location.adress }}</p>
             <google-map
               :center="{
                 lat: carObject.location.latitude,
@@ -38,7 +42,10 @@
             </button>
           </div>
         </div>
-        <div class="grid-item-2">
+        <div class="grid-item-2" v-if="carObject.vehicles.length === 0">
+          <p>In preparation...</p>
+        </div>
+        <div class="grid-item-2" v-if="carObject.vehicles.length > 0">
           <vehicleCard
             v-for="vehicle in carObject.vehicles"
             :key="vehicle.id"
@@ -230,7 +237,7 @@ export default {
   grid-row: 1/3;
   padding: 20px;
   border: 1px solid #e0e0e0;
-  max-height: 100vh; /* Dodali smo ograničenje visine */
+  max-height: 140vh;
   width: 100%;
   display: grid;
   margin-top: 20px;
@@ -406,5 +413,11 @@ p.grade {
   align-items: center;
   text-align: center;
   color: #ad3421;
+}
+
+.grid-item-2 p {
+  font-size: 30px;
+  color: #7a3227;
+  text-align: center;
 }
 </style>

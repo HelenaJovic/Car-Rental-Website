@@ -388,7 +388,14 @@
 
       <div class="admin-box" v-if="isAdministrator">
         <div class="header-box">
+          <div class="h2-container">
           <h2>All registered users</h2>
+        </div>
+              <button class="suspicious-container" v-on:click.prevent="handleSuspiciousClick">
+                <p>Suspicious</p>
+        <img src="../assets/images/suspicious.png" alt="Add logo" class="image" />
+      </button>
+
         </div>
         <div class="second-container">
           <div class="search-container">
@@ -400,6 +407,28 @@
             />
             <p>🔍</p>
           </div>
+          <div class="filter-container">
+  <button v-if="!showFilter" type="submit" v-on:click.prevent="toggleFilter()">Filter</button>
+  <transition name="slide">
+    <div class="filter-slide" v-if="showFilter">
+      <div>
+        <label for="role-type-filter">Role:</label>
+        <select v-model="roleTypeFilter" id="role-type-filter">
+          <option value="">All</option>
+          <option v-for="type in roleTypes" :value="type">{{ type }}</option>
+        </select>
+      </div>
+      <div>
+        <label for="user-type-filter">User Type:</label>
+        <select v-model="userTypeFilter" id="user-type-filter">
+          <option value="">All</option>
+          <option v-for="type in userTypes" :value="type">{{ type }}</option>
+        </select>
+      </div>
+    </div>
+  </transition>
+</div>
+
           <div class="combobox-container">
             <label for="sort-by">Sort By:</label>
             <select
@@ -425,6 +454,7 @@
             v-for="profile in filteredProfiles"
             :key="profile.id"
             :profile="profile"
+            :blocked-click="BlockedClick"
           ></ProfileCard>
         </div>
       </div>
@@ -458,6 +488,12 @@ export default {
         birthday: "",
         image: ""
       },
+      UserId:0,
+      showFilter: false,
+      roleTypeFilter: "",
+      userTypeFilter: "",
+      roleTypes: ["Buyer", "Manager", "Administrator"],
+      userTypes: ["Gold", "Silver", "Bronze"],
       orders: [],
       profiles: [],
       search: "",
@@ -482,9 +518,39 @@ export default {
     };
   },
 
-  methods: {
+  methods: { BlockedClick(UserId){
+      axios
+        .put(`http://localhost:8081/users/isBlockedUser/user/${UserId}`)
+        .then(response => {
+          this.$toastr.s("Bravo!");
+          this.$forceUpdate();
+
+
+        })
+        .catch(error => {
+          console.error(error);
+          console.log(error)
+          this.$toastr.e("Error heere!");
+        });
+
+    },
+    toggleFilter() {
+      this.showFilter = !this.showFilter;
+    },
+    filterByRoleAndType(profiles) {
+  const filteredByRole = this.roleTypeFilter
+    ? profiles.filter(profile => profile.role === this.roleTypeFilter)
+    : profiles;
+
+  const filteredByType = this.userTypeFilter
+    ? filteredByRole.filter(profile => profile.userType === this.userTypeFilter)
+    : filteredByRole;
+
+  return filteredByType;
+}
+,
     matchPriceRange: function(price, searchValue) {
-      const priceRangeRegex = /\d+\s*-\s*\d+/; // Pattern for price range like "10 - 20"
+      const priceRangeRegex = /\d+\s*-\s*\d+/; 
       const searchRegex = new RegExp(searchValue, "i");
 
       if (priceRangeRegex.test(searchValue)) {
@@ -500,7 +566,7 @@ export default {
     },
 
     matchDateRange: function(date, searchValue) {
-      const dateRangeRegex = /\d{4}-\d{2}-\d{2}\s*-\s*\d{4}-\d{2}-\d{2}/; // Pattern for date range like "2023-07-05 - 2023-07-09"
+      const dateRangeRegex = /\d{4}-\d{2}-\d{2}\s*-\s*\d{4}-\d{2}-\d{2}/; 
       const searchRegex = new RegExp(searchValue, "i");
 
       if (dateRangeRegex.test(searchValue)) {
@@ -538,6 +604,8 @@ export default {
           this.$toastr.e("Error!");
         });
     },
+
+   
 
     rejectOrder(order) {
       axios
@@ -720,25 +788,41 @@ export default {
     },
 
     cancelOrder(order) {
-      const token = localStorage.getItem("token");
-      const decoded = jwt_decode(token);
+  const token = localStorage.getItem("token");
+  const decoded = jwt_decode(token);
 
+  axios
+    .put(`http://localhost:8081/orders/cancelOrder/${order.orderId}`)
+    .then(response => {
+      this.$toastr.s("Order canceled!");
+      this.$forceUpdate();
+
+   
       axios
-        .put(`http://localhost:8081/orders/cancelOrder/${order.orderId}`)
+        .put(`http://localhost:8081/users/increaseCounter/${decoded.id}`)
         .then(response => {
-          this.$toastr.s("Order canceled!");
+          this.$toastr.s("Bravo!");
           this.$forceUpdate();
 
-          this.orders = this.orders.map(item => {
-            if (item.orderId === order.orderId) {
-              item.orderStatus = "Canceled";
-            }
-            return item;
-          });
+
         })
         .catch(error => {
+          console.error(error);
           this.$toastr.e("Error!");
         });
+
+      this.orders = this.orders.map(item => {
+        if (item.orderId === order.orderId) {
+          item.orderStatus = "Canceled";
+        }
+        return item;
+      });
+    })
+    .catch(error => {
+      this.$toastr.e("Error!");
+    });
+
+
 
       axios
         .post(`http://localhost:8081/users/lostPoints/${decoded.id}`, {
@@ -896,34 +980,42 @@ export default {
     },
 
     filteredProfiles() {
-      const searchValues = this.search.split(",").map(value => value.trim());
+  const searchValues = this.search.split(",").map(value => value.trim());
 
-      let filteredProfiles = this.profiles.filter(profile => {
-        let matchesSearch = true;
+  let filteredProfiles = this.profiles.filter(profile => {
+    let matchesSearch = true;
 
-        for (const searchValue of searchValues) {
-          if (searchValue) {
-            const searchRegex = new RegExp(searchValue, "i");
+    for (const searchValue of searchValues) {
+      if (searchValue) {
+        const searchRegex = new RegExp(searchValue, "i");
 
-            const matchesName = profile.name.match(searchRegex);
-            const matchesSurname = profile.surname.match(searchRegex);
-            const matchesUsername = profile.username.match(searchRegex);
+        const matchesName = profile.name.match(searchRegex);
+        const matchesSurname = profile.surname.match(searchRegex);
+        const matchesUsername = profile.username.match(searchRegex);
 
-            matchesSearch =
-              matchesSearch &&
-              (matchesName || matchesSurname || matchesUsername);
-          }
-        }
-
-        return matchesSearch;
-      });
-
-      if (this.selectedSortField) {
-        this.sortProfile(filteredProfiles, this.selectedSortField);
+        matchesSearch =
+          matchesSearch &&
+          (matchesName || matchesSurname || matchesUsername);
       }
-
-      return filteredProfiles;
     }
+
+    return matchesSearch;
+  });
+
+  filteredProfiles = this.filterByRoleAndType(filteredProfiles);
+
+  if (this.selectedSortField) {
+    this.sortProfile(filteredProfiles, this.selectedSortField);
+  }
+
+  return filteredProfiles;
+},handleSuspiciousClick() {
+  this.profiles = this.profiles.filter(profile => parseInt(profile.counter) > 4);
+  console.log(this);
+}
+
+
+
   }
 };
 </script>
@@ -948,15 +1040,6 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.header-box {
-  display: flex;
-  justify-content: center;
-  border-radius: 3px;
-  background-color: rgba(82, 82, 221, 0.3);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  font-size: 22px;
-  color: rgb(183, 230, 230);
-}
 
 .search-box {
   height: 8%;
@@ -1116,11 +1199,29 @@ export default {
 .name:hover {
   color: darkblue;
 }
+.filter-container button{
+    background-color: rgb(192, 171, 171);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 16px;
+
+  height: 40px;
+  width: 100px;
+  }
 
 .nameS:hover {
   color: darkblue;
 }
-.nameS {
+
+.filter-slide{
+  display: flex;
+  gap:1rem;
+}
+.nameS{
+
   font-size: 50px;
   text-align: center;
   color: lightslategray;
@@ -1499,6 +1600,43 @@ p.orderStatus.approved {
 p.orderStatus.canceled {
   background-color: rgb(232, 96, 96);
 }
+.header-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  background-color: rgba(82, 82, 221, 0.3);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  font-size: 22px;
+  color: rgb(183, 230, 230);
+}
+
+.h2-container{
+ width: 80%;
+padding: 0px 0px 0px 80px;
+ justify-content: center;
+ text-align: center;
+}
+
+.suspicious-container {
+  width: 20%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.suspicious-container p{
+  font-size: 15px;
+  color: #ad3421;
+}
+
+.suspicious-container img {
+  width: 20%;
+}
+
+
+
 
 p.orderStatus {
   background-color: rgb(15, 132, 182);
