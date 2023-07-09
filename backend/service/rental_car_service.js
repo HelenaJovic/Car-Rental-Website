@@ -1,101 +1,99 @@
 const rentalCarRepo = require("../repo/rental_car_repo");
-const orderService=require("../service/order_service");
-const rentalDTO=require("../dto/rentalDTO");
-const commentDTO=require("../dto/commentDTO");
-const commentService=require("../service/comment_service")
-const userService=require("../service/user_service")
+const orderService = require("../service/order_service");
+const rentalDTO = require("../dto/rentalDTO");
+const commentDTO = require("../dto/commentDTO");
+const commentService = require("../service/comment_service");
+const userService = require("../service/user_service");
 
 function create(car_rental) {
   return rentalCarRepo.create(car_rental);
 }
 
-function getAllCommentsByRentalId(idRental,role) {
+function getAllCommentsByRentalId(idRental, role) {
   const comments = commentService.getCommentsByRentalId(idRental);
   const commentDTOs = [];
 
-if (role === 'Manager' || role === 'Administrator') {
+  if (role === "Manager" || role === "Administrator") {
+    for (const comment of comments) {
+      const user = userService.getById(comment.idUser);
 
-  for (const comment of comments) {
-    const user = userService.getById(comment.idUser);
+      const commentDto = new commentDTO();
+      commentDto.commentId = comment.id;
+      commentDto.logo = user.image;
+      commentDto.userName = user.name;
+      commentDto.idUser = user.id;
+      commentDto.surname = user.surname;
+      commentDto.text = comment.text;
+      commentDto.rentalId = idRental;
+      commentDto.isApproved = comment.isApproved; // Pretpostavka da komentar ima polje isApproved
+      commentDto.isSeen = comment.isSeen;
+      commentDto.grade = comment.grade;
 
-    const commentDto = new commentDTO();
-    commentDto.commentId = comment.id;
-    commentDto.logo = user.image;
-    commentDto.userName = user.name;
-    commentDto.idUser=user.id;
-    commentDto.surname = user.surname;
-    commentDto.text = comment.text;
-    commentDto.rentalId = idRental;
-    commentDto.isApproved = comment.isApproved; // Pretpostavka da komentar ima polje isApproved
-    commentDto.isSeen=comment.isSeen;
-    commentDto.grade=comment.grade;
+      commentDTOs.push(commentDto);
+    }
+  } else if (role === "Buyer") {
+    const filteredComments = comments.filter(
+      (comment) => comment.isApproved && comment.isSeen
+    );
 
+    for (const comment of filteredComments) {
+      const user = userService.getById(comment.idUser);
 
-    commentDTOs.push(commentDto);
+      const commentDto = new commentDTO();
+      commentDto.commentId = comment.id;
+      commentDto.logo = user.image;
+      commentDto.userName = user.name;
+      commentDto.idUser = user.id;
+      commentDto.surname = user.surname;
+      commentDto.text = comment.text;
+      commentDto.rentalId = idRental;
+      commentDto.isApproved = comment.isApproved;
+      commentDto.isSeen = comment.isSeen;
+      commentDto.grade = comment.grade;
+
+      commentDTOs.push(commentDto);
+    }
   }
-
-} 
-else if (role === 'Buyer') {
-      const filteredComments = comments.filter(comment => comment.isApproved && comment.isSeen);
-
-      for (const comment of filteredComments) {
-        const user = userService.getById(comment.idUser);
-
-        const commentDto = new commentDTO();
-        commentDto.commentId = comment.id;
-        commentDto.logo = user.image;
-        commentDto.userName = user.name;
-        commentDto.idUser=user.id;
-        commentDto.surname = user.surname;
-        commentDto.text = comment.text;
-        commentDto.rentalId = idRental;
-        commentDto.isApproved = comment.isApproved; 
-        commentDto.isSeen=comment.isSeen;
-        commentDto.grade=comment.grade;
-
-
-        commentDTOs.push(commentDto);
-
+  return commentDTOs;
 }
-
- 
- 
-}
-return commentDTOs;
-}
-function IsManager(idRental,idUser)
-{
-  return rentalCarRepo.IsManager(idRental,idUser);
+function IsManager(idRental, idUser) {
+  return rentalCarRepo.IsManager(idRental, idUser);
 }
 
 function getFreeRentals(startDate, endDate) {
   const rentals = rentalCarRepo.getAll();
 
-  const response = rentals.map(rental => {
-    const vehicles = orderService.getFilteredVehicles(rental, startDate, endDate);
+  const response = rentals
+    .map((rental) => {
+      const vehicles = orderService.getFilteredVehicles(
+        rental,
+        startDate,
+        endDate
+      );
 
-    if (vehicles.length === 0) {
-      return null; 
-    }
+      if (vehicles.length === 0) {
+        return null;
+      }
 
-    const rentalDto = new rentalDTO(); 
-    rentalDto.id = rental.id;
-    rentalDto.nameRental = rental.name;
-    rentalDto.logoR = rental.imagePath;
-    rentalDto.rentalId=rental.id;
-    rentalDto.vehicles = vehicles;
+      const rentalDto = new rentalDTO();
+      rentalDto.id = rental.id;
+      rentalDto.nameRental = rental.name;
+      rentalDto.logoR = rental.imagePath;
+      rentalDto.rentalId = rental.id;
+      rentalDto.vehicles = vehicles;
 
-    return rentalDto;
-  }).filter(rentalDto => rentalDto !== null); 
+      return rentalDto;
+    })
+    .filter((rentalDto) => rentalDto !== null);
 
   return response;
 }
 
 function getFreeRentalById(rentalId, startDate, endDate) {
-  const rental=rentalCarRepo.getById(rentalId);
+  const rental = rentalCarRepo.getById(rentalId);
   const vehicles = orderService.getFilteredVehicles(rental, startDate, endDate);
 
-  const rentalDto = new rentalDTO(); 
+  const rentalDto = new rentalDTO();
   rentalDto.id = rental.id;
   rentalDto.location = rental.location;
   rentalDto.workHours = rental.workHours;
@@ -112,8 +110,6 @@ function getFreeRentalById(rentalId, startDate, endDate) {
   return rentalDto;
 }
 
-
-
 function remove(id) {
   return rentalCarRepo.remove(id);
 }
@@ -125,15 +121,14 @@ function getAll() {
 function getSortedCarsByStatus() {
   const allCars = rentalCarRepo.getAll();
 
-  allCars.forEach(car => {
+  allCars.forEach((car) => {
     if (!isWithinWorkingHours(car)) {
       car.status = false;
-      console.log(car.id,car)
-      rentalCarRepo.update(car.id,car); 
-    }
-    else{
+      console.log(car.id, car);
+      rentalCarRepo.update(car.id, car);
+    } else {
       car.status = true;
-      rentalCarRepo.update(car.id,car); 
+      rentalCarRepo.update(car.id, car);
     }
   });
 
@@ -164,26 +159,23 @@ function isWithinWorkingHours(car) {
 function getTimeFromString(timeString) {
   const [hours, minutes] = timeString.split(":");
   const now = new Date();
-  const time = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
+  const time = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    hours,
+    minutes
+  );
   return time;
 }
 
-
-
-
-function addNewCar(id,vehicle)
-{
-  const rentalCar=rentalCarRepo.getById(id);
+function addNewCar(id, vehicle) {
+  const rentalCar = rentalCarRepo.getById(id);
   rentalCar.vehicles.push(vehicle);
-  update(id,rentalCar);
-  
+  update(id, rentalCar);
 }
 
-
-
-
-function deleteNewCar(id,idCar)
-{
+function deleteNewCar(id, idCar) {
   const rentalCar = rentalCarRepo.getById(idCar);
   let index = -1;
 
@@ -198,9 +190,7 @@ function deleteNewCar(id,idCar)
     rentalCar.vehicles.splice(index, 1);
     rentalCarRepo.update(idCar, rentalCar);
   }
-  
 }
-
 
 function updateNewCar(id, updatedVehicle, idCar) {
   const rentalCar = rentalCarRepo.getById(idCar);
@@ -231,8 +221,6 @@ function update(id, updatedCar) {
 function getAllVehicles(id) {
   return rentalCarRepo.getAllVehicles(id);
 }
-
-
 
 module.exports = {
   create,

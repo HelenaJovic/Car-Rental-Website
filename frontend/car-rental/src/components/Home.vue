@@ -16,43 +16,63 @@
           <p>🔍</p>
         </div>
         <div class="filter-container">
-          <button v-if="!showFilter" type="submit" v-on:click.prevent="toggleFilter()">Filter</button>
+          <button
+            v-if="!showFilter"
+            type="submit"
+            v-on:click.prevent="toggleFilter()"
+          >
+            Filter
+          </button>
           <transition name="slide">
-  <div class="filter-slide" v-if="showFilter">
-    <div>
-      <label for="vehicle-type-filter">Vehicle Type:</label>
-      <select v-model="vehicleTypeFilter" id="vehicle-type-filter">
-        <option value="">All</option>
-        <option v-for="type in vehicleTypes" :value="type">{{ type }}</option>
-      </select>
-    </div>
-    <div>
-      <label for="fuel-type-filter">Fuel Type:</label>
-      <select v-model="fuelTypeFilter" id="fuel-type-filter">
-        <option value="">All</option>
-        <option v-for="type in fuelTypes" :value="type">{{ type }}</option>
-      </select>
-    </div>
-    <div>
-      <label for="show-only-open-objects">Show Only Open Objects:</label>
-      <input type="checkbox" v-model="showOnlyOpenObjects" id="show-only-open-objects">
-    </div>
-  </div>
-</transition>
-</div>
-<div class="combobox-container">
-  <label for="sort-by">Sort By:</label>
-  <select v-model="selectedSortField" id="sort-by" class="custom-select">
-    <option value="">Select</option>
-    <option value="name">Name</option>
-    <option value="grade">Grade</option>
-    <option value="location">Location</option>
-  </select>
-  <router-link to="/addObject" v-if="IsAdministrator">
-    <img src="../assets/images/add.png" alt="Add logo" class="image" />
-  </router-link>
-</div>
-</div>
+            <div class="filter-slide" v-if="showFilter">
+              <div>
+                <label for="vehicle-type-filter">Vehicle Type:</label>
+                <select v-model="vehicleTypeFilter" id="vehicle-type-filter">
+                  <option value="">All</option>
+                  <option v-for="type in vehicleTypes" :value="type">{{
+                    type
+                  }}</option>
+                </select>
+              </div>
+              <div>
+                <label for="fuel-type-filter">Fuel Type:</label>
+                <select v-model="fuelTypeFilter" id="fuel-type-filter">
+                  <option value="">All</option>
+                  <option v-for="type in fuelTypes" :value="type">{{
+                    type
+                  }}</option>
+                </select>
+              </div>
+              <div>
+                <label for="show-only-open-objects"
+                  >Show Only Open Objects:</label
+                >
+                <input
+                  type="checkbox"
+                  v-model="showOnlyOpenObjects"
+                  id="show-only-open-objects"
+                />
+              </div>
+            </div>
+          </transition>
+        </div>
+        <div class="combobox-container">
+          <label for="sort-by">Sort By:</label>
+          <select
+            v-model="selectedSortField"
+            id="sort-by"
+            class="custom-select"
+          >
+            <option value="">Select</option>
+            <option value="name">Name</option>
+            <option value="grade">Grade</option>
+            <option value="location">Location</option>
+          </select>
+          <router-link to="/addObject" v-if="IsAdministrator">
+            <img src="../assets/images/add.png" alt="Add logo" class="image" />
+          </router-link>
+        </div>
+      </div>
 
       <div class="rent-a-car-list">
         <RentACarCard v-for="car in filterObjects" :key="car.id" :car="car" />
@@ -95,7 +115,9 @@ export default {
   methods: {
     async getData() {
       try {
-        const response = await axios.get("http://localhost:8081/cars/sortedCars");
+        const response = await axios.get(
+          "http://localhost:8081/cars/sortedCars"
+        );
         this.cars = response.data;
         console.log(this.cars);
       } catch (error) {
@@ -145,7 +167,7 @@ export default {
 
             const matchesName = car.name.match(searchRegex);
 
-            const matchesLocation = car.location.match(searchRegex);
+            const matchesLocation = car.location.adress.match(searchRegex);
 
             const matchesGrade = car.grade.match(searchRegex);
             const matchesVehicleType = car.vehicles.some(vehicle =>
@@ -167,7 +189,9 @@ export default {
       const filteredByVehicleType = this.vehicleTypeFilter
         ? filteredCars.filter(car =>
             car.vehicles.some(vehicle =>
-              vehicle.vehicleType.toLowerCase().includes(this.vehicleTypeFilter.toLowerCase())
+              vehicle.vehicleType
+                .toLowerCase()
+                .includes(this.vehicleTypeFilter.toLowerCase())
             )
           )
         : filteredCars;
@@ -175,13 +199,15 @@ export default {
       const filteredByFuelType = this.fuelTypeFilter
         ? filteredByVehicleType.filter(car =>
             car.vehicles.some(vehicle =>
-            vehicle.fuelType.toLowerCase().includes(this.fuelTypeFilter.toLowerCase())
+              vehicle.fuelType
+                .toLowerCase()
+                .includes(this.fuelTypeFilter.toLowerCase())
             )
           )
         : filteredByVehicleType;
 
       const filteredByOpenObjects = this.showOnlyOpenObjects
-        ? filteredByFuelType.filter(car => car.status===true)
+        ? filteredByFuelType.filter(car => car.status === true)
         : filteredByFuelType;
 
       if (this.selectedSortField) {
@@ -205,13 +231,13 @@ export default {
   overflow: hidden;
   background-image: url(../assets/images/back3.jpg);
   background-size: cover;
-  background-position: center;  }
+  background-position: center;
+}
 
 .rent-a-car-container h1 {
   font-size: 2rem;
   margin-bottom: 1rem;
 }
-
 
 .rent-a-car-container h1 {
   font-size: 2rem;
@@ -293,8 +319,8 @@ export default {
   margin-left: 5px;
 }
 
-.filter-container button{
-    background-color: rgb(192, 171, 171);
+.filter-container button {
+  background-color: rgb(192, 171, 171);
   color: white;
   border: none;
   border-radius: 4px;
@@ -304,9 +330,9 @@ export default {
 
   height: 40px;
   width: 100px;
-  }
+}
 
- .first-container h1 {
+.first-container h1 {
   font-family: georgia, serif;
   font-size: 50px;
   letter-spacing: 0.1em;
@@ -322,9 +348,9 @@ export default {
   animation: gradientAnimation 5s ease infinite;
 }
 
-.filter-slide{
+.filter-slide {
   display: flex;
-  gap:1rem;
+  gap: 1rem;
 }
 
 @keyframes gradientAnimation {
@@ -337,6 +363,5 @@ export default {
   100% {
     background-position: 0% 50%;
   }
-  
 }
 </style>
